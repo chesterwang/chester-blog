@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html lang="en" dir="auto">
 
-<head><meta charset="utf-8">
+<head><script src="/chester-blog/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=chester-blog/livereload" data-no-instant defer></script><meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="robots" content="index, follow">
 <title>suse 12sp5 升级 openssh 及 openssl | lvbibir&#39;s Blog</title>
 <meta name="keywords" content="suse, openssh, openssl">
 <meta name="description" content="以源码编译的方式, 将 suse12sp5 默认的 openssl 从 1.0.2j 升级到 1.1.1i, openssh 从 7.2p2 升级至 9.7p1.">
-<meta name="author" content="作者:&nbsp;lvbibir">
-<link rel="canonical" href="https://chesterwang.github.io/chester-blog/en/posts/tech/suse-12sp5-update-openssl-openssh/">
+<meta name="author" content="作者:lvbibir">
+<link rel="canonical" href="http://localhost:1313/chester-blog/en/posts/tech/suse-12sp5-update-openssl-openssh/">
 <link crossorigin="anonymous" href="/chester-blog/assets/css/stylesheet.a3b4d2cae219ae904272a1beae2d019e95573341f245e12d4effba204604461c.css" integrity="sha256-o7TSyuIZrpBCcqG&#43;ri0BnpVXM0HyReEtTv&#43;6IEYERhw=" rel="preload stylesheet" as="style">
 <script defer crossorigin="anonymous" src="/chester-blog/assets/js/highlight.f413e19d0714851f6474e7ee9632408e58ac146fbdbe62747134bea2fa3415e0.js" integrity="sha256-9BPhnQcUhR9kdOfuljJAjlisFG&#43;9vmJ0cTS&#43;ovo0FeA="
     onload="hljs.initHighlightingOnLoad();"></script>
@@ -20,7 +20,7 @@
 <link rel="mask-icon" href="https://image.lvbibir.cn/blog/avatar.webp">
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
-<link rel="alternate" hreflang="en" href="https://chesterwang.github.io/chester-blog/en/posts/tech/suse-12sp5-update-openssl-openssh/">
+<link rel="alternate" hreflang="en" href="http://localhost:1313/chester-blog/en/posts/tech/suse-12sp5-update-openssl-openssh/">
 <noscript>
     <style>
         #theme-toggle,
@@ -73,7 +73,7 @@ var _hmt = _hmt || [];
 <meta property="og:title" content="suse 12sp5 升级 openssh 及 openssl" />
 <meta property="og:description" content="以源码编译的方式, 将 suse12sp5 默认的 openssl 从 1.0.2j 升级到 1.1.1i, openssh 从 7.2p2 升级至 9.7p1." />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://chesterwang.github.io/chester-blog/en/posts/tech/suse-12sp5-update-openssl-openssh/" />
+<meta property="og:url" content="http://localhost:1313/chester-blog/en/posts/tech/suse-12sp5-update-openssl-openssh/" />
 <meta property="og:image" content="https://image.lvbibir.cn/blog/logo-suse.png" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2024-05-15T00:00:00+00:00" />
 <meta property="article:modified_time" content="2024-06-13T00:00:00+00:00" />
@@ -93,19 +93,19 @@ var _hmt = _hmt || [];
       "@type": "ListItem",
       "position":  1 ,
       "name": "📚 文章",
-      "item": "https://chesterwang.github.io/chester-blog/en/posts/"
+      "item": "http://localhost:1313/chester-blog/en/posts/"
     }, 
     {
       "@type": "ListItem",
       "position":  2 ,
       "name": "👨🏻‍💻 技术",
-      "item": "https://chesterwang.github.io/chester-blog/en/posts/tech/"
+      "item": "http://localhost:1313/chester-blog/en/posts/tech/"
     }, 
     {
       "@type": "ListItem",
       "position":  3 ,
       "name": "suse 12sp5 升级 openssh 及 openssl",
-      "item": "https://chesterwang.github.io/chester-blog/en/posts/tech/suse-12sp5-update-openssl-openssh/"
+      "item": "http://localhost:1313/chester-blog/en/posts/tech/suse-12sp5-update-openssl-openssh/"
     }
   ]
 }
@@ -131,7 +131,7 @@ var _hmt = _hmt || [];
   },
   "mainEntityOfPage": {
     "@type": "WebPage",
-    "@id": "https://chesterwang.github.io/chester-blog/en/posts/tech/suse-12sp5-update-openssl-openssh/"
+    "@id": "http://localhost:1313/chester-blog/en/posts/tech/suse-12sp5-update-openssl-openssh/"
   },
   "publisher": {
     "@type": "Organization",
@@ -160,7 +160,7 @@ var _hmt = _hmt || [];
 <header class="header">
     <nav class="nav">
         <div class="logo">
-            <a href="https://chesterwang.github.io/chester-blog/en/" accesskey="h" title="lvbibir&#39;s Blog (Alt + H)">
+            <a href="http://localhost:1313/chester-blog/en/" accesskey="h" title="lvbibir&#39;s Blog (Alt + H)">
                 <img src="https://image.lvbibir.cn/blog/avatar.webp" alt="" aria-label="logo"
                     height="35">lvbibir&#39;s Blog</a>
             <div class="logo-switches">
@@ -190,35 +190,35 @@ var _hmt = _hmt || [];
         </div>
         <ul id="menu">
             <li class="menu-item">
-                <a href="https://chesterwang.github.io/chester-blog/en/search" title="🔍 搜索 (Alt &#43; /)" accesskey=/>
+                <a href="http://localhost:1313/chester-blog/en/search" title="🔍 搜索 (Alt &#43; /)" accesskey=/>
                     <span>🔍 搜索</span>
                     
                 </a>
             
             </li>
             <li class="menu-item">
-                <a href="https://chesterwang.github.io/chester-blog/en/posts" title="📚 文章">
+                <a href="http://localhost:1313/chester-blog/en/posts" title="📚 文章">
                     <span>📚 文章</span>
                     
                 </a>
             
             </li>
             <li class="menu-item">
-                <a href="https://chesterwang.github.io/chester-blog/en/archives" title="📈 归档">
+                <a href="http://localhost:1313/chester-blog/en/archives" title="📈 归档">
                     <span>📈 归档</span>
                     
                 </a>
             
             </li>
             <li class="menu-item">
-                <a href="https://chesterwang.github.io/chester-blog/en/talk" title="💬 说说">
+                <a href="http://localhost:1313/chester-blog/en/talk" title="💬 说说">
                     <span>💬 说说</span>
                     
                 </a>
             
             </li>
             <li class="menu-item">
-                <a href="https://chesterwang.github.io/chester-blog/en/links" title="🤝 友链">
+                <a href="http://localhost:1313/chester-blog/en/links" title="🤝 友链">
                     <span>🤝 友链</span>
                     
                 </a>
@@ -231,21 +231,21 @@ var _hmt = _hmt || [];
 <article class="post-single">
     <div id="single-content">
         <header class="post-header">
-            <div class="breadcrumbs"><a href="https://chesterwang.github.io/chester-blog/en/">主页</a>&nbsp;»&nbsp;<a href="https://chesterwang.github.io/chester-blog/en/posts/">📚 文章</a>&nbsp;»&nbsp;<a href="https://chesterwang.github.io/chester-blog/en/posts/tech/">👨🏻‍💻 技术</a></div>
+            <div class="breadcrumbs"><a href="http://localhost:1313/chester-blog/en/">主页</a>&nbsp;»&nbsp;<a href="http://localhost:1313/chester-blog/en/posts/">📚 文章</a>&nbsp;»&nbsp;<a href="http://localhost:1313/chester-blog/en/posts/tech/">👨🏻‍💻 技术</a></div>
             <h1 class="post-title">
                 suse 12sp5 升级 openssh 及 openssl
             </h1>
             <div class="post-description">
                 以源码编译的方式, 将 suse12sp5 默认的 openssl 从 1.0.2j 升级到 1.1.1i, openssh 从 7.2p2 升级至 9.7p1.
             </div>
-            <div class="post-meta">创建:&amp;nbsp;&lt;span title=&#39;2024-05-15 00:00:00 &#43;0000 UTC&#39;&gt;2024-05-15&lt;/span&gt;&amp;nbsp;|&amp;nbsp;更新:&amp;nbsp;2024-06-13&amp;nbsp;|&amp;nbsp;字数:&amp;nbsp;143字&amp;nbsp;|&amp;nbsp;作者:&amp;nbsp;lvbibir
+            <div class="post-meta">创建: 2024-05-15 | 更新: 2024-06-13 | 字数: 143字 | 作者:lvbibir
 
 
                 |&nbsp;标签:&nbsp;
                 <ul class="post-tags-meta">
-                    <a href="https://chesterwang.github.io/chester-blog/en/tags/suse/">Suse</a>
-                    <a href="https://chesterwang.github.io/chester-blog/en/tags/openssh/">、Openssh</a>
-                    <a href="https://chesterwang.github.io/chester-blog/en/tags/openssl/">、Openssl</a>
+                    <a href="http://localhost:1313/chester-blog/en/tags/suse/">Suse</a>
+                    <a href="http://localhost:1313/chester-blog/en/tags/openssh/">、Openssh</a>
+                    <a href="http://localhost:1313/chester-blog/en/tags/openssl/">、Openssl</a>
                 </ul>
 
                 
@@ -335,12 +335,12 @@ var _hmt = _hmt || [];
         <footer class="post-footer">
             
 <nav class="paginav">
-  <a class="prev" href="https://chesterwang.github.io/chester-blog/en/posts/tech/kylinos-7.6-install-otp/">
+  <a class="prev" href="http://localhost:1313/chester-blog/en/posts/tech/kylinos-7.6-install-otp/">
     <span class="title">« 上一页</span>
     <br>
     <span>麒麟 7.6 安装谷歌 OTP 认证模块</span>
   </a>
-  <a class="next" href="https://chesterwang.github.io/chester-blog/en/posts/tech/suse-12sp5-deploy-mysql57/">
+  <a class="next" href="http://localhost:1313/chester-blog/en/posts/tech/suse-12sp5-deploy-mysql57/">
     <span class="title">下一页 »</span>
     <br>
     <span>suse 12sp5 部署 mysql 5.7</span>
@@ -425,7 +425,7 @@ var _hmt = _hmt || [];
         Copyright
         &copy;
         2020-2025
-        <a href="https://chesterwang.github.io/chester-blog/en/" style="border-bottom:1px solid">lvbibir&#39;s Blog</a>
+        <a href="http://localhost:1313/chester-blog/en/" style="border-bottom:1px solid">lvbibir&#39;s Blog</a>
     </span>
 
     

@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><script src="/chester-blog/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=chester-blog/livereload" data-no-instant defer></script><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>编码-隐匿在计算机软硬件背后的语言上 | lvbibir&#39;s Blog</title>
+<meta name="keywords" content="读书">
+<meta name="description" content="这本书从物理层到逻辑层 自底向上完整描述了计算机的计算时如何运行的。 参考别人的读书笔记 http://kaito-kidd.com/2016/04/20/code-note-01-10/ http://kaito-kidd.com/2016/05/28/code-note-11-17/ http://kaito-kidd.com/2016/06/24/code-note-18-25/ 第1章 至亲密友 第2章 编码与组合 第3章 布莱叶盲文与二进制码 第4章 手电筒的剖析 第5章 绕过拐角的通信 第6章 电报机与继电器 第7章 我们的十个数字 第8章 十的替代品 第9章 二进制数 第10章 逻辑与开关 第11章">
+<meta name="author" content="作者:lvbibir">
+<link rel="canonical" href="http://localhost:1313/chester-blog/en/posts/2018-01-13-%E7%BC%96%E7%A0%81-%E9%9A%90%E5%8C%BF%E5%9C%A8%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%BD%AF%E7%A1%AC%E4%BB%B6%E8%83%8C%E5%90%8E%E7%9A%84%E8%AF%AD%E8%A8%80%E4%B8%8A/">
+<link crossorigin="anonymous" href="/chester-blog/assets/css/stylesheet.a3b4d2cae219ae904272a1beae2d019e95573341f245e12d4effba204604461c.css" integrity="sha256-o7TSyuIZrpBCcqG&#43;ri0BnpVXM0HyReEtTv&#43;6IEYERhw=" rel="preload stylesheet" as="style">
+<script defer crossorigin="anonymous" src="/chester-blog/assets/js/highlight.f413e19d0714851f6474e7ee9632408e58ac146fbdbe62747134bea2fa3415e0.js" integrity="sha256-9BPhnQcUhR9kdOfuljJAjlisFG&#43;9vmJ0cTS&#43;ovo0FeA="
+    onload="hljs.initHighlightingOnLoad();"></script>
+<link rel="icon" href="https://image.lvbibir.cn/blog/avatar.webp">
+<link rel="icon" type="image/png" sizes="16x16" href="https://image.lvbibir.cn/blog/avatar.webp">
+<link rel="icon" type="image/png" sizes="32x32" href="https://image.lvbibir.cn/blog/avatar.webp">
+<link rel="apple-touch-icon" href="https://image.lvbibir.cn/blog/avatar.webp">
+<link rel="mask-icon" href="https://image.lvbibir.cn/blog/avatar.webp">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="http://localhost:1313/chester-blog/en/posts/2018-01-13-%E7%BC%96%E7%A0%81-%E9%9A%90%E5%8C%BF%E5%9C%A8%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%BD%AF%E7%A1%AC%E4%BB%B6%E8%83%8C%E5%90%8E%E7%9A%84%E8%AF%AD%E8%A8%80%E4%B8%8A/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --hljs-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript>
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = ""; 
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+<meta property="og:title" content="编码-隐匿在计算机软硬件背后的语言上" />
+<meta property="og:description" content="这本书从物理层到逻辑层 自底向上完整描述了计算机的计算时如何运行的。 参考别人的读书笔记 http://kaito-kidd.com/2016/04/20/code-note-01-10/ http://kaito-kidd.com/2016/05/28/code-note-11-17/ http://kaito-kidd.com/2016/06/24/code-note-18-25/ 第1章 至亲密友 第2章 编码与组合 第3章 布莱叶盲文与二进制码 第4章 手电筒的剖析 第5章 绕过拐角的通信 第6章 电报机与继电器 第7章 我们的十个数字 第8章 十的替代品 第9章 二进制数 第10章 逻辑与开关 第11章" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://localhost:1313/chester-blog/en/posts/2018-01-13-%E7%BC%96%E7%A0%81-%E9%9A%90%E5%8C%BF%E5%9C%A8%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%BD%AF%E7%A1%AC%E4%BB%B6%E8%83%8C%E5%90%8E%E7%9A%84%E8%AF%AD%E8%A8%80%E4%B8%8A/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2018-01-13T22:20:16+00:00" />
+<meta property="article:modified_time" content="2018-01-13T22:20:16+00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="编码-隐匿在计算机软硬件背后的语言上"/>
+<meta name="twitter:description" content="这本书从物理层到逻辑层 自底向上完整描述了计算机的计算时如何运行的。 参考别人的读书笔记 http://kaito-kidd.com/2016/04/20/code-note-01-10/ http://kaito-kidd.com/2016/05/28/code-note-11-17/ http://kaito-kidd.com/2016/06/24/code-note-18-25/ 第1章 至亲密友 第2章 编码与组合 第3章 布莱叶盲文与二进制码 第4章 手电筒的剖析 第5章 绕过拐角的通信 第6章 电报机与继电器 第7章 我们的十个数字 第8章 十的替代品 第9章 二进制数 第10章 逻辑与开关 第11章"/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "📚 文章",
+      "item": "http://localhost:1313/chester-blog/en/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "编码-隐匿在计算机软硬件背后的语言上",
+      "item": "http://localhost:1313/chester-blog/en/posts/2018-01-13-%E7%BC%96%E7%A0%81-%E9%9A%90%E5%8C%BF%E5%9C%A8%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%BD%AF%E7%A1%AC%E4%BB%B6%E8%83%8C%E5%90%8E%E7%9A%84%E8%AF%AD%E8%A8%80%E4%B8%8A/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "编码-隐匿在计算机软硬件背后的语言上",
+  "name": "编码-隐匿在计算机软硬件背后的语言上",
+  "description": "这本书从物理层到逻辑层 自底向上完整描述了计算机的计算时如何运行的。 参考别人的读书笔记 http://kaito-kidd.com/2016/04/20/code-note-01-10/ http://kaito-kidd.com/2016/05/28/code-note-11-17/ http://kaito-kidd.com/2016/06/24/code-note-18-25/ 第1章 至亲密友 第2章 编码与组合 第3章 布莱叶盲文与二进制码 第4章 手电筒的剖析 第5章 绕过拐角的通信 第6章 电报机与继电器 第7章 我们的十个数字 第8章 十的替代品 第9章 二进制数 第10章 逻辑与开关 第11章",
+  "keywords": [
+    "读书"
+  ],
+  "articleBody": "这本书从物理层到逻辑层 自底向上完整描述了计算机的计算时如何运行的。\n参考别人的读书笔记 http://kaito-kidd.com/2016/04/20/code-note-01-10/ http://kaito-kidd.com/2016/05/28/code-note-11-17/ http://kaito-kidd.com/2016/06/24/code-note-18-25/ 第1章 至亲密友 第2章 编码与组合 第3章 布莱叶盲文与二进制码 第4章 手电筒的剖析 第5章 绕过拐角的通信 第6章 电报机与继电器 第7章 我们的十个数字 第8章 十的替代品 第9章 二进制数 第10章 逻辑与开关 第11章 门 第12章 二进制加法器 第13章 如何实现减法 第14章 反馈与触发器 第15章 字节与十六进制 第16章 存储器组织 第17章 自动操作 第18章 从算盘到芯片 第19章 两种典型的微处理器 第20章 ASCII码和字符转换 第21章 总线 第22章 操作系统 第23章 定点数和浮点数 第24章 高级语言与低级语言 第25章 图形化革命 ",
+  "wordCount" : "284",
+  "inLanguage": "en",
+  "datePublished": "2018-01-13T22:20:16Z",
+  "dateModified": "2018-01-13T22:20:16Z",
+  "author":{
+    "@type": "Person",
+    "name": "lvbibir"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "http://localhost:1313/chester-blog/en/posts/2018-01-13-%E7%BC%96%E7%A0%81-%E9%9A%90%E5%8C%BF%E5%9C%A8%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%BD%AF%E7%A1%AC%E4%BB%B6%E8%83%8C%E5%90%8E%E7%9A%84%E8%AF%AD%E8%A8%80%E4%B8%8A/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "lvbibir's Blog",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://image.lvbibir.cn/blog/avatar.webp"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="http://localhost:1313/chester-blog/en/" accesskey="h" title="lvbibir&#39;s Blog (Alt + H)">
+                <img src="https://image.lvbibir.cn/blog/avatar.webp" alt="" aria-label="logo"
+                    height="35">lvbibir&#39;s Blog</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+                <ul class="lang-switch"><li>|</li>
+                </ul>
+            </div>
+        </div>
+        <ul id="menu">
+            <li class="menu-item">
+                <a href="http://localhost:1313/chester-blog/en/search" title="🔍 搜索 (Alt &#43; /)" accesskey=/>
+                    <span>🔍 搜索</span>
+                    
+                </a>
+            
+            </li>
+            <li class="menu-item">
+                <a href="http://localhost:1313/chester-blog/en/posts" title="📚 文章">
+                    <span>📚 文章</span>
+                    
+                </a>
+            
+            </li>
+            <li class="menu-item">
+                <a href="http://localhost:1313/chester-blog/en/archives" title="📈 归档">
+                    <span>📈 归档</span>
+                    
+                </a>
+            
+            </li>
+            <li class="menu-item">
+                <a href="http://localhost:1313/chester-blog/en/talk" title="💬 说说">
+                    <span>💬 说说</span>
+                    
+                </a>
+            
+            </li>
+            <li class="menu-item">
+                <a href="http://localhost:1313/chester-blog/en/links" title="🤝 友链">
+                    <span>🤝 友链</span>
+                    
+                </a>
+            
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main page">
+<article class="post-single">
+    <div id="single-content">
+        <header class="post-header">
+            <div class="breadcrumbs"><a href="http://localhost:1313/chester-blog/en/">主页</a>&nbsp;»&nbsp;<a href="http://localhost:1313/chester-blog/en/posts/">📚 文章</a></div>
+            <h1 class="post-title">
+                编码-隐匿在计算机软硬件背后的语言上
+            </h1>
+            <div class="post-meta">创建: 2018-01-13 | 更新: 2018-01-13 | 字数: 284字 | 作者:lvbibir
+
+
+                |&nbsp;标签:&nbsp;
+                <ul class="post-tags-meta">
+                    <a href="http://localhost:1313/chester-blog/en/tags/%E8%AF%BB%E4%B9%A6/">读书</a>
+                </ul>
+
+                
+                <span id="busuanzi_container_page_pv">
+                    &nbsp;|&nbsp;访问:&nbsp;<span id="busuanzi_value_page_pv"></span>
+                </span>
+
+</div>
+        </header> <aside id="toc-container" class="toc-container wide">
+    <div class="toc">
+        <details  open>
+        <summary accesskey="c" title="(Alt + C)">
+            <span class="details">文章目录</span>
+        </summary>
+
+        <div class="inner"><ul>
+                <li>
+                    <a href="#%e7%ac%ac1%e7%ab%a0-%e8%87%b3%e4%ba%b2%e5%af%86%e5%8f%8b" aria-label="第1章 至亲密友">第1章 至亲密友</a></li>
+                <li>
+                    <a href="#%e7%ac%ac2%e7%ab%a0-%e7%bc%96%e7%a0%81%e4%b8%8e%e7%bb%84%e5%90%88" aria-label="第2章 编码与组合">第2章 编码与组合</a></li>
+                <li>
+                    <a href="#%e7%ac%ac3%e7%ab%a0-%e5%b8%83%e8%8e%b1%e5%8f%b6%e7%9b%b2%e6%96%87%e4%b8%8e%e4%ba%8c%e8%bf%9b%e5%88%b6%e7%a0%81" aria-label="第3章 布莱叶盲文与二进制码">第3章 布莱叶盲文与二进制码</a></li>
+                <li>
+                    <a href="#%e7%ac%ac4%e7%ab%a0-%e6%89%8b%e7%94%b5%e7%ad%92%e7%9a%84%e5%89%96%e6%9e%90" aria-label="第4章 手电筒的剖析">第4章 手电筒的剖析</a></li>
+                <li>
+                    <a href="#%e7%ac%ac5%e7%ab%a0-%e7%bb%95%e8%bf%87%e6%8b%90%e8%a7%92%e7%9a%84%e9%80%9a%e4%bf%a1" aria-label="第5章 绕过拐角的通信">第5章 绕过拐角的通信</a></li>
+                <li>
+                    <a href="#%e7%ac%ac6%e7%ab%a0-%e7%94%b5%e6%8a%a5%e6%9c%ba%e4%b8%8e%e7%bb%a7%e7%94%b5%e5%99%a8" aria-label="第6章 电报机与继电器">第6章 电报机与继电器</a></li>
+                <li>
+                    <a href="#%e7%ac%ac7%e7%ab%a0-%e6%88%91%e4%bb%ac%e7%9a%84%e5%8d%81%e4%b8%aa%e6%95%b0%e5%ad%97" aria-label="第7章 我们的十个数字">第7章 我们的十个数字</a></li>
+                <li>
+                    <a href="#%e7%ac%ac8%e7%ab%a0-%e5%8d%81%e7%9a%84%e6%9b%bf%e4%bb%a3%e5%93%81" aria-label="第8章 十的替代品">第8章 十的替代品</a></li>
+                <li>
+                    <a href="#%e7%ac%ac9%e7%ab%a0-%e4%ba%8c%e8%bf%9b%e5%88%b6%e6%95%b0" aria-label="第9章 二进制数">第9章 二进制数</a></li>
+                <li>
+                    <a href="#%e7%ac%ac10%e7%ab%a0-%e9%80%bb%e8%be%91%e4%b8%8e%e5%bc%80%e5%85%b3" aria-label="第10章 逻辑与开关">第10章 逻辑与开关</a></li>
+                <li>
+                    <a href="#%e7%ac%ac11%e7%ab%a0-%e9%97%a8" aria-label="第11章 门">第11章 门</a></li>
+                <li>
+                    <a href="#%e7%ac%ac12%e7%ab%a0-%e4%ba%8c%e8%bf%9b%e5%88%b6%e5%8a%a0%e6%b3%95%e5%99%a8" aria-label="第12章 二进制加法器">第12章 二进制加法器</a></li>
+                <li>
+                    <a href="#%e7%ac%ac13%e7%ab%a0-%e5%a6%82%e4%bd%95%e5%ae%9e%e7%8e%b0%e5%87%8f%e6%b3%95" aria-label="第13章 如何实现减法">第13章 如何实现减法</a></li>
+                <li>
+                    <a href="#%e7%ac%ac14%e7%ab%a0-%e5%8f%8d%e9%a6%88%e4%b8%8e%e8%a7%a6%e5%8f%91%e5%99%a8" aria-label="第14章 反馈与触发器">第14章 反馈与触发器</a></li>
+                <li>
+                    <a href="#%e7%ac%ac15%e7%ab%a0-%e5%ad%97%e8%8a%82%e4%b8%8e%e5%8d%81%e5%85%ad%e8%bf%9b%e5%88%b6" aria-label="第15章 字节与十六进制">第15章 字节与十六进制</a></li>
+                <li>
+                    <a href="#%e7%ac%ac16%e7%ab%a0-%e5%ad%98%e5%82%a8%e5%99%a8%e7%bb%84%e7%bb%87" aria-label="第16章 存储器组织">第16章 存储器组织</a></li>
+                <li>
+                    <a href="#%e7%ac%ac17%e7%ab%a0-%e8%87%aa%e5%8a%a8%e6%93%8d%e4%bd%9c" aria-label="第17章 自动操作">第17章 自动操作</a></li>
+                <li>
+                    <a href="#%e7%ac%ac18%e7%ab%a0-%e4%bb%8e%e7%ae%97%e7%9b%98%e5%88%b0%e8%8a%af%e7%89%87" aria-label="第18章 从算盘到芯片">第18章 从算盘到芯片</a></li>
+                <li>
+                    <a href="#%e7%ac%ac19%e7%ab%a0-%e4%b8%a4%e7%a7%8d%e5%85%b8%e5%9e%8b%e7%9a%84%e5%be%ae%e5%a4%84%e7%90%86%e5%99%a8" aria-label="第19章 两种典型的微处理器">第19章 两种典型的微处理器</a></li>
+                <li>
+                    <a href="#%e7%ac%ac20%e7%ab%a0-ascii%e7%a0%81%e5%92%8c%e5%ad%97%e7%ac%a6%e8%bd%ac%e6%8d%a2" aria-label="第20章 ASCII码和字符转换">第20章 ASCII码和字符转换</a></li>
+                <li>
+                    <a href="#%e7%ac%ac21%e7%ab%a0-%e6%80%bb%e7%ba%bf" aria-label="第21章 总线">第21章 总线</a></li>
+                <li>
+                    <a href="#%e7%ac%ac22%e7%ab%a0-%e6%93%8d%e4%bd%9c%e7%b3%bb%e7%bb%9f" aria-label="第22章 操作系统">第22章 操作系统</a></li>
+                <li>
+                    <a href="#%e7%ac%ac23%e7%ab%a0-%e5%ae%9a%e7%82%b9%e6%95%b0%e5%92%8c%e6%b5%ae%e7%82%b9%e6%95%b0" aria-label="第23章 定点数和浮点数">第23章 定点数和浮点数</a></li>
+                <li>
+                    <a href="#%e7%ac%ac24%e7%ab%a0-%e9%ab%98%e7%ba%a7%e8%af%ad%e8%a8%80%e4%b8%8e%e4%bd%8e%e7%ba%a7%e8%af%ad%e8%a8%80" aria-label="第24章 高级语言与低级语言">第24章 高级语言与低级语言</a></li>
+                <li>
+                    <a href="#%e7%ac%ac25%e7%ab%a0-%e5%9b%be%e5%bd%a2%e5%8c%96%e9%9d%a9%e5%91%bd" aria-label="第25章 图形化革命">第25章 图形化革命</a>
+                </li>
+            </ul>
+        </div>
+        </details>
+    </div>
+</aside>
+<script>
+    let activeElement;
+    let elements;
+    window.addEventListener('DOMContentLoaded', function (event) {
+        checkTocPosition();
+
+        elements = document.querySelectorAll('h1[id],h2[id],h3[id],h4[id],h5[id],h6[id]');
+        
+        activeElement = elements[0];
+        const id = encodeURI(activeElement.getAttribute('id')).toLowerCase();
+        document.querySelector(`.inner ul li a[href="#${id}"]`).classList.add('active');
+    }, false);
+
+    window.addEventListener('resize', function(event) {
+        checkTocPosition();
+    }, false);
+
+    window.addEventListener('scroll', () => {
+        
+        activeElement = Array.from(elements).find((element) => {
+            if ((getOffsetTop(element) - window.pageYOffset) > 0 &&
+                (getOffsetTop(element) - window.pageYOffset) < window.innerHeight/2) {
+                return element;
+            }
+        }) || activeElement
+
+        elements.forEach(element => {
+            const id = encodeURI(element.getAttribute('id')).toLowerCase();
+            if (element === activeElement){
+                document.querySelector(`.inner ul li a[href="#${id}"]`).classList.add('active');
+            } else {
+                document.querySelector(`.inner ul li a[href="#${id}"]`).classList.remove('active');
+            }
+        })
+    }, false);
+
+    const main = parseInt(getComputedStyle(document.body).getPropertyValue('--article-width'), 10);
+    const toc = parseInt(getComputedStyle(document.body).getPropertyValue('--toc-width'), 10);
+    const gap = parseInt(getComputedStyle(document.body).getPropertyValue('--gap'), 10);
+
+    function checkTocPosition() {
+        const width = document.body.scrollWidth;
+        if (width - main - (toc * 2) - (gap * 4) > 0) {
+            document.getElementById("toc-container").classList.add("wide");
+        } else {
+            document.getElementById("toc-container").classList.remove("wide");
+        }
+    }
+
+    function getOffsetTop(element) {
+        if (!element.getClientRects().length) {
+            return 0;
+        }
+        let rect = element.getBoundingClientRect();
+        let win = element.ownerDocument.defaultView;
+        return rect.top + win.pageYOffset;
+    }
+</script>
+        <div class="post-content"><p>这本书从物理层到逻辑层 自底向上完整描述了计算机的计算时如何运行的。</p>
+<!-- more -->
+<ul>
+<li>参考别人的读书笔记
+<ol>
+<li><a href="http://kaito-kidd.com/2016/04/20/code-note-01-10/" target="_blank" rel="noopener" style="color:#42b983";>http://kaito-kidd.com/2016/04/20/code-note-01-10/</a></li>
+<li><a href="http://kaito-kidd.com/2016/05/28/code-note-11-17/" target="_blank" rel="noopener" style="color:#42b983";>http://kaito-kidd.com/2016/05/28/code-note-11-17/</a></li>
+<li><a href="http://kaito-kidd.com/2016/06/24/code-note-18-25/" target="_blank" rel="noopener" style="color:#42b983";>http://kaito-kidd.com/2016/06/24/code-note-18-25/</a></li>
+</ol>
+</li>
+</ul>
+<h1 id="第1章-至亲密友">第1章 至亲密友<a hidden class="anchor" aria-hidden="true" href="#第1章-至亲密友">#</a></h1>
+<h1 id="第2章-编码与组合">第2章 编码与组合<a hidden class="anchor" aria-hidden="true" href="#第2章-编码与组合">#</a></h1>
+<h1 id="第3章-布莱叶盲文与二进制码">第3章 布莱叶盲文与二进制码<a hidden class="anchor" aria-hidden="true" href="#第3章-布莱叶盲文与二进制码">#</a></h1>
+<h1 id="第4章-手电筒的剖析">第4章 手电筒的剖析<a hidden class="anchor" aria-hidden="true" href="#第4章-手电筒的剖析">#</a></h1>
+<h1 id="第5章-绕过拐角的通信">第5章 绕过拐角的通信<a hidden class="anchor" aria-hidden="true" href="#第5章-绕过拐角的通信">#</a></h1>
+<h1 id="第6章-电报机与继电器">第6章 电报机与继电器<a hidden class="anchor" aria-hidden="true" href="#第6章-电报机与继电器">#</a></h1>
+<h1 id="第7章-我们的十个数字">第7章 我们的十个数字<a hidden class="anchor" aria-hidden="true" href="#第7章-我们的十个数字">#</a></h1>
+<h1 id="第8章-十的替代品">第8章 十的替代品<a hidden class="anchor" aria-hidden="true" href="#第8章-十的替代品">#</a></h1>
+<h1 id="第9章-二进制数">第9章 二进制数<a hidden class="anchor" aria-hidden="true" href="#第9章-二进制数">#</a></h1>
+<h1 id="第10章-逻辑与开关">第10章 逻辑与开关<a hidden class="anchor" aria-hidden="true" href="#第10章-逻辑与开关">#</a></h1>
+<h1 id="第11章-门">第11章 门<a hidden class="anchor" aria-hidden="true" href="#第11章-门">#</a></h1>
+<h1 id="第12章-二进制加法器">第12章 二进制加法器<a hidden class="anchor" aria-hidden="true" href="#第12章-二进制加法器">#</a></h1>
+<h1 id="第13章-如何实现减法">第13章 如何实现减法<a hidden class="anchor" aria-hidden="true" href="#第13章-如何实现减法">#</a></h1>
+<h1 id="第14章-反馈与触发器">第14章 反馈与触发器<a hidden class="anchor" aria-hidden="true" href="#第14章-反馈与触发器">#</a></h1>
+<h1 id="第15章-字节与十六进制">第15章 字节与十六进制<a hidden class="anchor" aria-hidden="true" href="#第15章-字节与十六进制">#</a></h1>
+<h1 id="第16章-存储器组织">第16章 存储器组织<a hidden class="anchor" aria-hidden="true" href="#第16章-存储器组织">#</a></h1>
+<h1 id="第17章-自动操作">第17章 自动操作<a hidden class="anchor" aria-hidden="true" href="#第17章-自动操作">#</a></h1>
+<h1 id="第18章-从算盘到芯片">第18章 从算盘到芯片<a hidden class="anchor" aria-hidden="true" href="#第18章-从算盘到芯片">#</a></h1>
+<h1 id="第19章-两种典型的微处理器">第19章 两种典型的微处理器<a hidden class="anchor" aria-hidden="true" href="#第19章-两种典型的微处理器">#</a></h1>
+<h1 id="第20章-ascii码和字符转换">第20章 ASCII码和字符转换<a hidden class="anchor" aria-hidden="true" href="#第20章-ascii码和字符转换">#</a></h1>
+<h1 id="第21章-总线">第21章 总线<a hidden class="anchor" aria-hidden="true" href="#第21章-总线">#</a></h1>
+<h1 id="第22章-操作系统">第22章 操作系统<a hidden class="anchor" aria-hidden="true" href="#第22章-操作系统">#</a></h1>
+<h1 id="第23章-定点数和浮点数">第23章 定点数和浮点数<a hidden class="anchor" aria-hidden="true" href="#第23章-定点数和浮点数">#</a></h1>
+<h1 id="第24章-高级语言与低级语言">第24章 高级语言与低级语言<a hidden class="anchor" aria-hidden="true" href="#第24章-高级语言与低级语言">#</a></h1>
+<h1 id="第25章-图形化革命">第25章 图形化革命<a hidden class="anchor" aria-hidden="true" href="#第25章-图形化革命">#</a></h1>
+<h1 id="heading"><a hidden class="anchor" aria-hidden="true" href="#heading">#</a></h1>
+
+
+        </div>
+        <div class="post-reward">
+            <div style="padding: 0 0 0 0; margin: 0 0 0 0; width: 100%; font-size:16px; text-align: center;">
+                <div id="QR" style="opacity: 0;">
+                    <div id="wechat" style="display: inline-block">
+                        <a class="fancybox" rel="group">
+                            <img id="wechat_qr" src="https://image.lvbibir.cn/blog/wechatpay.png" alt="wechat_pay"></a>
+                        <p>微信</p>
+                    </div>
+                    <div id="alipay" style="display: inline-block">
+                        <a class="fancybox" rel="group">
+                            <img id="alipay_qr" src="https://image.lvbibir.cn/blog/alipay.png" alt="alipay"></a>
+                        <p>支付宝</p>
+                    </div>
+                </div>
+                <button id="rewardButton"
+                        onclick="
+                    var qr = document.getElementById('QR');
+                    if (qr.style.opacity === '0') {
+                        qr.style.opacity='1';
+                    } else {
+                        qr.style.opacity='0'
+                    }"
+                >
+                    <span>🧧 鼓励</span>
+                </button>
+            </div>
+        </div>
+
+        <footer class="post-footer">
+            
+<nav class="paginav">
+  <a class="prev" href="http://localhost:1313/chester-blog/en/posts/2018-01-20-%E8%AF%BB%E4%B9%A6-high-performance-browser-networking/">
+    <span class="title">« 上一页</span>
+    <br>
+    <span>前端系列（二） 读书-high-performance-browser-networking</span>
+  </a>
+  <a class="next" href="http://localhost:1313/chester-blog/en/posts/2018-01-12-ajax/">
+    <span class="title">下一页 »</span>
+    <br>
+    <span>前端系列（一） ajax</span>
+  </a>
+</nav>
+
+        </footer>
+    </div>
+
+
+
+<div>
+    <div class="pagination__title">
+        <span class="pagination__title-h" style="font-size: 20px;">💬评论</span>
+        <hr />
+    </div>
+
+    <div id="tcomment"></div>
+
+    <script src="https://image.lvbibir.cn/js/1.6.40/twikoo.all.min.js">
+    </script>
+    
+
+    
+
+    <script>
+        twikoo.init({
+            envId: "https://twikoo.lvbibir.cn/", 
+            el: "#tcomment",
+            lang: 'zh-CN',
+            
+            path: window.TWIKOO_MAGIC_PATH||window.location.pathname,
+            
+            
+            
+            
+            
+            
+            
+        });
+    </script>
+
+</div>
+</article>
+</main>
+
+
+<footer class="footer">
+
+    <a href="https://gohugo.io/" target="_blank">
+        
+        <img style="display: unset;" src="https://image.lvbibir.cn/blog/frame-hugo-blue.svg">
+    </a>
+    <a href="https://github.com/adityatelange/hugo-PaperMod" target="_blank">
+        
+        <img style="display: unset;" src="https://image.lvbibir.cn/blog/theme-papermod-lightgrey.svg">
+    </a>
+    <a href="https://cn.aliyun.com/" target="_blank">
+        
+        <img style="display: unset;" src="https://image.lvbibir.cn/blog/图床-阿里云-orange.svg">
+    </a>
+
+    <br>
+
+    <span id="runtime_span"></span>
+    <script
+        type="text/javascript">function show_runtime() { window.setTimeout("show_runtime()", 1000); X = new Date("7/13/2021 1:00:00"); Y = new Date(); T = (Y.getTime() - X.getTime()); M = 24 * 60 * 60 * 1000; a = T / M; A = Math.floor(a); b = (a - A) * 24; B = Math.floor(b); c = (b - B) * 60; C = Math.floor((b - B) * 60); D = Math.floor((c - C) * 60); runtime_span.innerHTML = "网站已运行" + A + "天" + B + "小时" + C + "分" + D + "秒" } show_runtime();</script>
+    |
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span id="busuanzi_container">
+        
+        总访客数:  <span id="busuanzi_value_site_uv"></span>
+        |
+        总访问量:  <span id="busuanzi_value_site_pv"></span>
+    </span>
+
+    <br>
+
+    <a href="https://beian.miit.gov.cn/" target="_blank" style="border-bottom:1px solid">京ICP备2021023168号-1</a>&nbsp;
+    |
+    <span>
+        Copyright
+        &copy;
+        2020-2025
+        <a href="http://localhost:1313/chester-blog/en/" style="border-bottom:1px solid">lvbibir&#39;s Blog</a>
+    </span>
+
+    
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <span class="topInner">
+        <svg class="topSvg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+            <path d="M12 6H0l6-6z" />
+        </svg>
+        <span id="read_progress"></span>
+    </span>
+</a>
+
+<script>
+    document.addEventListener('scroll', function (e) {
+        const readProgress = document.getElementById("read_progress");
+        const scrollHeight = document.documentElement.scrollHeight;
+        const clientHeight = document.documentElement.clientHeight;
+        const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+        
+        readProgress.innerText = ((scrollTop / (scrollHeight - clientHeight)).toFixed(2) * 100).toFixed(0);
+    })
+</script>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    let mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 400 || document.documentElement.scrollTop > 400) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+
+
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerText = '📄复制';
+
+        function copyingDone() {
+            copybutton.innerText = '👌🏻已复制!';
+            setTimeout(() => {
+                copybutton.innerText = '📄复制';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) {
+            }
+            ;
+            selection.removeRange(range);
+        });
+
+        let language = codeblock.className.replaceAll("language-", "")
+        let macTool = document.createElement("div")
+        let macTool1 = document.createElement("div")
+        let macTool2 = document.createElement("div")
+        let macTool3 = document.createElement("div")
+        let languageType = document.createElement("div")
+        languageType.innerText = language
+        macTool.setAttribute('class', 'mac-tool')
+        macTool1.setAttribute('class', 'mac bb1')
+        macTool2.setAttribute('class', 'mac bb2')
+        macTool3.setAttribute('class', 'mac bb3')
+        languageType.setAttribute('class', 'language-type')
+        macTool.appendChild(macTool1)
+        macTool.appendChild(macTool2)
+        macTool.appendChild(macTool3)
+        macTool.appendChild(languageType)
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+            container.appendChild(macTool)
+        } else if (container.parentNode.firstChild === container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName === "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+            container.appendChild(macTool)
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+            container.appendChild(macTool)
+        }
+    });
+</script>
+
+</body>
+
+</html>

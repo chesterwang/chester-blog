@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html lang="en" dir="auto">
 
-<head><meta charset="utf-8">
+<head><script src="/chester-blog/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=chester-blog/livereload" data-no-instant defer></script><meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="robots" content="index, follow">
 <title>loki (一) 简介 | lvbibir&#39;s Blog</title>
 <meta name="keywords" content="kubernetes, prometheus, loki">
 <meta name="description" content="loki 开源日志的优缺点及架构; loki 的四个角色; prometail 简介; 日志告警">
-<meta name="author" content="作者:&nbsp;lvbibir">
-<link rel="canonical" href="https://chesterwang.github.io/chester-blog/en/posts/tech/kubernetes-loki-1-jianjie/">
+<meta name="author" content="作者:lvbibir">
+<link rel="canonical" href="http://localhost:1313/chester-blog/en/posts/tech/kubernetes-loki-1-jianjie/">
 <link crossorigin="anonymous" href="/chester-blog/assets/css/stylesheet.a3b4d2cae219ae904272a1beae2d019e95573341f245e12d4effba204604461c.css" integrity="sha256-o7TSyuIZrpBCcqG&#43;ri0BnpVXM0HyReEtTv&#43;6IEYERhw=" rel="preload stylesheet" as="style">
 <script defer crossorigin="anonymous" src="/chester-blog/assets/js/highlight.f413e19d0714851f6474e7ee9632408e58ac146fbdbe62747134bea2fa3415e0.js" integrity="sha256-9BPhnQcUhR9kdOfuljJAjlisFG&#43;9vmJ0cTS&#43;ovo0FeA="
     onload="hljs.initHighlightingOnLoad();"></script>
@@ -20,7 +20,7 @@
 <link rel="mask-icon" href="https://image.lvbibir.cn/blog/avatar.webp">
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
-<link rel="alternate" hreflang="en" href="https://chesterwang.github.io/chester-blog/en/posts/tech/kubernetes-loki-1-jianjie/">
+<link rel="alternate" hreflang="en" href="http://localhost:1313/chester-blog/en/posts/tech/kubernetes-loki-1-jianjie/">
 <noscript>
     <style>
         #theme-toggle,
@@ -73,7 +73,7 @@ var _hmt = _hmt || [];
 <meta property="og:title" content="loki (一) 简介" />
 <meta property="og:description" content="loki 开源日志的优缺点及架构; loki 的四个角色; prometail 简介; 日志告警" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://chesterwang.github.io/chester-blog/en/posts/tech/kubernetes-loki-1-jianjie/" />
+<meta property="og:url" content="http://localhost:1313/chester-blog/en/posts/tech/kubernetes-loki-1-jianjie/" />
 <meta property="og:image" content="https://image.lvbibir.cn/blog/loki.png" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2023-04-30T00:00:00+00:00" />
 <meta property="article:modified_time" content="2024-01-28T00:00:00+00:00" />
@@ -93,19 +93,19 @@ var _hmt = _hmt || [];
       "@type": "ListItem",
       "position":  1 ,
       "name": "📚 文章",
-      "item": "https://chesterwang.github.io/chester-blog/en/posts/"
+      "item": "http://localhost:1313/chester-blog/en/posts/"
     }, 
     {
       "@type": "ListItem",
       "position":  2 ,
       "name": "👨🏻‍💻 技术",
-      "item": "https://chesterwang.github.io/chester-blog/en/posts/tech/"
+      "item": "http://localhost:1313/chester-blog/en/posts/tech/"
     }, 
     {
       "@type": "ListItem",
       "position":  3 ,
       "name": "loki (一) 简介",
-      "item": "https://chesterwang.github.io/chester-blog/en/posts/tech/kubernetes-loki-1-jianjie/"
+      "item": "http://localhost:1313/chester-blog/en/posts/tech/kubernetes-loki-1-jianjie/"
     }
   ]
 }
@@ -131,7 +131,7 @@ var _hmt = _hmt || [];
   },
   "mainEntityOfPage": {
     "@type": "WebPage",
-    "@id": "https://chesterwang.github.io/chester-blog/en/posts/tech/kubernetes-loki-1-jianjie/"
+    "@id": "http://localhost:1313/chester-blog/en/posts/tech/kubernetes-loki-1-jianjie/"
   },
   "publisher": {
     "@type": "Organization",
@@ -160,7 +160,7 @@ var _hmt = _hmt || [];
 <header class="header">
     <nav class="nav">
         <div class="logo">
-            <a href="https://chesterwang.github.io/chester-blog/en/" accesskey="h" title="lvbibir&#39;s Blog (Alt + H)">
+            <a href="http://localhost:1313/chester-blog/en/" accesskey="h" title="lvbibir&#39;s Blog (Alt + H)">
                 <img src="https://image.lvbibir.cn/blog/avatar.webp" alt="" aria-label="logo"
                     height="35">lvbibir&#39;s Blog</a>
             <div class="logo-switches">
@@ -190,35 +190,35 @@ var _hmt = _hmt || [];
         </div>
         <ul id="menu">
             <li class="menu-item">
-                <a href="https://chesterwang.github.io/chester-blog/en/search" title="🔍 搜索 (Alt &#43; /)" accesskey=/>
+                <a href="http://localhost:1313/chester-blog/en/search" title="🔍 搜索 (Alt &#43; /)" accesskey=/>
                     <span>🔍 搜索</span>
                     
                 </a>
             
             </li>
             <li class="menu-item">
-                <a href="https://chesterwang.github.io/chester-blog/en/posts" title="📚 文章">
+                <a href="http://localhost:1313/chester-blog/en/posts" title="📚 文章">
                     <span>📚 文章</span>
                     
                 </a>
             
             </li>
             <li class="menu-item">
-                <a href="https://chesterwang.github.io/chester-blog/en/archives" title="📈 归档">
+                <a href="http://localhost:1313/chester-blog/en/archives" title="📈 归档">
                     <span>📈 归档</span>
                     
                 </a>
             
             </li>
             <li class="menu-item">
-                <a href="https://chesterwang.github.io/chester-blog/en/talk" title="💬 说说">
+                <a href="http://localhost:1313/chester-blog/en/talk" title="💬 说说">
                     <span>💬 说说</span>
                     
                 </a>
             
             </li>
             <li class="menu-item">
-                <a href="https://chesterwang.github.io/chester-blog/en/links" title="🤝 友链">
+                <a href="http://localhost:1313/chester-blog/en/links" title="🤝 友链">
                     <span>🤝 友链</span>
                     
                 </a>
@@ -231,19 +231,19 @@ var _hmt = _hmt || [];
 <article class="post-single">
     <div id="single-content">
         <header class="post-header">
-            <div class="breadcrumbs"><a href="https://chesterwang.github.io/chester-blog/en/">主页</a>&nbsp;»&nbsp;<a href="https://chesterwang.github.io/chester-blog/en/posts/">📚 文章</a>&nbsp;»&nbsp;<a href="https://chesterwang.github.io/chester-blog/en/posts/tech/">👨🏻‍💻 技术</a></div>
+            <div class="breadcrumbs"><a href="http://localhost:1313/chester-blog/en/">主页</a>&nbsp;»&nbsp;<a href="http://localhost:1313/chester-blog/en/posts/">📚 文章</a>&nbsp;»&nbsp;<a href="http://localhost:1313/chester-blog/en/posts/tech/">👨🏻‍💻 技术</a></div>
             <h1 class="post-title">
                 loki (一) 简介
             </h1>
             <div class="post-description">
                 loki 开源日志的优缺点及架构; loki 的四个角色; prometail 简介; 日志告警
             </div>
-            <div class="post-meta">创建:&amp;nbsp;&lt;span title=&#39;2023-04-30 00:00:00 &#43;0000 UTC&#39;&gt;2023-04-30&lt;/span&gt;&amp;nbsp;|&amp;nbsp;更新:&amp;nbsp;2024-01-28&amp;nbsp;|&amp;nbsp;字数:&amp;nbsp;1532字&amp;nbsp;|&amp;nbsp;作者:&amp;nbsp;lvbibir
+            <div class="post-meta">创建: 2023-04-30 | 更新: 2024-01-28 | 字数: 1532字 | 作者:lvbibir
 
 
                 |&nbsp;标签:&nbsp;
                 <ul class="post-tags-meta">
-                    <a href="https://chesterwang.github.io/chester-blog/en/tags/kubernetes/">Kubernetes</a>
+                    <a href="http://localhost:1313/chester-blog/en/tags/kubernetes/">Kubernetes</a>
                 </ul>
 
                 
@@ -460,12 +460,12 @@ var _hmt = _hmt || [];
         <footer class="post-footer">
             
 <nav class="paginav">
-  <a class="prev" href="https://chesterwang.github.io/chester-blog/en/posts/tech/kubernetes-loki-2-deploy/">
+  <a class="prev" href="http://localhost:1313/chester-blog/en/posts/tech/kubernetes-loki-2-deploy/">
     <span class="title">« 上一页</span>
     <br>
     <span>loki (二) 部署</span>
   </a>
-  <a class="next" href="https://chesterwang.github.io/chester-blog/en/posts/tech/kubernetes-prometheus-6-alertmanager/">
+  <a class="next" href="http://localhost:1313/chester-blog/en/posts/tech/kubernetes-prometheus-6-alertmanager/">
     <span class="title">下一页 »</span>
     <br>
     <span>prometheus (六) Alertmanager</span>
@@ -550,7 +550,7 @@ var _hmt = _hmt || [];
         Copyright
         &copy;
         2020-2025
-        <a href="https://chesterwang.github.io/chester-blog/en/" style="border-bottom:1px solid">lvbibir&#39;s Blog</a>
+        <a href="http://localhost:1313/chester-blog/en/" style="border-bottom:1px solid">lvbibir&#39;s Blog</a>
     </span>
 
     

@@ -1,0 +1,181 @@
+---
+title: 前端系列（二） 读书-high-performance-browser-networking
+date: 2018-01-20 12:18:32
+tags: 
+    - 读书
+categories: 前端系列
+---
+
+# note
+
+- Networking 101
+    - Primer on Latency and Bandwidth
+        - Speed Is a Feature
+            - latency: The time from the source sending a packet to the destination receiving it
+            - Bandwidth: Maximum throughput of a logical or physical communication path
+            - network data rates: Network data rates are typically measured in bits per second (bps), whereas data rates for non-network equipment are typically shown in bytes per second (Bps). This is a common source of confusion, pay close attention to the units. For example, to put a 10 megabyte (MB) file "on the wire" over a 1Mbps link, we will need 80 seconds. 10MB is equal to 80Mb because there are 8 bits for every byte!
+        - The Many Components of Latency
+            - https://en.wikipedia.org/wiki/List_of_device_bit_rates
+        - Speed of Light and Propagation Latency
+            - CDN: Content delivery network (CDN) services provide many benefits, but chief among them is the simple observation that distributing the content around the globe, and serving that content from a nearby location to the client, enables us to significantly reduce the propagation time of all the data packets. We may not be able to make the packets travel faster, but we can reduce the distance by strategically positioning our servers closer to the users! Leveraging a CDN to serve your data can offer significant performance benefits.
+        - Last- Mile Latency
+        - Bandwidth in Core Networks
+        - Bandwidth at the Network Edge
+        - Delivering Higher Bandwidth and Lower Latencies
+    - Building Blocks of TCP
+        - introduction
+            - The HTTP standard does not mandate TCP as the only transport protocol. If we wanted, we could deliver HTTP via a datagram socket (User Datagram Protocol or UDP), or any other transport protocol of our choice, but in practice all HTTP traffic on the Internet today is delivered via TCP due to the many great and convenient features it provides out of the box.
+        - Three- Way Handshake
+        - Congestion Avoidance and Control
+        - Bandwidth- Delay Product
+        - Head- of- Line Blocking
+        - Optimizing for TCP
+            - Performance Checklist
+                - Optimizing TCP performance pays high dividends, regardless of the type of application, for every new connection to your servers. A short list to put on the agenda:
+                - Upgrade server kernel to latest version.
+                - Ensure that cwnd size is set to 10.
+                - Ensure that window scaling is enabled.
+                - Disable slow-start after idle.
+                - Investigate enabling TCP Fast Open.
+                - Eliminate redundant data transfers.
+                - Compress transferred data.
+                - Position servers closer to the user to reduce roundtrip times.
+                - Reuse TCP connections whenever possible.
+                - Investigate "TCP Tuning for HTTP" recommendations.
+    - Building Blocks of UDP
+        - Null Protocol Services
+        - UDP and Network Address Translators
+        - Optimizing for UDP
+    - Transport Layer Security (TLS)
+        - Encryption, Authentication, and Integrity
+        - HTTPS Everywhere
+        - TLS Handshake
+        - TLS Session Resumption
+        - Chain of Trust and Certificate Authorities
+        - Certificate Revocation
+        - TLS Record Protocol
+        - Optimizing for TLS
+        - Testing and Verification
+
+- Performance of Wireless Networks
+
+    - Introduction to Wireless Networks
+        - Ubiquitous Connectivity
+        - Types of Wireless Networks
+        - Performance Fundamentals of Wireless Networks
+        - Measuring Real- World Wireless Performance
+    - WiFi
+        - From Ethernet to a Wireless LAN
+        - WiFi Standards and Features
+        - Measuring and Optimizing WiFi Performance
+        - Optimizing for WiFi Networks
+    - Mobile Networks
+        - Brief History of the G’s
+        - Device Features and Capabilities
+        - Radio Resource Controller (RRC)
+        - End- to- End Carrier Architecture
+        - Packet Flow in a Mobile Network
+        - Heterogeneous Networks (HetNets)
+        - Real- World 3G, 4G, and WiFi Performance
+    - Optimizing for Mobile Networks
+        - Preserve Battery Power
+        - Eliminate Periodic and Inefficient Data Transfers
+        - Anticipate Network Latency Overhead
+        - Design for Variable Network Interface Availability
+        - Burst Your Data and Return to Idle
+        - Offload to WiFi Networks
+        - Apply Protocol and Application Best Practices
+
+- HTTP
+
+    - Brief History of HTTP
+        - HTTP 0.9: The One- Line Protocol
+        - HTTP/1.0: Rapid Growth and Informational RFC
+        - HTTP/1.1: Internet Standard
+        - HTTP/2: Improving Transport Performance
+    - Primer on Web Performance
+        - Hypertext, Web Pages, and Web Applications
+        - Anatomy of a Modern Web Application
+        - Performance Pillars: Computing, Rendering, Networking
+        - Synthetic and Real- User Performance Measurement
+        - Browser Optimization
+    - HTTP/1.X
+        - Benefits of Keepalive Connections
+        - HTTP Pipelining
+        - Using Multiple TCP Connections
+        - Domain Sharding
+        - Measuring and Controlling Protocol Overhead
+        - Concatenation and Spriting
+        - Resource Inlining
+    - HTTP/2
+        - Brief History of SPDY and HTTP/2
+        - Design and Technical Goals
+        - Binary Framing Layer
+        - Streams, Messages, and Frames
+        - Request and Response Multiplexing
+        - Stream Prioritization
+        - One Connection Per Origin
+        - Flow Control
+        - Server Push
+        - Header Compression
+        - Upgrading to HTTP/2
+        - Brief Introduction to Binary Framing
+    - Optimizing Application Delivery
+        - Optimizing Physical and Transport Layers
+        - Evergreen Performance Best Practices
+        - Optimizing for HTTP/1.x
+        - Optimizing for HTTP/2
+
+- Browser APIs and Protocols
+
+    - Primer on Browser Networking
+        - Connection Management and Optimization
+        - Network Security and Sandboxing
+        - Resource and Client State Caching
+        - Application APIs and Protocols
+    - XMLHttpRequest
+        - Brief History of XHR
+        - Cross- Origin Resource Sharing (CORS)
+        - Downloading Data with XHR
+        - Uploading Data with XHR
+        - Monitoring Download and Upload Progress
+        - Streaming Data with XHR
+        - Real- Time Notifications and Delivery
+        - XHR Use Cases and Performance
+    - Server- Sent Events (SSE)
+        - intro
+            - SSE 底层实现是通过a single long-lived HTTP connection
+        - EventSource API
+            - EventSource也可以利用CORS的权限机制进行跨域请求
+            - SSE是内存高效的,因为可以不用将所有收到的数据放到内存中,处理过后的信息直接扔掉,但是XHR必须要全部缓冲所有response数据
+            - SSE底层可以自动重连
+            - 现代浏览器基本都支持SSE,除了IE和stock android浏览器. 但是浏览器原生不支持,也可以通过JS库(polyfill)来enable SSE.
+                - 但是 polyfill底层是XHR polling,所以并不能保证高效
+            - 总结一下 web stream 的几种方法
+                - XHR polling
+                - XHR long-polling
+                - XHR streaming
+                - 浏览器原生支持的XHR streaming,原生支持更为高校
+        - Event Stream Protocol
+            - client initiate regular HTTP request
+            - server responds with a custom text/event-stream content-type, then streams the UTF-8 encoded event data.
+            - protocal:
+                - Event payload is the value of one or more adjacent data fields.
+                - Event may carry an optional ID and an event type string.
+                - Event boundaries are marked by newlines.
+
+        - SSE Use Cases and Performance
+    - WebSocket
+        - WebSocket API
+        - WebSocket Protocol
+        - WebSocket Use Cases and Performance
+        - Performance Checklist
+    - WebRTC
+        - Standards and Development of WebRTC
+        - Audio and Video Engines
+        - Real- Time Network Transports
+        - Establishing a Peer- to- Peer Connection
+        - Delivering Media and Application Data
+        - DataChannel
+        - WebRTC Use Cases and Performance
+        - Performance Checklist
