@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh" dir="auto">
 
-<head><meta charset="utf-8">
+<head><script src="/chester-blog/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=chester-blog/livereload" data-no-instant defer></script><meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="robots" content="index, follow">
@@ -9,8 +9,8 @@
 <meta name="keywords" content="LLM, RAG">
 <meta name="description" content="个人RAG项目的开发记录和笔记">
 <meta name="author" content="作者:Chester">
-<link rel="canonical" href="https://chesterwang.github.io/chester-blog/posts/2025-11-07-rag-demo%E9%A1%B9%E7%9B%AE/">
-<link crossorigin="anonymous" href="/chester-blog/assets/css/stylesheet.3d787722632b03b0bffe0d67e8f4333c75f6538432f31f18a83dfd05a3aeae4b.css" integrity="sha256-PXh3ImMrA7C//g1n6PQzPHX2U4Qy8x8YqD39BaOurks=" rel="preload stylesheet" as="style">
+<link rel="canonical" href="http://localhost:1313/chester-blog/posts/2025-11-07-rag-demo%E9%A1%B9%E7%9B%AE-copy/">
+<link crossorigin="anonymous" href="/chester-blog/assets/css/stylesheet.a3b4d2cae219ae904272a1beae2d019e95573341f245e12d4effba204604461c.css" integrity="sha256-o7TSyuIZrpBCcqG&#43;ri0BnpVXM0HyReEtTv&#43;6IEYERhw=" rel="preload stylesheet" as="style">
 <script defer crossorigin="anonymous" src="/chester-blog/assets/js/highlight.f413e19d0714851f6474e7ee9632408e58ac146fbdbe62747134bea2fa3415e0.js" integrity="sha256-9BPhnQcUhR9kdOfuljJAjlisFG&#43;9vmJ0cTS&#43;ovo0FeA="
     onload="hljs.initHighlightingOnLoad();"></script>
 <link rel="icon" href="https://image.lvbibir.cn/blog/avatar.webp">
@@ -20,7 +20,7 @@
 <link rel="mask-icon" href="https://image.lvbibir.cn/blog/avatar.webp">
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
-<link rel="alternate" hreflang="zh" href="https://chesterwang.github.io/chester-blog/posts/2025-11-07-rag-demo%E9%A1%B9%E7%9B%AE/">
+<link rel="alternate" hreflang="zh" href="http://localhost:1313/chester-blog/posts/2025-11-07-rag-demo%E9%A1%B9%E7%9B%AE-copy/">
 <noscript>
     <style>
         #theme-toggle,
@@ -71,30 +71,26 @@ var _hmt = _hmt || [];
 
 
 
- 
+
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.25/dist/katex.min.css" integrity="sha384-WcoG4HRXMzYzfCgiyfrySxx90XSl2rxY5mnVY5TwtWE6KLrArNKn0T/mOgNL0Mmi" crossorigin="anonymous">
 <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.25/dist/katex.min.js" integrity="sha384-J+9dG2KMoiR9hqcFao0IBLwxt6zpcyN68IgwzsCSkbreXUjmNVRhPFTssqdSGjwQ" crossorigin="anonymous"></script>
-<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.25/dist/contrib/auto-render.min.js" integrity="sha384-hCXGrW6PitJEwbkoStFjeJxv+fSOOQKOPbJxSfM6G5sWZjAyWhXiTIIAmQqnlLlh" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.25/dist/contrib/auto-render.min.js" integrity="sha384-hCXGrW6PitJEwbkoStFjeJxv+fSOOQKOPbJxSfM6G5sWZjAyWhXiTIIAmQqnlLlh" crossorigin="anonymous"
+    onload="renderMathInElement(document.body);"></script>
+
+
 <script>
     document.addEventListener("DOMContentLoaded", function() {
         renderMathInElement(document.body, {
-          
-          
-          delimiters: [
-              {left: '$$', right: '$$', display: true},
-              {left: '$', right: '$', display: false},
-              {left: '\\(', right: '\\)', display: false},
-              {left: '\\[', right: '\\]', display: true}
-          ],
-          
-          throwOnError : false
+            delimiters: [
+                {left: "$$", right: "$$", display: true},
+                {left: "$", right: "$", display: false}
+            ]
         });
     });
-</script>
-<meta property="og:title" content="个人RAG项目开发记录" />
+</script><meta property="og:title" content="个人RAG项目开发记录" />
 <meta property="og:description" content="个人RAG项目的开发记录和笔记" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://chesterwang.github.io/chester-blog/posts/2025-11-07-rag-demo%E9%A1%B9%E7%9B%AE/" /><meta property="article:section" content="posts" />
+<meta property="og:url" content="http://localhost:1313/chester-blog/posts/2025-11-07-rag-demo%E9%A1%B9%E7%9B%AE-copy/" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2025-11-07T00:00:00+00:00" />
 <meta property="article:modified_time" content="2025-11-11T00:00:00+00:00" />
 
@@ -112,13 +108,13 @@ var _hmt = _hmt || [];
       "@type": "ListItem",
       "position":  1 ,
       "name": "📚 文章",
-      "item": "https://chesterwang.github.io/chester-blog/posts/"
+      "item": "http://localhost:1313/chester-blog/posts/"
     }, 
     {
       "@type": "ListItem",
       "position":  2 ,
       "name": "个人RAG项目开发记录",
-      "item": "https://chesterwang.github.io/chester-blog/posts/2025-11-07-rag-demo%E9%A1%B9%E7%9B%AE/"
+      "item": "http://localhost:1313/chester-blog/posts/2025-11-07-rag-demo%E9%A1%B9%E7%9B%AE-copy/"
     }
   ]
 }
@@ -144,7 +140,7 @@ var _hmt = _hmt || [];
   },
   "mainEntityOfPage": {
     "@type": "WebPage",
-    "@id": "https://chesterwang.github.io/chester-blog/posts/2025-11-07-rag-demo%E9%A1%B9%E7%9B%AE/"
+    "@id": "http://localhost:1313/chester-blog/posts/2025-11-07-rag-demo%E9%A1%B9%E7%9B%AE-copy/"
   },
   "publisher": {
     "@type": "Organization",
@@ -173,7 +169,7 @@ var _hmt = _hmt || [];
 <header class="header">
     <nav class="nav">
         <div class="logo">
-            <a href="https://chesterwang.github.io/chester-blog/" accesskey="h" title="Chester&#39;s Blog (Alt + H)">
+            <a href="http://localhost:1313/chester-blog/" accesskey="h" title="Chester&#39;s Blog (Alt + H)">
                 <img src="https://image.lvbibir.cn/blog/avatar.webp" alt="" aria-label="logo"
                     height="35">Chester&#39;s Blog</a>
             <div class="logo-switches">
@@ -203,42 +199,42 @@ var _hmt = _hmt || [];
         </div>
         <ul id="menu">
             <li class="menu-item">
-                <a href="https://chesterwang.github.io/chester-blog/categories" title="🤙🏿 分类">
+                <a href="http://localhost:1313/chester-blog/categories" title="🤙🏿 分类">
                     <span>🤙🏿 分类</span>
                     
                 </a>
             
             </li>
             <li class="menu-item">
-                <a href="https://chesterwang.github.io/chester-blog/tags" title="🏷️ 标签">
+                <a href="http://localhost:1313/chester-blog/tags" title="🏷️ 标签">
                     <span>🏷️ 标签</span>
                     
                 </a>
             
             </li>
             <li class="menu-item">
-                <a href="https://chesterwang.github.io/chester-blog/archives" title="📈 归档">
+                <a href="http://localhost:1313/chester-blog/archives" title="📈 归档">
                     <span>📈 归档</span>
                     
                 </a>
             
             </li>
             <li class="menu-item">
-                <a href="https://chesterwang.github.io/chester-blog/talk" title="💬 说说">
+                <a href="http://localhost:1313/chester-blog/talk" title="💬 说说">
                     <span>💬 说说</span>
                     
                 </a>
             
             </li>
             <li class="menu-item">
-                <a href="https://chesterwang.github.io/chester-blog/search" title="🔍 搜索 (Alt &#43; /)" accesskey=/>
+                <a href="http://localhost:1313/chester-blog/search" title="🔍 搜索 (Alt &#43; /)" accesskey=/>
                     <span>🔍 搜索</span>
                     
                 </a>
             
             </li>
             <li class="menu-item">
-                <a href="https://chesterwang.github.io/chester-blog/about" title="🙋🏻‍♂️ 关于">
+                <a href="http://localhost:1313/chester-blog/about" title="🙋🏻‍♂️ 关于">
                     <span>🙋🏻‍♂️ 关于</span>
                     
                 </a>
@@ -251,7 +247,7 @@ var _hmt = _hmt || [];
 <article class="post-single">
     <div id="single-content">
         <header class="post-header">
-            <div class="breadcrumbs"><a href="https://chesterwang.github.io/chester-blog/">主页</a>&nbsp;»&nbsp;<a href="https://chesterwang.github.io/chester-blog/posts/">📚 文章</a></div>
+            <div class="breadcrumbs"><a href="http://localhost:1313/chester-blog/">主页</a>&nbsp;»&nbsp;<a href="http://localhost:1313/chester-blog/posts/">📚 文章</a></div>
             <h1 class="post-title">
                 个人RAG项目开发记录
             </h1>
@@ -263,7 +259,7 @@ var _hmt = _hmt || [];
 
                 |&nbsp;标签:&nbsp;
                 <ul class="post-tags-meta">
-                    <a href="https://chesterwang.github.io/chester-blog/tags/llm/">LLM</a>
+                    <a href="http://localhost:1313/chester-blog/tags/llm/">LLM</a>
                 </ul>
 
                 
@@ -1970,10 +1966,10 @@ Ollama 平台提供了一个通用的 <strong><code>/api/embeddings</code></stro
         <footer class="post-footer">
             
 <nav class="paginav">
-  <a class="next" href="https://chesterwang.github.io/chester-blog/posts/2025-08-22-huggingface-%E7%B1%BB%E5%BA%93%E5%AD%A6%E4%B9%A0/">
+  <a class="next" href="http://localhost:1313/chester-blog/posts/2025-11-07-rag-demo%E9%A1%B9%E7%9B%AE/">
     <span class="title">下一页 »</span>
     <br>
-    <span>Huggingface 类库学习</span>
+    <span>个人RAG项目开发记录</span>
   </a>
 </nav>
 

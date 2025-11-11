@@ -112,8 +112,8 @@ outputs:
 # 这里的参数会被代码以 .Site.Params 的形式读取
 params:
   env: production # to enable google analytics, opengraph, twitter-cards and schema.
-  description: "lvbibir的个人博客, hugo, papermod, shell, python, linux, mysql, redis, k8s, docker, devops"
-  author: lvbibir # author: ["Me", "You"] # multiple authors
+  description: "Chester 的个人博客, Python, AIGC, LLM"
+  author: Chester # author: ["Me", "You"] # multiple authors
   draft: flase
   defaultTheme: auto  # defaultTheme: light or  dark 
   disableThemeToggle: false

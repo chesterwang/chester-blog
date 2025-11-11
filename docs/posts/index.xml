@@ -10,10 +10,19 @@
     <item>
       <title>个人RAG项目开发记录</title>
       <link>https://chesterwang.github.io/chester-blog/posts/2025-11-07-rag-demo%E9%A1%B9%E7%9B%AE/</link>
-      <pubDate>Wed, 06 Jul 2022 00:00:00 +0000</pubDate>
+      <pubDate>Fri, 07 Nov 2025 00:00:00 +0000</pubDate>
       
       <guid>https://chesterwang.github.io/chester-blog/posts/2025-11-07-rag-demo%E9%A1%B9%E7%9B%AE/</guid>
       <description>个人RAG项目的开发记录和笔记</description>
+    </item>
+    
+    <item>
+      <title>Huggingface 类库学习</title>
+      <link>https://chesterwang.github.io/chester-blog/posts/2025-08-22-huggingface-%E7%B1%BB%E5%BA%93%E5%AD%A6%E4%B9%A0/</link>
+      <pubDate>Fri, 22 Aug 2025 00:00:00 +0000</pubDate>
+      
+      <guid>https://chesterwang.github.io/chester-blog/posts/2025-08-22-huggingface-%E7%B1%BB%E5%BA%93%E5%AD%A6%E4%B9%A0/</guid>
+      <description>Huggingface 类库学习</description>
     </item>
     
   </channel>
