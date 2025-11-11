@@ -1,4 +1,4 @@
-baseURL: https://www.lvbibir.cn
+baseURL: https://chesterwang.github.io/chester-blog
 languageCode: zh-cn # en-us
 title: lvbibir's Blog
 theme: PaperMod  # 主题名字，和themes文件夹下的一致
