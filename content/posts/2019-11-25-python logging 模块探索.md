@@ -7,17 +7,6 @@ categories: 工程开发系列
 
 本文介绍了python logging 模块的大致原理。
 
-<!-- more -->
-
-
-
-目录
-
-- [1. logging 体系结构](#1-logging-体系结构)
-- [2. logging 中的数据结构](#2-logging-中的数据结构)
-- [3. 源码阅读收获](#3-源码阅读收获)
-
-
 # 1. logging 体系结构
 
 1. Manager 管理Logger的树性体系

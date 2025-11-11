@@ -7,24 +7,6 @@ categories: 工程开发系列
 ---
 
 
-<!-- @import "[TOC]" {cmd="toc" depthFrom=1 depthTo=6 orderedList=false} -->
-<!-- code_chunk_output -->
-
-- [chapter 1 What are Static sites?](#chapter-1-what-are-static-sites)
-    - [1.1 CMS](#11-cms)
-        - [1.1.1 国内有没有大机构用 Drupal 来构建官网？ https://www.zhihu.com/question/19648357](#111-国内有没有大机构用-drupal-来构建官网-httpswwwzhihucomquestion19648357)
-    - [1.2 dynamic aspects](#12-dynamic-aspects)
-        - [1.2.1 对静态站点添加动态内容的一些服务](#121-对静态站点添加动态内容的一些服务)
-        - [1.2.2 BAAS: backend as a service例子  https://www.zhihu.com/question/22098754 这里给出一些BaaS服务提供商](#122-baas-backend-as-a-service例子--httpswwwzhihucomquestion22098754-这里给出一些baas服务提供商)
-    - [1.3 defining a static website](#13-defining-a-static-website)
-- [chapter 2 The basics of  static site generator](#chapter-2-the-basics-of--static-site-generator)
-    - [2.1 what are static site generator](#21-what-are-static-site-generator)
-- [chapter 3 popular site generators](#chapter-3-popular-site-generators)
-
-<!-- /code_chunk_output -->
-
-
-
 # chapter 1 What are Static sites?
 
 ## 1.1 CMS
