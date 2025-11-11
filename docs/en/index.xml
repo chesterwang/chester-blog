@@ -17,24 +17,6 @@
     </item>
     
     <item>
-      <title>《人间失格》</title>
-      <link>http://localhost:1313/chester-blog/en/posts/read/ren-jian-shi-ge/</link>
-      <pubDate>Sat, 09 Jul 2022 00:00:00 +0000</pubDate>
-      
-      <guid>http://localhost:1313/chester-blog/en/posts/read/ren-jian-shi-ge/</guid>
-      <description>《人间失格》（又名《丧失为人的资格》）日本小说家太宰治创作的中篇小说，发表于 1948 年，是一部半自传体的小说。</description>
-    </item>
-    
-    <item>
-      <title>跑步日常</title>
-      <link>http://localhost:1313/chester-blog/en/posts/life/running/</link>
-      <pubDate>Thu, 07 Jul 2022 00:00:00 +0000</pubDate>
-      
-      <guid>http://localhost:1313/chester-blog/en/posts/life/running/</guid>
-      <description>记录一下本跑渣的跑步日常，一点一滴见证自己成长~</description>
-    </item>
-    
-    <item>
       <title>纪录片系列 里奇·史蒂夫斯游欧洲 Rick Steves&#39; Europe P1</title>
       <link>http://localhost:1313/chester-blog/en/posts/2022-02-06-%E7%BA%AA%E5%BD%95%E7%89%87%E7%B3%BB%E5%88%97-%E9%87%8C%E5%A5%87%E5%8F%B2%E8%92%82%E5%A4%AB%E6%96%AF%E6%B8%B8%E6%AC%A7%E6%B4%B2-rick-steves-europe-p1/</link>
       <pubDate>Sun, 06 Feb 2022 18:48:25 +0000</pubDate>
@@ -77,15 +59,6 @@
       
       <guid>http://localhost:1313/chester-blog/en/posts/2022-02-05-%E5%B9%BF%E5%91%8A%E7%AE%97%E6%B3%95%E7%B3%BB%E5%88%97%E4%B8%80-2020%E8%85%BE%E8%AE%AF%E7%AE%97%E6%B3%95%E5%A4%A7%E8%B5%9B/</guid>
       <description>特征工程 1. 知识总结 1.1. kaggle编码categorical feature总结 1.2. Mean (likelihood) encodings 2. 参赛团队 资料学习 2.1. 小太阳队 2.2. 玉古路 2.3. 挥霍的人生 2.4. xx 2.5. xx 2.6. xx 2.7. xx 2.8. xx 2.9. xx 3. 代码资料 研究材料的地址： 1. 答辩视频：【TAAC2020】2020腾讯广告算法大赛决赛 答辩（上）_哔哩哔哩_bilibili</description>
-    </item>
-    
-    <item>
-      <title>部署 Ambari 2.7.5 &#43; HDP 3.1.5</title>
-      <link>http://localhost:1313/chester-blog/en/posts/tech/centos-deploy-ambari-2.7.5-and-hdp-3.1.5/</link>
-      <pubDate>Wed, 01 Dec 2021 00:00:00 +0000</pubDate>
-      
-      <guid>http://localhost:1313/chester-blog/en/posts/tech/centos-deploy-ambari-2.7.5-and-hdp-3.1.5/</guid>
-      <description>记录通过 Ambari 部署 hadoop 集群的过程</description>
     </item>
     
     <item>
@@ -261,6 +234,69 @@ Quick Start Create a new post $ hexo new &amp;#34;My New Post&amp;#34; More info
 Run server $ hexo server More info: Server
 Generate static files $ hexo generate More info: Generating
 Deploy to remote sites $ hexo deploy More info: Deployment</description>
+    </item>
+    
+    <item>
+      <title>论文阅读 an experimental comparison of click position bias models</title>
+      <link>http://localhost:1313/chester-blog/en/posts/2016-08-02-an-experimental-comparison-of-click-position-bias-models/</link>
+      <pubDate>Tue, 02 Aug 2016 00:00:00 +0000</pubDate>
+      
+      <guid>http://localhost:1313/chester-blog/en/posts/2016-08-02-an-experimental-comparison-of-click-position-bias-models/</guid>
+      <description>论文阅读 an experimental comparison of click position bias models introduction 统计一下 clickthrough rate decay curve 统计一下 用户回头的概率，examination backward回头在喜马拉雅搜索系统中无法统计，但是click backward回头可以统计。 代码 图片 figure 3 从某种方面说明了，当点击概率比较小的时候，比较subfigure1和subfigure</description>
+    </item>
+    
+    <item>
+      <title>搜索排序算法解决方案总结</title>
+      <link>http://localhost:1313/chester-blog/en/posts/2016-08-01-search-rank-solutions/</link>
+      <pubDate>Mon, 01 Aug 2016 00:00:00 +0000</pubDate>
+      
+      <guid>http://localhost:1313/chester-blog/en/posts/2016-08-01-search-rank-solutions/</guid>
+      <description>淘宝/微博/amazon/ebay/jd 资料 淘宝搜索排序解决方案 淘宝搜索引擎的一些特点 导航,类目属性导航在网页搜索中基本是不可见的.在淘宝搜索中,浏览和导航则是用户在线寻找和购买商品的重要途径,占商品搜索流量的25%-30%,在淘宝,大量的商品搜索是关键词和导航的组合。 图片 线下评</description>
+    </item>
+    
+    <item>
+      <title>美团O2O排序解决方案</title>
+      <link>http://localhost:1313/chester-blog/en/posts/2016-08-01-meituan-search-rank/</link>
+      <pubDate>Mon, 01 Aug 2016 00:00:00 +0000</pubDate>
+      
+      <guid>http://localhost:1313/chester-blog/en/posts/2016-08-01-meituan-search-rank/</guid>
+      <description>美团解决方案 工程架构 POI和deal的区别,POI是商家,deal是商品 特征监控: 离线数据处理中包括特征监控，特征的错误异常变动会直接影响排序的效果。特征监控主要监控覆盖率和取值分布，帮助相关人员及时发现数据质量问题。 为什么要分离线训练和在线训练两部分。我的观点是,可以这样认为，</description>
+    </item>
+    
+    <item>
+      <title>今日头条user profile概览</title>
+      <link>http://localhost:1313/chester-blog/en/posts/2016-07-22-jinritoutiao-machine-learning-overview/</link>
+      <pubDate>Fri, 22 Jul 2016 00:00:00 +0000</pubDate>
+      
+      <guid>http://localhost:1313/chester-blog/en/posts/2016-07-22-jinritoutiao-machine-learning-overview/</guid>
+      <description>今日头条user profile 演讲总结 user profile 特征方面 分人的特征/环境特征/文章特征，对应到广告中也就是用户特征/场景特征/广告特征，对应到我们公司也就是用户特征/场景特征/专辑特征(或者声音特征) 用户的行为也作为人的特征 环境特征: 地理位置/时间/网络/天气 天气，这种属于外部资源 文章特征有主题词</description>
+    </item>
+    
+    <item>
+      <title>天猫机器学习概览</title>
+      <link>http://localhost:1313/chester-blog/en/posts/2016-07-22-tianmao-machine-learning-overview/</link>
+      <pubDate>Fri, 22 Jul 2016 00:00:00 +0000</pubDate>
+      
+      <guid>http://localhost:1313/chester-blog/en/posts/2016-07-22-tianmao-machine-learning-overview/</guid>
+      <description>天猫机器学习概览 天猫推荐算法团队的那些事儿 搜索和推荐的差别 算法方面，搜索意图明确,所以关键在于query的理解，1. query怎么切词 2.怎么从切好的词中抽取信息。而推荐则需要从用户行为中理解用户兴趣和用户意图。 产品方面, 搜索产品形式简单，推荐产品非常多样复杂 关于AB测试 线上测试</description>
+    </item>
+    
+    <item>
+      <title>Ender&#39;s Game 笔记</title>
+      <link>http://localhost:1313/chester-blog/en/posts/2016-07-17-enders-game-notes/</link>
+      <pubDate>Sun, 17 Jul 2016 00:00:00 +0000</pubDate>
+      
+      <guid>http://localhost:1313/chester-blog/en/posts/2016-07-17-enders-game-notes/</guid>
+      <description>故事梗概: 某家庭有三个孩子,老大Peter性情残暴,老二Valentine,老三Ender经常被老大欺负。某日，老三被某军事学校邀请，Ender因无法忍受哥哥的折磨接受了邀请从而逃离了家庭，从此踏上军事训练之路。 训练之中Ender表现突出，并结识了Alai等好友。最终晋级终极训练</description>
+    </item>
+    
+    <item>
+      <title>spark dataframe操作总结!</title>
+      <link>http://localhost:1313/chester-blog/en/posts/2016-07-16-spark-dataframe-summary/</link>
+      <pubDate>Sat, 16 Jul 2016 00:00:00 +0000</pubDate>
+      
+      <guid>http://localhost:1313/chester-blog/en/posts/2016-07-16-spark-dataframe-summary/</guid>
+      <description>spark datagrame的操作总结 资料 https://databricks.com/blog/2016/01/04/introducing-apache-spark-datasets.html Spark Datasets, an extension of the DataFrame API that provides a type-safe, object-oriented programming interface. Datasets extend these benefits with compile-time type safety – meaning production applications can be checked for errors before they are run. 这点非常重要，因为在这种大数据应用开发中，构造测试数据和运行测试程序都比较麻烦，有了type-safe就可以省去很多麻烦。 Both APIs make it easy to express the transformation using lambda functions. with Datasets you also have access to all the power of a full</description>
     </item>
     
     

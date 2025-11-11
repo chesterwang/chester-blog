@@ -57,26 +57,23 @@ languages:
     homeInfoParams:
       Title: "欢迎光临小站🥂"
       Content: >
-        本站主要内容包括读书笔记、技术积累、生活感悟。如果能有哪些内容可以帮助到你，那也是极好的。</br>
-        精通 CSS JavaScript PHP C C++ C# java Ruby Perl Python 等单词的拼写</br>
-        熟悉 Windows Linux Mac Android IOS 等系统的开关机</br>
-        喜欢的事情: 🏃‍♂️ 跑步 🎮️ 游戏 🎧 音乐 📺 动漫</br>
-        文章内容及标题随着想法或者思路可能会改变, 如果发现某些文章的链接丢失, 请善用搜索
+        一个算法工程师的个人博客。</br>
+        爱好:  音乐 </br>
 
     menu:
       main:
         - identifier: search
           name: 🔍 搜索
           url: search
-          weight: 10
+          weight: 80
         # - identifier: home
         #   name: 🏡 主页
         #   url: /
         #   weight: 20
-        - identifier: posts
-          name: 📚 文章
-          url: posts
-          weight: 30
+        # - identifier: posts
+        #   name: 📚 文章
+        #   url: posts
+        #   weight: 30
         # - identifier: tags
         #   name: 🏷️ 标签
         #   url: tags
@@ -89,18 +86,18 @@ languages:
           name: 💬 说说
           url: talk
           weight: 60
-        - identifier: links
-          name: 🤝 友链
-          url: links
-          weight: 70
-        # - identifier: about
-        #   name: 🙋🏻‍♂️ 关于
-        #   url: about
-        #   weight: 80
-        # - identifier: categories
-        #   name: 🤙🏿 分类
-        #   url: categories
-        #   weight: 1
+        # - identifier: links
+        #   name: 🤝 友链
+        #   url: links
+        #   weight: 70
+        - identifier: about
+          name: 🙋🏻‍♂️ 关于
+          url: about
+          weight: 80
+        - identifier: categories
+          name: 🤙🏿 分类
+          url: categories
+          weight: 1
         # - parent: categories
         #   name: docker
         #   url: /posts

@@ -1,0 +1,796 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><script src="/chester-blog/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=chester-blog/livereload" data-no-instant defer></script><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>今日头条user profile概览 | lvbibir&#39;s Blog</title>
+<meta name="keywords" content="">
+<meta name="description" content="今日头条user profile 演讲总结 user profile 特征方面 分人的特征/环境特征/文章特征，对应到广告中也就是用户特征/场景特征/广告特征，对应到我们公司也就是用户特征/场景特征/专辑特征(或者声音特征) 用户的行为也作为人的特征 环境特征: 地理位置/时间/网络/天气 天气，这种属于外部资源 文章特征有主题词">
+<meta name="author" content="作者:lvbibir">
+<link rel="canonical" href="http://localhost:1313/chester-blog/en/posts/2016-07-22-jinritoutiao-machine-learning-overview/">
+<link crossorigin="anonymous" href="/chester-blog/assets/css/stylesheet.a3b4d2cae219ae904272a1beae2d019e95573341f245e12d4effba204604461c.css" integrity="sha256-o7TSyuIZrpBCcqG&#43;ri0BnpVXM0HyReEtTv&#43;6IEYERhw=" rel="preload stylesheet" as="style">
+<script defer crossorigin="anonymous" src="/chester-blog/assets/js/highlight.f413e19d0714851f6474e7ee9632408e58ac146fbdbe62747134bea2fa3415e0.js" integrity="sha256-9BPhnQcUhR9kdOfuljJAjlisFG&#43;9vmJ0cTS&#43;ovo0FeA="
+    onload="hljs.initHighlightingOnLoad();"></script>
+<link rel="icon" href="https://image.lvbibir.cn/blog/avatar.webp">
+<link rel="icon" type="image/png" sizes="16x16" href="https://image.lvbibir.cn/blog/avatar.webp">
+<link rel="icon" type="image/png" sizes="32x32" href="https://image.lvbibir.cn/blog/avatar.webp">
+<link rel="apple-touch-icon" href="https://image.lvbibir.cn/blog/avatar.webp">
+<link rel="mask-icon" href="https://image.lvbibir.cn/blog/avatar.webp">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="http://localhost:1313/chester-blog/en/posts/2016-07-22-jinritoutiao-machine-learning-overview/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --hljs-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript>
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = ""; 
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+<meta property="og:title" content="今日头条user profile概览" />
+<meta property="og:description" content="今日头条user profile 演讲总结 user profile 特征方面 分人的特征/环境特征/文章特征，对应到广告中也就是用户特征/场景特征/广告特征，对应到我们公司也就是用户特征/场景特征/专辑特征(或者声音特征) 用户的行为也作为人的特征 环境特征: 地理位置/时间/网络/天气 天气，这种属于外部资源 文章特征有主题词" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://localhost:1313/chester-blog/en/posts/2016-07-22-jinritoutiao-machine-learning-overview/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2016-07-22T00:00:00+00:00" />
+<meta property="article:modified_time" content="2016-07-22T00:00:00+00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="今日头条user profile概览"/>
+<meta name="twitter:description" content="今日头条user profile 演讲总结 user profile 特征方面 分人的特征/环境特征/文章特征，对应到广告中也就是用户特征/场景特征/广告特征，对应到我们公司也就是用户特征/场景特征/专辑特征(或者声音特征) 用户的行为也作为人的特征 环境特征: 地理位置/时间/网络/天气 天气，这种属于外部资源 文章特征有主题词"/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "📚 文章",
+      "item": "http://localhost:1313/chester-blog/en/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "今日头条user profile概览",
+      "item": "http://localhost:1313/chester-blog/en/posts/2016-07-22-jinritoutiao-machine-learning-overview/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "今日头条user profile概览",
+  "name": "今日头条user profile概览",
+  "description": "今日头条user profile 演讲总结 user profile 特征方面 分人的特征/环境特征/文章特征，对应到广告中也就是用户特征/场景特征/广告特征，对应到我们公司也就是用户特征/场景特征/专辑特征(或者声音特征) 用户的行为也作为人的特征 环境特征: 地理位置/时间/网络/天气 天气，这种属于外部资源 文章特征有主题词",
+  "keywords": [
+    
+  ],
+  "articleBody": "今日头条user profile 演讲总结\nuser profile 特征方面\n分人的特征/环境特征/文章特征，对应到广告中也就是用户特征/场景特征/广告特征，对应到我们公司也就是用户特征/场景特征/专辑特征(或者声音特征) 用户的行为也作为人的特征 环境特征: 地理位置/时间/网络/天气 天气，这种属于外部资源 文章特征有主题词(可能是topic模型计算，也可能是切词)/兴趣标签/热度/正能量值/时效性/质量/作者来源/相似文章 作者来源 这种有很多值的特征最后如何处理? 相似文章 可能是计算好的 高质量的用户特征是做好推荐的关键之一 排序是多变量函数 F(匹配度,热度,质量,时效性,正能量值) 推荐效果评估，不仅仅是点击率\n短期目标，也要考虑到内容质量/内容多样性/用户心理上的惊喜感/帮助用户探索兴趣/快速反馈又不能过度灵敏。 即目标不单一，多目标推荐，比如给用户推荐不在兴趣范围内的东西，完成兴趣探索。 长期目标，有兴趣/有收获/愿意长期使用 从商泰上是鼓励良币/驱逐劣币 用户特征包括从内容方面考虑的特征\n用户喜好文章类别/文章主题/文章关键词/文章实体(entity) 每个特征上的值都划分为喜欢和不喜欢(这个是否应该分为喜欢/不喜欢/未知三种) 很多特征也包括短期和长期两种, 即区分用户的长期喜好和短期喜好, 即针对不同的业务场景，就可能倾向于用不同种类(长期或者短期)的特征. 协同特征:有相似用户,即把相似用户的用户id放进来，那么这些相似用户的所有行为(短期和长期)都可以映射进来。 为什么用户的行为对推荐来说非常重要\n和搜索不同，搜索非常注重对query的理解，因为query可以完全表达用户的意图，但是推荐不同，要理解用户想要什么，必须从用户所有的行为中去理解用户。 所以用户行为的存储/分析/转化为模型和profile就变得非常重要。 算法\n每个特征的权重，点击加权/未点击惩罚，但是未点击惩罚教轻，因为是隐式反馈 热门文章的点击行为相较正常文章的点击所加权重较小。 每个特征上进行时间上的衰减 为用户推荐文章，称之为recall, recall之后进行排序。这里recall借用的是search的概念。\n算法上线异常，可以对user profile进行回滚\n今日头条每天训练数据达到100T，每日日志行数100亿条。特征组合数每天750亿，线上model330亿\n算法 冷启动要分为 用户冷启动和文章冷启动\n冷启动 选择兴趣点,比如quora, zhihu, pinterest 给出一些item, 让用户选择喜欢或不喜欢，根据此行为产生来进行推荐 今日头条则选择了另一种解决方案——通过对用户微博账号的分析建立一个“兴趣图谱”，即根据用户在微博上发布的内容及其所属类别、用户自标签、社交关系、社交行为、参与的群组、机型、使用时间等来数据源来推断出用户的兴趣点有哪些。社交关系、社交行为即用户和用户之间的交流状况，可以根据二者间的共同好友数、相互评论熟、@数等来做度量。\n经过了两个阶段\n第一阶段:一开始今日头条的推荐算法，首先入手的是“非个性化推荐”——解决的热门文章推荐，以及新文章冷启动的问题。\n“单纯的热门（文章），会让一些新文章没有机会。单纯的随机（推荐），（文章）质量当然不好，所以考虑一些简单方法，比如算一下威尔逊置信区间，来平衡热与新的问题。” 第二阶段:个性化推荐\n协同过滤 + 内容推荐 （协同过滤）是一个很好的方法，直到今天我们还一直使用。但缺点也很明显，对于没有行为（记录）的文章，没办法推荐，所以没办法用于文章的冷启动。所以我们引入了基于内容推荐的策略。比如计算文章的分类、文章的关键词，然后根据用户对文章的阅读、浏览等信息，细化用户的个人资料。——这样子，如果文章是和科技相关的，而用户的个人资料也显示科技相关，那么就算匹配。\n除此之外，今日头条还通过用户对内容的“正负反馈”来判断内容匹配是否精准。正反馈，包括用户点击了、看了很长时间、分享了、收藏了、评论了，都是正反馈。负反馈反而是比较难获取的，现在今日头条在内容上设置了一个小叉，点击之后，会咨询用户不感兴趣的理由，这种做法则会获取比较强的负反馈。但是通过这种方式收集到的数据还不多。\n推荐准确度仍然较低 热门文章过度推荐，导致个性化程度差 兴趣树深度不够，可能是他们的知识树建的不够深，这样不能针对用户进行更细分领域的挖掘。 对于文章的评估 点击率＋读完率\n话题的站外热度\n其实可以有很多的垫子，但是如何把这些点子融入到一个框架和架构里面，而且可以很好的运作，就是一个高深的问题。 评估 推荐类产品如果用相关性来做衡量指标，可能会导致模型过度收敛，最后推荐出的内容越来越相似。 一个典型的反例就是两三年之前的豆瓣FM，我在上面听过几首张悬的歌之后，不停的推荐张悬、清新这种风格的曲目，每次听上几首便会有「腻」的感觉。所以好的推荐引擎一定是兼顾了收敛和发散的。 那么用数据说话呢。 理想的情况是—— 首先，制定一个（多个）核心指标来衡量公司的产品状态。比如 Medium 的 CEO Evan 说他们最关心的是用户的阅读时长。 其次，大的指标可以拆分成较细的指标，或者用一些次重要的指标辅助。比如阅读时长可以拆分为阅读的文章数和文章平均阅读时长；阅读时长之外，也可以加入互动数（评论数/赞同数/etc）来衡量用户对阅读的内容是否感兴趣。 最后，根据算法的迭代，进行对照试验，看 key metrics 的变化是否符合预期，符合上线，不符合下线修改再做测试即可。 然而现实情况并不是这么简单—— 指标的制定异常困难，想建立一套数据体系来衡量产品的质量，需要多次的尝试和往复；加上公司不同部门、部门里每个人，对于事情的看法、甚至是价值观的不同，其中不乏撕x的情况。 以今日头条为例，CTR (click through rate) 是常见的用来衡量搜索或推荐产品的指标，比如今日头条推荐了一条新闻，10000个人看到了，最后有多少人点击了这条新闻去查看了详细内容呢？理论上，推荐的质量越高，点击率就应该越高。 但是正如 Evan 所言，片面的追求单一指标是有很大的风险的。为了提高点击率，推荐了很多标题党、与色情、暴力沾边的内容，都可能使 CTR 上升，但这并不意味产品或推荐的质量有提升（至少我是这么认为的）。所以在制定 key metrics 的时候，必须非常慎重。 ——说了这么多其实就两点。 1. 结果指标比相关性更好。 2. 结果指标的制定需要非常慎重。 作者：刘韬 链接：https://www.zhihu.com/question/26990692/answer/58999540 来源：知乎 著作权归作者所有，转载请联系作者获得授权。 但是正如 Evan 所言，片面的追求单一指标是有很大的风险的。为了提高点击率，推荐了很多标题党、与色情、暴力沾边的内容，都可能使 CTR 上升，但这并不意味产品或推荐的质量有提升（至少我是这么认为的）。所以在制定 key metrics 的时候，必须非常慎重。 ——说了这么多其实就两点。 1. 结果指标比相关性更好。 2. 结果指标的制定需要非常慎重。 作者：刘韬 链接：https://www.zhihu.com/question/26990692/answer/58999540 来源：知乎 著作权归作者所有，转载请联系作者获得授权。 用户分析 用户群 今日头条最早的种子用户来自于内涵段子等几个倒量进来的 今日头条的用户群体和快手类似，偏中下阶层的屌丝群体，而这帮用户的规模是很惊人的 所谓的核心个性推荐技术并不是核心，核心是推荐的新闻内容都是比较符合屌丝用户的三俗新闻，比如姐夫诱惑小姨子了、大波美女走光了等等诸如此类，牢牢得抓住了屌丝用户的❤，而且新闻本身呈现出趣味性。这才是为什么能轻轻松松的超越网易新闻的根本原因。看看快手的日活就知道，群众力量大哇！ 产品方面 无线下拉刷新 内容运营 段子笑话美女。头条做内涵段子起家的，这个不多说。这个的群众基础太大了，前有糗百，后有百思不得姐，现在还有节操精选啊，槽厂/橘子娱乐，盖范什么的，国外也有 Buzzfeed，9GAG 这些 个人观点 对今日头条来说，目标是泛阅读 但是要在高品质精读之中, 个性化推荐能发挥的作用可大可小, 但是要想效果好必须积累大量的数据, 但高品质阅读又不能积累大量的数据, 我的观点是推荐不能完全是被动的个性化推荐, 必须增加负反馈, 甚至增加更多的和用户交互的途径来让用户自己控制系统。 其他资料 首页排序可以看做一个推荐问题或者搜索排序问题，对于这种问题一般分解为以下几个步骤： 一：匹配 通过用户的订阅的公众号，关键词，类目，过去浏览的文章的相关文章等方法得到候选集。 二：排序 根据文章的主题（PLSA、LDA）提前主题特征，word2vector 特征，关键词，作者，订阅号等特征，根据点击率预估排序。 如果是个性化的，还需要用户特征和文章特征的相关性特征放入逻辑回归等模型来训练。 三：过滤 根据展示过没有看的做去除；根据用户看的类目占比调整最终展示的类目占比等。\n资料 今日头条的个性化推荐 采访 丁海峰：今日头条的个性化推荐 泛阅读产品“今日头条”是如何基于微博兴趣图谱做个性化推荐的? 今日头条是怎么从阅读市场竞争激烈的红海杀出来的? [https://www.zhihu.com/question/28997244] ",
+  "wordCount" : "3604",
+  "inLanguage": "en",
+  "datePublished": "2016-07-22T00:00:00Z",
+  "dateModified": "2016-07-22T00:00:00Z",
+  "author":{
+    "@type": "Person",
+    "name": "lvbibir"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "http://localhost:1313/chester-blog/en/posts/2016-07-22-jinritoutiao-machine-learning-overview/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "lvbibir's Blog",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://image.lvbibir.cn/blog/avatar.webp"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="http://localhost:1313/chester-blog/en/" accesskey="h" title="lvbibir&#39;s Blog (Alt + H)">
+                <img src="https://image.lvbibir.cn/blog/avatar.webp" alt="" aria-label="logo"
+                    height="35">lvbibir&#39;s Blog</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+                <ul class="lang-switch"><li>|</li>
+                </ul>
+            </div>
+        </div>
+        <ul id="menu">
+            <li class="menu-item">
+                <a href="http://localhost:1313/chester-blog/en/categories" title="🤙🏿 分类">
+                    <span>🤙🏿 分类</span>
+                    
+                </a>
+            
+            </li>
+            <li class="menu-item">
+                <a href="http://localhost:1313/chester-blog/en/archives" title="📈 归档">
+                    <span>📈 归档</span>
+                    
+                </a>
+            
+            </li>
+            <li class="menu-item">
+                <a href="http://localhost:1313/chester-blog/en/talk" title="💬 说说">
+                    <span>💬 说说</span>
+                    
+                </a>
+            
+            </li>
+            <li class="menu-item">
+                <a href="http://localhost:1313/chester-blog/en/search" title="🔍 搜索 (Alt &#43; /)" accesskey=/>
+                    <span>🔍 搜索</span>
+                    
+                </a>
+            
+            </li>
+            <li class="menu-item">
+                <a href="http://localhost:1313/chester-blog/en/about" title="🙋🏻‍♂️ 关于">
+                    <span>🙋🏻‍♂️ 关于</span>
+                    
+                </a>
+            
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main page">
+<article class="post-single">
+    <div id="single-content">
+        <header class="post-header">
+            <div class="breadcrumbs"><a href="http://localhost:1313/chester-blog/en/">主页</a>&nbsp;»&nbsp;<a href="http://localhost:1313/chester-blog/en/posts/">📚 文章</a></div>
+            <h1 class="post-title">
+                今日头条user profile概览
+            </h1>
+            <div class="post-meta">创建: 2016-07-22 | 更新: 2016-07-22 | 字数: 3604字 | 作者:lvbibir
+
+
+                |&nbsp;标签:&nbsp;
+
+                
+                <span id="busuanzi_container_page_pv">
+                    &nbsp;|&nbsp;访问:&nbsp;<span id="busuanzi_value_page_pv"></span>
+                </span>
+
+</div>
+        </header> <aside id="toc-container" class="toc-container wide">
+    <div class="toc">
+        <details  open>
+        <summary accesskey="c" title="(Alt + C)">
+            <span class="details">文章目录</span>
+        </summary>
+
+        <div class="inner"><ul>
+                <li>
+                    <a href="#user-profile" aria-label="user profile">user profile</a></li>
+                <li>
+                    <a href="#%e7%ae%97%e6%b3%95" aria-label="算法">算法</a></li>
+                <li>
+                    <a href="#%e8%af%84%e4%bc%b0" aria-label="评估">评估</a></li>
+                <li>
+                    <a href="#%e7%94%a8%e6%88%b7%e5%88%86%e6%9e%90" aria-label="用户分析">用户分析</a></li>
+                <li>
+                    <a href="#%e4%ba%a7%e5%93%81%e6%96%b9%e9%9d%a2" aria-label="产品方面">产品方面</a></li>
+                <li>
+                    <a href="#%e5%86%85%e5%ae%b9%e8%bf%90%e8%90%a5" aria-label="内容运营">内容运营</a></li>
+                <li>
+                    <a href="#%e4%b8%aa%e4%ba%ba%e8%a7%82%e7%82%b9" aria-label="个人观点">个人观点</a></li>
+                <li>
+                    <a href="#%e5%85%b6%e4%bb%96%e8%b5%84%e6%96%99" aria-label="其他资料">其他资料</a></li>
+                <li>
+                    <a href="#%e8%b5%84%e6%96%99" aria-label="资料">资料</a>
+                </li>
+            </ul>
+        </div>
+        </details>
+    </div>
+</aside>
+<script>
+    let activeElement;
+    let elements;
+    window.addEventListener('DOMContentLoaded', function (event) {
+        checkTocPosition();
+
+        elements = document.querySelectorAll('h1[id],h2[id],h3[id],h4[id],h5[id],h6[id]');
+        
+        activeElement = elements[0];
+        const id = encodeURI(activeElement.getAttribute('id')).toLowerCase();
+        document.querySelector(`.inner ul li a[href="#${id}"]`).classList.add('active');
+    }, false);
+
+    window.addEventListener('resize', function(event) {
+        checkTocPosition();
+    }, false);
+
+    window.addEventListener('scroll', () => {
+        
+        activeElement = Array.from(elements).find((element) => {
+            if ((getOffsetTop(element) - window.pageYOffset) > 0 &&
+                (getOffsetTop(element) - window.pageYOffset) < window.innerHeight/2) {
+                return element;
+            }
+        }) || activeElement
+
+        elements.forEach(element => {
+            const id = encodeURI(element.getAttribute('id')).toLowerCase();
+            if (element === activeElement){
+                document.querySelector(`.inner ul li a[href="#${id}"]`).classList.add('active');
+            } else {
+                document.querySelector(`.inner ul li a[href="#${id}"]`).classList.remove('active');
+            }
+        })
+    }, false);
+
+    const main = parseInt(getComputedStyle(document.body).getPropertyValue('--article-width'), 10);
+    const toc = parseInt(getComputedStyle(document.body).getPropertyValue('--toc-width'), 10);
+    const gap = parseInt(getComputedStyle(document.body).getPropertyValue('--gap'), 10);
+
+    function checkTocPosition() {
+        const width = document.body.scrollWidth;
+        if (width - main - (toc * 2) - (gap * 4) > 0) {
+            document.getElementById("toc-container").classList.add("wide");
+        } else {
+            document.getElementById("toc-container").classList.remove("wide");
+        }
+    }
+
+    function getOffsetTop(element) {
+        if (!element.getClientRects().length) {
+            return 0;
+        }
+        let rect = element.getBoundingClientRect();
+        let win = element.ownerDocument.defaultView;
+        return rect.top + win.pageYOffset;
+    }
+</script>
+        <div class="post-content"><p>今日头条user profile 演讲总结</p>
+<h3 id="user-profile">user profile<a hidden class="anchor" aria-hidden="true" href="#user-profile">#</a></h3>
+<ul>
+<li>
+<p>特征方面</p>
+<ul>
+<li>分人的特征/环境特征/文章特征，对应到广告中也就是用户特征/场景特征/广告特征，对应到我们公司也就是用户特征/场景特征/专辑特征(或者声音特征)</li>
+<li><strong>用户的行为也作为人的特征</strong></li>
+<li>环境特征: 地理位置/时间/网络/<strong>天气</strong>
+<ul>
+<li>天气，这种属于外部资源</li>
+</ul>
+</li>
+<li>文章特征有主题词(可能是topic模型计算，也可能是切词)/<strong>兴趣标签</strong>/<strong>热度</strong>/<strong>正能量值</strong>/<strong>时效性</strong>/<strong>质量</strong>/<strong>作者来源</strong>/<strong>相似文章</strong>
+<ul>
+<li><strong>作者来源</strong> 这种有很多值的特征最后如何处理?</li>
+<li><strong>相似文章</strong> 可能是计算好的</li>
+</ul>
+</li>
+<li>高质量的用户特征是做好推荐的关键之一</li>
+<li>排序是多变量函数 F(匹配度,热度,质量,时效性,正能量值)</li>
+</ul>
+</li>
+<li>
+<p>推荐效果评估，不仅仅是点击率</p>
+<ul>
+<li>短期目标，也要考虑到内容质量/内容多样性/用户心理上的惊喜感/帮助用户探索兴趣/快速反馈又不能过度灵敏。
+<ul>
+<li>即目标不单一，<strong>多目标推荐</strong>，比如给用户推荐不在兴趣范围内的东西，完成兴趣探索。</li>
+</ul>
+</li>
+<li>长期目标，有兴趣/有收获/愿意长期使用</li>
+<li>从商泰上是鼓励良币/驱逐劣币</li>
+</ul>
+</li>
+<li>
+<p>用户特征包括从内容方面考虑的特征</p>
+<ul>
+<li>用户喜好文章类别/文章主题/文章关键词/文章实体(entity)</li>
+<li>每个特征上的值都划分为喜欢和不喜欢(这个是否应该分为喜欢/不喜欢/未知三种)</li>
+<li>很多特征也包括短期和长期两种, 即区分用户的长期喜好和短期喜好, 即针对不同的业务场景，就可能倾向于用不同种类(长期或者短期)的特征.</li>
+<li>协同特征:有相似用户,即把相似用户的用户id放进来，那么这些相似用户的所有行为(短期和长期)都可以映射进来。</li>
+</ul>
+</li>
+<li>
+<p>为什么用户的行为对推荐来说非常重要</p>
+<ul>
+<li>和搜索不同，搜索非常注重对query的理解，因为query可以完全表达用户的意图，但是推荐不同，要理解用户想要什么，必须从用户所有的行为中去理解用户。</li>
+<li>所以用户行为的存储/分析/转化为模型和profile就变得非常重要。</li>
+</ul>
+</li>
+<li>
+<p>算法</p>
+<ul>
+<li>每个特征的权重，点击加权/未点击惩罚，但是未点击惩罚教轻，因为是隐式反馈</li>
+<li>热门文章的点击行为相较正常文章的点击所加权重较小。</li>
+<li>每个特征上进行时间上的衰减</li>
+</ul>
+</li>
+<li>
+<p>为用户推荐文章，称之为recall, recall之后进行排序。这里recall借用的是search的概念。</p>
+</li>
+<li>
+<p>算法上线异常，可以对user profile进行回滚</p>
+</li>
+<li>
+<p>今日头条每天训练数据达到100T，每日日志行数100亿条。特征组合数每天750亿，线上model330亿</p>
+</li>
+</ul>
+<h3 id="算法">算法<a hidden class="anchor" aria-hidden="true" href="#算法">#</a></h3>
+<p>冷启动要分为 用户冷启动和文章冷启动</p>
+<ul>
+<li>冷启动
+<ul>
+<li>
+<ol>
+<li>选择兴趣点,比如quora, zhihu, pinterest</li>
+</ol>
+</li>
+<li>
+<ol start="2">
+<li>给出一些item, 让用户选择喜欢或不喜欢，根据此行为产生来进行推荐</li>
+</ol>
+</li>
+</ul>
+</li>
+</ul>
+<p>今日头条则选择了另一种解决方案——通过对用户微博账号的分析建立一个“兴趣图谱”，即根据用户在微博上发布的内容及其所属类别、用户自标签、社交关系、社交行为、参与的群组、机型、使用时间等来数据源来推断出用户的兴趣点有哪些。社交关系、社交行为即用户和用户之间的交流状况，可以根据二者间的共同好友数、相互评论熟、@数等来做度量。</p>
+<p>经过了两个阶段</p>
+<ul>
+<li>
+<p>第一阶段:一开始今日头条的推荐算法，首先入手的是“非个性化推荐”——解决的热门文章推荐，以及新文章冷启动的问题。</p>
+<ul>
+<li>“单纯的热门（文章），会让一些新文章没有机会。单纯的随机（推荐），（文章）质量当然不好，所以考虑一些简单方法，比如算一下威尔逊置信区间，来平衡热与新的问题。”</li>
+</ul>
+</li>
+<li>
+<p>第二阶段:个性化推荐</p>
+<ul>
+<li>协同过滤 +  内容推荐</li>
+</ul>
+<p>（协同过滤）是一个很好的方法，直到今天我们还一直使用。但缺点也很明显，对于没有行为（记录）的文章，没办法推荐，所以没办法用于文章的冷启动。所以我们引入了基于内容推荐的策略。比如计算文章的分类、文章的关键词，然后根据用户对文章的阅读、浏览等信息，细化用户的个人资料。——这样子，如果文章是和科技相关的，而用户的个人资料也显示科技相关，那么就算匹配。</p>
+<p>除此之外，今日头条还通过用户对内容的“正负反馈”来判断内容匹配是否精准。正反馈，包括用户点击了、看了很长时间、分享了、收藏了、评论了，都是正反馈。负反馈反而是比较难获取的，现在今日头条在内容上设置了一个小叉，点击之后，会咨询用户不感兴趣的理由，这种做法则会获取比较强的负反馈。但是通过这种方式收集到的数据还不多。</p>
+</li>
+</ul>
+<ol>
+<li>推荐准确度仍然较低</li>
+<li>热门文章过度推荐，导致个性化程度差</li>
+<li>兴趣树深度不够，可能是他们的知识树建的不够深，这样不能针对用户进行更细分领域的挖掘。</li>
+</ol>
+<p>对于文章的评估
+点击率＋读完率</p>
+<p>话题的站外热度</p>
+<ul>
+<li>其实可以有很多的垫子，但是如何把这些点子融入到一个框架和架构里面，而且可以很好的运作，就是一个高深的问题。</li>
+</ul>
+<h3 id="评估">评估<a hidden class="anchor" aria-hidden="true" href="#评估">#</a></h3>
+<pre><code>推荐类产品如果用相关性来做衡量指标，可能会导致模型过度收敛，最后推荐出的内容越来越相似。
+一个典型的反例就是两三年之前的豆瓣FM，我在上面听过几首张悬的歌之后，不停的推荐张悬、清新这种风格的曲目，每次听上几首便会有「腻」的感觉。所以好的推荐引擎一定是兼顾了收敛和发散的。
+那么用数据说话呢。
+理想的情况是——
+首先，制定一个（多个）核心指标来衡量公司的产品状态。比如 Medium 的 CEO Evan 说他们最关心的是用户的阅读时长。
+其次，大的指标可以拆分成较细的指标，或者用一些次重要的指标辅助。比如阅读时长可以拆分为阅读的文章数和文章平均阅读时长；阅读时长之外，也可以加入互动数（评论数/赞同数/etc）来衡量用户对阅读的内容是否感兴趣。
+最后，根据算法的迭代，进行对照试验，看 key metrics 的变化是否符合预期，符合上线，不符合下线修改再做测试即可。
+然而现实情况并不是这么简单——
+指标的制定异常困难，想建立一套数据体系来衡量产品的质量，需要多次的尝试和往复；加上公司不同部门、部门里每个人，对于事情的看法、甚至是价值观的不同，其中不乏撕x的情况。
+以今日头条为例，CTR (click through rate) 是常见的用来衡量搜索或推荐产品的指标，比如今日头条推荐了一条新闻，10000个人看到了，最后有多少人点击了这条新闻去查看了详细内容呢？理论上，推荐的质量越高，点击率就应该越高。
+但是正如 Evan 所言，片面的追求单一指标是有很大的风险的。为了提高点击率，推荐了很多标题党、与色情、暴力沾边的内容，都可能使 CTR 上升，但这并不意味产品或推荐的质量有提升（至少我是这么认为的）。所以在制定 key metrics 的时候，必须非常慎重。
+——说了这么多其实就两点。
+1. 结果指标比相关性更好。
+2. 结果指标的制定需要非常慎重。
+作者：刘韬
+链接：https://www.zhihu.com/question/26990692/answer/58999540
+来源：知乎
+著作权归作者所有，转载请联系作者获得授权。
+
+
+但是正如 Evan 所言，片面的追求单一指标是有很大的风险的。为了提高点击率，推荐了很多标题党、与色情、暴力沾边的内容，都可能使 CTR 上升，但这并不意味产品或推荐的质量有提升（至少我是这么认为的）。所以在制定 key metrics 的时候，必须非常慎重。
+
+——说了这么多其实就两点。
+1. 结果指标比相关性更好。
+2. 结果指标的制定需要非常慎重。
+
+作者：刘韬
+链接：https://www.zhihu.com/question/26990692/answer/58999540
+来源：知乎
+著作权归作者所有，转载请联系作者获得授权。
+</code></pre>
+<h3 id="用户分析">用户分析<a hidden class="anchor" aria-hidden="true" href="#用户分析">#</a></h3>
+<ul>
+<li>用户群</li>
+<li>今日头条最早的种子用户来自于内涵段子等几个倒量进来的</li>
+<li>今日头条的用户群体和快手类似，偏中下阶层的屌丝群体，而这帮用户的规模是很惊人的</li>
+<li>所谓的核心个性推荐技术并不是核心，核心是推荐的新闻内容都是比较符合屌丝用户的三俗新闻，比如姐夫诱惑小姨子了、大波美女走光了等等诸如此类，牢牢得抓住了屌丝用户的❤，而且新闻本身呈现出趣味性。这才是为什么能轻轻松松的超越网易新闻的根本原因。看看快手的日活就知道，群众力量大哇！</li>
+</ul>
+<h3 id="产品方面">产品方面<a hidden class="anchor" aria-hidden="true" href="#产品方面">#</a></h3>
+<ul>
+<li>无线下拉刷新</li>
+</ul>
+<h3 id="内容运营">内容运营<a hidden class="anchor" aria-hidden="true" href="#内容运营">#</a></h3>
+<ul>
+<li>
+<ol start="9">
+<li>段子笑话美女。头条做内涵段子起家的，这个不多说。这个的群众基础太大了，前有糗百，后有百思不得姐，现在还有节操精选啊，槽厂/橘子娱乐，盖范什么的，国外也有 Buzzfeed，9GAG 这些</li>
+</ol>
+</li>
+</ul>
+<h3 id="个人观点">个人观点<a hidden class="anchor" aria-hidden="true" href="#个人观点">#</a></h3>
+<ul>
+<li>对今日头条来说，目标是泛阅读</li>
+<li>但是要在高品质精读之中, 个性化推荐能发挥的作用可大可小, 但是要想效果好必须积累大量的数据, 但高品质阅读又不能积累大量的数据, 我的观点是推荐不能完全是被动的个性化推荐, 必须增加负反馈, 甚至增加更多的和用户交互的途径来让用户自己控制系统。</li>
+</ul>
+<h3 id="其他资料">其他资料<a hidden class="anchor" aria-hidden="true" href="#其他资料">#</a></h3>
+<p>首页排序可以看做一个推荐问题或者搜索排序问题，对于这种问题一般分解为以下几个步骤：
+一：匹配
+通过用户的订阅的公众号，关键词，类目，过去浏览的文章的相关文章等方法得到候选集。
+二：排序
+根据文章的主题（PLSA、LDA）提前主题特征，word2vector 特征，关键词，作者，订阅号等特征，根据点击率预估排序。
+如果是个性化的，还需要用户特征和文章特征的相关性特征放入逻辑回归等模型来训练。
+三：过滤
+根据展示过没有看的做去除；根据用户看的类目占比调整最终展示的类目占比等。</p>
+<h3 id="资料">资料<a hidden class="anchor" aria-hidden="true" href="#资料">#</a></h3>
+<ul>
+<li><a href="http://www.infoq.com/cn/presentations/practice-of-toutiao-profile-user-system-architecture" target="_blank" rel="noopener" style="color:#42b983";>今日头条的个性化推荐</a></li>
+<li><a href="http://www.infoq.com/cn/interviews/interview-with-dinghaifeng-talk-toutiao-personalized-recommendation" target="_blank" rel="noopener" style="color:#42b983";>采访 丁海峰：今日头条的个性化推荐</a></li>
+<li><a href="http://www.pingwest.com/demo/jinritoutiao-reading/" target="_blank" rel="noopener" style="color:#42b983";>泛阅读产品“今日头条”是如何基于微博兴趣图谱做个性化推荐的?</a></li>
+<li><a href="https://www.zhihu.com/question/21300015" target="_blank" rel="noopener" style="color:#42b983";>今日头条是怎么从阅读市场竞争激烈的红海杀出来的?</a></li>
+<li>[https://www.zhihu.com/question/28997244]</li>
+</ul>
+
+
+        </div>
+        <div class="post-reward">
+            <div style="padding: 0 0 0 0; margin: 0 0 0 0; width: 100%; font-size:16px; text-align: center;">
+                <div id="QR" style="opacity: 0;">
+                    <div id="wechat" style="display: inline-block">
+                        <a class="fancybox" rel="group">
+                            <img id="wechat_qr" src="https://image.lvbibir.cn/blog/wechatpay.png" alt="wechat_pay"></a>
+                        <p>微信</p>
+                    </div>
+                    <div id="alipay" style="display: inline-block">
+                        <a class="fancybox" rel="group">
+                            <img id="alipay_qr" src="https://image.lvbibir.cn/blog/alipay.png" alt="alipay"></a>
+                        <p>支付宝</p>
+                    </div>
+                </div>
+                <button id="rewardButton"
+                        onclick="
+                    var qr = document.getElementById('QR');
+                    if (qr.style.opacity === '0') {
+                        qr.style.opacity='1';
+                    } else {
+                        qr.style.opacity='0'
+                    }"
+                >
+                    <span>🧧 鼓励</span>
+                </button>
+            </div>
+        </div>
+
+        <footer class="post-footer">
+            
+<nav class="paginav">
+  <a class="prev" href="http://localhost:1313/chester-blog/en/posts/2016-08-01-meituan-search-rank/">
+    <span class="title">« 上一页</span>
+    <br>
+    <span>美团O2O排序解决方案</span>
+  </a>
+  <a class="next" href="http://localhost:1313/chester-blog/en/posts/2016-07-22-tianmao-machine-learning-overview/">
+    <span class="title">下一页 »</span>
+    <br>
+    <span>天猫机器学习概览</span>
+  </a>
+</nav>
+
+        </footer>
+    </div>
+
+
+
+<div>
+    <div class="pagination__title">
+        <span class="pagination__title-h" style="font-size: 20px;">💬评论</span>
+        <hr />
+    </div>
+
+    <div id="tcomment"></div>
+
+    <script src="https://image.lvbibir.cn/js/1.6.40/twikoo.all.min.js">
+    </script>
+    
+
+    
+
+    <script>
+        twikoo.init({
+            envId: "https://twikoo.lvbibir.cn/", 
+            el: "#tcomment",
+            lang: 'zh-CN',
+            
+            path: window.TWIKOO_MAGIC_PATH||window.location.pathname,
+            
+            
+            
+            
+            
+            
+            
+        });
+    </script>
+
+</div>
+</article>
+</main>
+
+
+<footer class="footer">
+
+    <a href="https://gohugo.io/" target="_blank">
+        
+        <img style="display: unset;" src="https://image.lvbibir.cn/blog/frame-hugo-blue.svg">
+    </a>
+    <a href="https://github.com/adityatelange/hugo-PaperMod" target="_blank">
+        
+        <img style="display: unset;" src="https://image.lvbibir.cn/blog/theme-papermod-lightgrey.svg">
+    </a>
+    <a href="https://cn.aliyun.com/" target="_blank">
+        
+        <img style="display: unset;" src="https://image.lvbibir.cn/blog/图床-阿里云-orange.svg">
+    </a>
+
+    <br>
+
+    <span id="runtime_span"></span>
+    <script
+        type="text/javascript">function show_runtime() { window.setTimeout("show_runtime()", 1000); X = new Date("11/11/2025 1:00:00"); Y = new Date(); T = (Y.getTime() - X.getTime()); M = 24 * 60 * 60 * 1000; a = T / M; A = Math.floor(a); b = (a - A) * 24; B = Math.floor(b); c = (b - B) * 60; C = Math.floor((b - B) * 60); D = Math.floor((c - C) * 60); runtime_span.innerHTML = "网站已运行" + A + "天" + B + "小时" + C + "分" + D + "秒" } show_runtime();</script>
+    |
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span id="busuanzi_container">
+        
+        总访客数:  <span id="busuanzi_value_site_uv"></span>
+        |
+        总访问量:  <span id="busuanzi_value_site_pv"></span>
+    </span>
+
+    <br>
+
+    
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <span class="topInner">
+        <svg class="topSvg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+            <path d="M12 6H0l6-6z" />
+        </svg>
+        <span id="read_progress"></span>
+    </span>
+</a>
+
+<script>
+    document.addEventListener('scroll', function (e) {
+        const readProgress = document.getElementById("read_progress");
+        const scrollHeight = document.documentElement.scrollHeight;
+        const clientHeight = document.documentElement.clientHeight;
+        const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+        
+        readProgress.innerText = ((scrollTop / (scrollHeight - clientHeight)).toFixed(2) * 100).toFixed(0);
+    })
+</script>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    let mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 400 || document.documentElement.scrollTop > 400) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+
+
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerText = '📄复制';
+
+        function copyingDone() {
+            copybutton.innerText = '👌🏻已复制!';
+            setTimeout(() => {
+                copybutton.innerText = '📄复制';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) {
+            }
+            ;
+            selection.removeRange(range);
+        });
+
+        let language = codeblock.className.replaceAll("language-", "")
+        let macTool = document.createElement("div")
+        let macTool1 = document.createElement("div")
+        let macTool2 = document.createElement("div")
+        let macTool3 = document.createElement("div")
+        let languageType = document.createElement("div")
+        languageType.innerText = language
+        macTool.setAttribute('class', 'mac-tool')
+        macTool1.setAttribute('class', 'mac bb1')
+        macTool2.setAttribute('class', 'mac bb2')
+        macTool3.setAttribute('class', 'mac bb3')
+        languageType.setAttribute('class', 'language-type')
+        macTool.appendChild(macTool1)
+        macTool.appendChild(macTool2)
+        macTool.appendChild(macTool3)
+        macTool.appendChild(languageType)
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+            container.appendChild(macTool)
+        } else if (container.parentNode.firstChild === container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName === "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+            container.appendChild(macTool)
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+            container.appendChild(macTool)
+        }
+    });
+</script>
+
+</body>
+
+</html>
