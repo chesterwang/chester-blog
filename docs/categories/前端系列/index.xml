@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>前端系列 on Chester&#39;s Blog</title>
+    <link>http://localhost:1313/chester-blog/categories/%E5%89%8D%E7%AB%AF%E7%B3%BB%E5%88%97/</link>
+    <description>Recent content in 前端系列 on Chester&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh</language>
+    <lastBuildDate>Tue, 23 Jan 2018 00:01:52 +0000</lastBuildDate><atom:link href="http://localhost:1313/chester-blog/categories/%E5%89%8D%E7%AB%AF%E7%B3%BB%E5%88%97/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>前端系列（四） -Programming-JavaScript-Applications</title>
+      <link>http://localhost:1313/chester-blog/posts/2018-01-23-%E8%AF%BB%E4%B9%A6-programming-javascript-applications/</link>
+      <pubDate>Tue, 23 Jan 2018 00:01:52 +0000</pubDate>
+      
+      <guid>http://localhost:1313/chester-blog/posts/2018-01-23-%E8%AF%BB%E4%B9%A6-programming-javascript-applications/</guid>
+      <description>https://www.safaribooksonline.com/library/view/programming-javascript-applications/9781491950289/ch03.html chapter 1 The JavaScript Revolutioin UnderScore.js functional programming testsuite annotated source code 1.1 anatomy of a typical modern JavaScript App 1.1.1 infrascture data store vpn/firewall(protect data store from unauthorized access) black box JSON Restful Web service Layer various third-party APIs,(BaaS) An app server/content management server to route requests and deliver pages to the client static content delivery network(CDN) for cached files(like iamges,javascript,CSS,and client-side templates) The client: Browser 1.1.1.1 NoSQL data stores Document-oriented data stsores commonly store data in XML format, while object-oriented data stores commonly employ the JSON format. JSON-based NoSQL data stores include MongoDB and CouchDB 1.1.1.2 restful json web servies RESTful web services use HTTP verbs to tell the server what action the client intends. The actions supported are: Create a new entry in the resource collection: HTTP POST. Retrieve a resource representation: HTTP GET verb. Update</description>
+    </item>
+    
+    <item>
+      <title>前端系列（三） -understaning-ECMAScript-6</title>
+      <link>http://localhost:1313/chester-blog/posts/2018-01-21-%E8%AF%BB%E4%B9%A6-understaning-ecmascript-6/</link>
+      <pubDate>Sun, 21 Jan 2018 14:15:41 +0000</pubDate>
+      
+      <guid>http://localhost:1313/chester-blog/posts/2018-01-21-%E8%AF%BB%E4%B9%A6-understaning-ecmascript-6/</guid>
+      <description>chapter 1 Elements:指的是 整个标签包括内部的内容 Tags: 指的仅仅是标签的开始部分(包括attributes)和结束部分 Attributes: An attribute can contain multiple, space-separated values, Block and inline elements self-closing elements, empty elements, or replaced elements &amp;lt;img&amp;gt;, &amp;lt;br&amp;gt;, &amp;lt;meta&amp;gt;, and &amp;lt;hr&amp;gt;</description>
+    </item>
+    
+    <item>
+      <title>前端系列（二） 读书-high-performance-browser-networking</title>
+      <link>http://localhost:1313/chester-blog/posts/2018-01-20-%E8%AF%BB%E4%B9%A6-high-performance-browser-networking/</link>
+      <pubDate>Sat, 20 Jan 2018 12:18:32 +0000</pubDate>
+      
+      <guid>http://localhost:1313/chester-blog/posts/2018-01-20-%E8%AF%BB%E4%B9%A6-high-performance-browser-networking/</guid>
+      <description>note Networking 101 Primer on Latency and Bandwidth Speed Is a Feature latency: The time from the source sending a packet to the destination receiving it Bandwidth: Maximum throughput of a logical or physical communication path network data rates: Network data rates are typically measured in bits per second (bps), whereas data rates for non-network equipment are typically shown in bytes per second (Bps). This is a common source of confusion, pay close attention to the units. For example, to put a 10 megabyte (MB) file &amp;ldquo;on the wire&amp;rdquo; over a 1Mbps link, we will need 80 seconds. 10MB is equal to 80Mb because there are 8 bits for every byte! The Many Components of Latency https://en.wikipedia.org/wiki/List_of_device_bit_rates Speed of Light and Propagation Latency CDN: Content delivery network (CDN) services provide many benefits, but chief among them is the simple observation</description>
+    </item>
+    
+    <item>
+      <title>前端系列（一） ajax</title>
+      <link>http://localhost:1313/chester-blog/posts/2018-01-12-ajax/</link>
+      <pubDate>Fri, 12 Jan 2018 20:56:47 +0000</pubDate>
+      
+      <guid>http://localhost:1313/chester-blog/posts/2018-01-12-ajax/</guid>
+      <description>wiki https://en.wikipedia.org/wiki/Ajax_(programming) Ajax (also AJAX; /ˈeɪdʒæks/; short for &amp;ldquo;Asynchronous JavaScript And XML&amp;rdquo;)[1] is a set of Web development techniques using many Web technologies on the client side to create asynchronous Web applications. With Ajax, Web applications can send and retrieve data from a server asynchronously (in the background) without interfering with the display and behavior of the existing page. By decoupling the data interchange layer from the presentation layer, Ajax allows for Web pages, and by extension Web applications, to change content dynamically without the need to reload the entire page.[2] In practice, modern implementations commonly substitute JSON for XML due to the advantages of JSON being native to JavaScript.[3] Asynchronous HTML and HTTP (AHAH) involves using XMLHTTPRequest to retrieve (X)HTML fragments, which are then inserted directly into the Web</description>
+    </item>
+    
+  </channel>
+</rss>

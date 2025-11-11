@@ -29,12 +29,12 @@ permalinks: # 访问博客时网址的显示形式
   post: "/:title/"
   # post: "/:year/:month/:day/:title/"
 
-defaultContentLanguage: en # 最顶部首先展示的语言页面
-defaultContentLanguageInSubdir: true
+defaultContentLanguage: zh # 最顶部首先展示的语言页面
+defaultContentLanguageInSubdir: false
 
 languages:
-  en:
-    languageName: "English"
+  zh:
+    languageName: "Chinese"
     weight: 1
     # profileMode:
     #   enabled: true
@@ -74,10 +74,10 @@ languages:
         #   name: 📚 文章
         #   url: posts
         #   weight: 30
-        # - identifier: tags
-        #   name: 🏷️ 标签
-        #   url: tags
-        #   weight: 40
+        - identifier: tags
+          name: 🏷️ 标签
+          url: tags
+          weight: 40
         - identifier: archives
           name: 📈 归档
           url: archives

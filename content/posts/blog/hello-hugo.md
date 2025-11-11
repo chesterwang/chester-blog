@@ -2,6 +2,7 @@
 title: "【置顶】Hello, hugo!"
 date: 2022-07-06
 lastmod: 2024-01-28
+draft: true
 tags:
   - 博客搭建
 keywords:

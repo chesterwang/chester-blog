@@ -1,0 +1,958 @@
+<!DOCTYPE html>
+<html lang="zh" dir="auto">
+
+<head><script src="/chester-blog/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=chester-blog/livereload" data-no-instant defer></script><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>读书  Front-End Developer Handbook 2017 | Chester&#39;s Blog</title>
+<meta name="keywords" content="读书">
+<meta name="description" content="part1 introduction 前端runtime web browser headless browser http://blog.csdn.net/u014745198/article/details/60757926 A headless browser is a web browser without a graphical user interface. 那么浏览器该有的东西它都应该有，只是看不到界面而已。 list of headless browsers: chrome/firefox/PhantomJS/HtmlUnit/TrifleJS/Splash/slimerjs Headless browsers are a web browser without a graphical user interface that can be controlled from a command line interface programmatically for the purpose of web page automation (e.g., functional testing, scraping, unit testing, etc.). WebView Webviews are used by a native OS, in a native application, to run web pages. list Cordova (typically for native phone/tablet apps) NW.js (typically used for desktop apps) Electron (typically used for desktop apps) compilation ouput 用户浏览器上的开发">
+<meta name="author" content="作者:lvbibir">
+<link rel="canonical" href="http://localhost:1313/chester-blog/posts/2018-01-10-%E8%AF%BB%E4%B9%A6-front-end-developer-handbook-2017/">
+<link crossorigin="anonymous" href="/chester-blog/assets/css/stylesheet.a3b4d2cae219ae904272a1beae2d019e95573341f245e12d4effba204604461c.css" integrity="sha256-o7TSyuIZrpBCcqG&#43;ri0BnpVXM0HyReEtTv&#43;6IEYERhw=" rel="preload stylesheet" as="style">
+<script defer crossorigin="anonymous" src="/chester-blog/assets/js/highlight.f413e19d0714851f6474e7ee9632408e58ac146fbdbe62747134bea2fa3415e0.js" integrity="sha256-9BPhnQcUhR9kdOfuljJAjlisFG&#43;9vmJ0cTS&#43;ovo0FeA="
+    onload="hljs.initHighlightingOnLoad();"></script>
+<link rel="icon" href="https://image.lvbibir.cn/blog/avatar.webp">
+<link rel="icon" type="image/png" sizes="16x16" href="https://image.lvbibir.cn/blog/avatar.webp">
+<link rel="icon" type="image/png" sizes="32x32" href="https://image.lvbibir.cn/blog/avatar.webp">
+<link rel="apple-touch-icon" href="https://image.lvbibir.cn/blog/avatar.webp">
+<link rel="mask-icon" href="https://image.lvbibir.cn/blog/avatar.webp">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="zh" href="http://localhost:1313/chester-blog/posts/2018-01-10-%E8%AF%BB%E4%B9%A6-front-end-developer-handbook-2017/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --hljs-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript>
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = ""; 
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.25/dist/katex.min.css" integrity="sha384-WcoG4HRXMzYzfCgiyfrySxx90XSl2rxY5mnVY5TwtWE6KLrArNKn0T/mOgNL0Mmi" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.25/dist/katex.min.js" integrity="sha384-J+9dG2KMoiR9hqcFao0IBLwxt6zpcyN68IgwzsCSkbreXUjmNVRhPFTssqdSGjwQ" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.25/dist/contrib/auto-render.min.js" integrity="sha384-hCXGrW6PitJEwbkoStFjeJxv+fSOOQKOPbJxSfM6G5sWZjAyWhXiTIIAmQqnlLlh" crossorigin="anonymous"
+    onload="renderMathInElement(document.body);"></script>
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        renderMathInElement(document.body, {
+            delimiters: [
+                {left: "$$", right: "$$", display: true},
+                {left: "$", right: "$", display: false}
+            ]
+        });
+    });
+</script><meta property="og:title" content="读书  Front-End Developer Handbook 2017" />
+<meta property="og:description" content="part1 introduction 前端runtime web browser headless browser http://blog.csdn.net/u014745198/article/details/60757926 A headless browser is a web browser without a graphical user interface. 那么浏览器该有的东西它都应该有，只是看不到界面而已。 list of headless browsers: chrome/firefox/PhantomJS/HtmlUnit/TrifleJS/Splash/slimerjs Headless browsers are a web browser without a graphical user interface that can be controlled from a command line interface programmatically for the purpose of web page automation (e.g., functional testing, scraping, unit testing, etc.). WebView Webviews are used by a native OS, in a native application, to run web pages. list Cordova (typically for native phone/tablet apps) NW.js (typically used for desktop apps) Electron (typically used for desktop apps) compilation ouput 用户浏览器上的开发" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://localhost:1313/chester-blog/posts/2018-01-10-%E8%AF%BB%E4%B9%A6-front-end-developer-handbook-2017/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2018-01-10T01:18:06+00:00" />
+<meta property="article:modified_time" content="2018-01-10T01:18:06+00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="读书  Front-End Developer Handbook 2017"/>
+<meta name="twitter:description" content="part1 introduction 前端runtime web browser headless browser http://blog.csdn.net/u014745198/article/details/60757926 A headless browser is a web browser without a graphical user interface. 那么浏览器该有的东西它都应该有，只是看不到界面而已。 list of headless browsers: chrome/firefox/PhantomJS/HtmlUnit/TrifleJS/Splash/slimerjs Headless browsers are a web browser without a graphical user interface that can be controlled from a command line interface programmatically for the purpose of web page automation (e.g., functional testing, scraping, unit testing, etc.). WebView Webviews are used by a native OS, in a native application, to run web pages. list Cordova (typically for native phone/tablet apps) NW.js (typically used for desktop apps) Electron (typically used for desktop apps) compilation ouput 用户浏览器上的开发"/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "📚 文章",
+      "item": "http://localhost:1313/chester-blog/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "读书  Front-End Developer Handbook 2017",
+      "item": "http://localhost:1313/chester-blog/posts/2018-01-10-%E8%AF%BB%E4%B9%A6-front-end-developer-handbook-2017/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "读书  Front-End Developer Handbook 2017",
+  "name": "读书  Front-End Developer Handbook 2017",
+  "description": "part1 introduction 前端runtime web browser headless browser http://blog.csdn.net/u014745198/article/details/60757926 A headless browser is a web browser without a graphical user interface. 那么浏览器该有的东西它都应该有，只是看不到界面而已。 list of headless browsers: chrome/firefox/PhantomJS/HtmlUnit/TrifleJS/Splash/slimerjs Headless browsers are a web browser without a graphical user interface that can be controlled from a command line interface programmatically for the purpose of web page automation (e.g., functional testing, scraping, unit testing, etc.). WebView Webviews are used by a native OS, in a native application, to run web pages. list Cordova (typically for native phone/tablet apps) NW.js (typically used for desktop apps) Electron (typically used for desktop apps) compilation ouput 用户浏览器上的开发",
+  "keywords": [
+    "读书"
+  ],
+  "articleBody": "part1 introduction 前端runtime web browser headless browser http://blog.csdn.net/u014745198/article/details/60757926 A headless browser is a web browser without a graphical user interface. 那么浏览器该有的东西它都应该有，只是看不到界面而已。 list of headless browsers: chrome/firefox/PhantomJS/HtmlUnit/TrifleJS/Splash/slimerjs Headless browsers are a web browser without a graphical user interface that can be controlled from a command line interface programmatically for the purpose of web page automation (e.g., functional testing, scraping, unit testing, etc.). WebView Webviews are used by a native OS, in a native application, to run web pages. list Cordova (typically for native phone/tablet apps) NW.js (typically used for desktop apps) Electron (typically used for desktop apps) compilation ouput 用户浏览器上的开发语言来写原生应用 list NativeScript React Native web technologies employed by front-end developers 核心技术 Uniform Resource Locators (aka URLs) Hypertext Transfer Protocol (aka HTTP) Hyper Text Markup Language (aka HTML) Cascading Style Sheets (aka CSS) JavaScript Programming Language (aka ECMAScript 262) JavaScript Object Notation (aka JSON) Document Object Model (aka DOM) Web APIs (aka HTML5 and friends or Browser APIs) Web Content Accessibility Guidelines (aka WCAG) \u0026 Accessible Rich Internet Applications (aka ARIA) 另一个完全技能列表 https://platform.html5.org/ HTML Most relevant specifications / documentation: All W3C HTML Spec The elements of HTML from the Living Standard Global attributes HTML 5.2 from W3C HTML attribute reference HTML element reference The HTML Syntax from the Living Standard CSS Most relevant specifications / documentation: All W3C CSS Specifications Cascading Style Sheets Level 2 Revision 2 (CSS 2.2) Specification CSS reference Selectors Level 3 DOM Most relevant specifications / documentation: Document Object Model (DOM) Level 3 Events Specification DOM Living Standard W3C DOM4 JavaScript Most relevant specifications / documentation: ECMAScript® 2017 Language Specification Web APIs (aka HTML5 and friends) Most relevant documentation: Web API Interfaces Hypertext Transfer Protocol (aka HTTP) Most relevant specifications: Hypertext Transfer Protocol – HTTP/1.1 HTTP/2 Uniform Resource Locators (aka URL) A URL is a specific type of uniform resource identifier (URI). Most relevant specifications: Uniform Resource Locators (URL) URL Living Standard JavaScript Object Notation (aka JSON) Most relevant specifications: Introducing JSON JSON API The JSON Data Interchange Format Front-End Dev Skills Content Management Systems (aka CMS) Node.js Cross-Browser Testing Cross-Platform Testing Unit Testing Cross-Device Testing Accessibility / WAI-ARIA Search Engine Optimization (aka SEO) Interaction or User Interface Design User Experience Usability E-commerce Systems Portal Systems Wireframing CSS Layout / Grids DOM Manipulation (e.g., jQuery) Mobile Web Performance Load Testing Performance Testing Progressive Enhancement / Graceful Degradation Version Control (e.g., GIT) MVC / MVVM / MV* Functional Programming Data Formats (e.g., JSON, XML) Data APIs (e.g Restful API) Web Font Embedding Scalable Vector Graphics (aka SVG) Regular Expressions Content Strategy Microdata / Microformats Task Runners, Build Tools, Process Automation Tools Responsive Web Design Object-Oriented Programming Application Architecture Modules Dependency Managers Package Managers JavaScript Animation CSS Animation Charts / Graphs UI Widgets Code Quality Testing Code Coverage Testing Code Complexity Analysis Integration Testing Command Line / CLI Templating Strategies Templating Engines Single Page Applications XHR Requests (aka AJAX) Web/Browser Security HTML Semantics Browser Developer Tools interviews Questions you may get asked: 10 Interview Questions Every JavaScript Developer Should Know Front-End Job Interview Questions Front End Web Development Quiz Interview Questions for Front-End-Developer JavaScript Web Quiz Questions you ask: An open source list of developer questions to ask prospective employers Preparing: Preparing for a Front-End Web Development Interview in 2017 Interview Cake [$] Cracking the front-end interview part2 learning video materials\ncodecademy.com codeschool.com egghead.io eventedmind.com Frontend Masters Freecodecamp Khan Academy laracasts.com lynda.com [careful, quality varies] mijingo.com pluralsight.com [careful, quality varies] Treehouse tutsplus.com Udacity [careful, quality varies] How Does the Internet Work?\nhttp://web.stanford.edu/class/msande91si/www-spr04/readings/week1/InternetWhitepaper.htm layers: application/TCP/IP/Harware If the message to be sent is long, each stack layer that the message passes through may break the message up into smaller chunks of data. In TCP layer, Each packet is assigned a port number. IP layer, 添加IP地址 learn web browsers\nThe most commonly used browsers (on any device) are: Chrome (engine: Blink + V8) Firefox (engine: Gecko + SpiderMonkey) Internet Explorer (engine: Trident + Chakra) Safari (engine: Webkit + SquirrelFish) The Most Commonly Used Headless Browser Are: PhantomJS (engine: Webkit + SquirrelFish) SlimerJS (engine: Gecko + SpiderMonkey) TrifleJS (engine: Trident + Chakra) DNS\nwiki:The Domain Name System (DNS) is a hierarchical distributed naming system for computers, services, or any resource connected to the Internet or a private network. It associates various information with domain names assigned to each of the participating entities. Most prominently, it translates domain names, which can be easily memorized by humans, to the numerical IP addresses needed for the purpose of computer services and devices worldwide. The Domain Name System is an essential component of the functionality of most Internet services because it is the Internet’s primary directory service. Learn HTTP/Networks\nHTTP Specifications HTTP/2 Hypertext Transfer Protocol – HTTP/1.1 HTPP STATUS code https://httpstatuses.com/ http book: High Performance Browser Networking content: networks/transport protocols/application protocols/apis(XHR websocket webrtc) Learn Web Hosting\nhttps://www.whoishostingthis.com/resources/web-hosting/ Learn General Front-End Development\nLearn User Interface/Interaction Design\nLearn HTML \u0026 CSS\nhttps://learn.shayhowe.com/advanced-html-css/complex-selectors/ https://learn.shayhowe.com/html-css/building-your-first-web-page/ https://code.tutsplus.com/tutorials/the-30-css-selectors-you-must-memorize--net-16048 https://developer.mozilla.org/en-US/docs/Web/JavaScript/A_re-introduction_to_JavaScript Learn DOM, BOM, \u0026 jQuery\ndocument object model http://eloquentjavascript.net/13_dom.html document.documentElement as root each DOM node object has a nodeType property,指明节点类型,其实是枚举类, document.**_NODE 是这些枚举类 all element node have a getElementBytTagName getElementBytTagId getElementByClassId method. element returned by querySelectorAll method is not live. It won’t change when you change the document. https://www.codecademy.com/courses/web-beginner-en-bay3D/0/1?curriculum_id=50a3fad8c7a770b5fd0007a1 book DOM Enlightenment: http://domenlightenment.com/ Learn Web/Browser APIs\nHTML5: http://apress.jensimmons.com/v5/pro-html5-programming/ch0.html api 文档: http://html5index.org/ Learn Computer Science via JS\nhttps://github.com/nzakas/computer-science-in-javascript Learn Front-End Application Architecture\nLearn Build and task automation\nBuild automation is the process of automating the creation of a software build and the associated processes including: compiling computer source code into binary code, packaging binary code, and running automated tests. ",
+  "wordCount" : "1026",
+  "inLanguage": "zh",
+  "datePublished": "2018-01-10T01:18:06Z",
+  "dateModified": "2018-01-10T01:18:06Z",
+  "author":{
+    "@type": "Person",
+    "name": "lvbibir"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "http://localhost:1313/chester-blog/posts/2018-01-10-%E8%AF%BB%E4%B9%A6-front-end-developer-handbook-2017/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Chester's Blog",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://image.lvbibir.cn/blog/avatar.webp"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="http://localhost:1313/chester-blog/" accesskey="h" title="Chester&#39;s Blog (Alt + H)">
+                <img src="https://image.lvbibir.cn/blog/avatar.webp" alt="" aria-label="logo"
+                    height="35">Chester&#39;s Blog</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+                <ul class="lang-switch"><li>|</li>
+                </ul>
+            </div>
+        </div>
+        <ul id="menu">
+            <li class="menu-item">
+                <a href="http://localhost:1313/chester-blog/categories" title="🤙🏿 分类">
+                    <span>🤙🏿 分类</span>
+                    
+                </a>
+            
+            </li>
+            <li class="menu-item">
+                <a href="http://localhost:1313/chester-blog/tags" title="🏷️ 标签">
+                    <span>🏷️ 标签</span>
+                    
+                </a>
+            
+            </li>
+            <li class="menu-item">
+                <a href="http://localhost:1313/chester-blog/archives" title="📈 归档">
+                    <span>📈 归档</span>
+                    
+                </a>
+            
+            </li>
+            <li class="menu-item">
+                <a href="http://localhost:1313/chester-blog/talk" title="💬 说说">
+                    <span>💬 说说</span>
+                    
+                </a>
+            
+            </li>
+            <li class="menu-item">
+                <a href="http://localhost:1313/chester-blog/search" title="🔍 搜索 (Alt &#43; /)" accesskey=/>
+                    <span>🔍 搜索</span>
+                    
+                </a>
+            
+            </li>
+            <li class="menu-item">
+                <a href="http://localhost:1313/chester-blog/about" title="🙋🏻‍♂️ 关于">
+                    <span>🙋🏻‍♂️ 关于</span>
+                    
+                </a>
+            
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main page">
+<article class="post-single">
+    <div id="single-content">
+        <header class="post-header">
+            <div class="breadcrumbs"><a href="http://localhost:1313/chester-blog/">主页</a>&nbsp;»&nbsp;<a href="http://localhost:1313/chester-blog/posts/">📚 文章</a></div>
+            <h1 class="post-title">
+                读书  Front-End Developer Handbook 2017
+            </h1>
+            <div class="post-meta">创建: 2018-01-10 | 更新: 2018-01-10 | 字数: 1026字 | 作者:lvbibir
+
+
+                |&nbsp;标签:&nbsp;
+                <ul class="post-tags-meta">
+                    <a href="http://localhost:1313/chester-blog/tags/%E8%AF%BB%E4%B9%A6/">读书</a>
+                </ul>
+
+                
+                <span id="busuanzi_container_page_pv">
+                    &nbsp;|&nbsp;访问:&nbsp;<span id="busuanzi_value_page_pv"></span>
+                </span>
+
+</div>
+        </header> <aside id="toc-container" class="toc-container wide">
+    <div class="toc">
+        <details  open>
+        <summary accesskey="c" title="(Alt + C)">
+            <span class="details">目录</span>
+        </summary>
+
+        <div class="inner"><ul>
+                <li>
+                    <a href="#part1-introduction" aria-label="part1 introduction">part1 introduction</a></li>
+                <li>
+                    <a href="#part2-learning" aria-label="part2 learning">part2 learning</a>
+                </li>
+            </ul>
+        </div>
+        </details>
+    </div>
+</aside>
+<script>
+    let activeElement;
+    let elements;
+    window.addEventListener('DOMContentLoaded', function (event) {
+        checkTocPosition();
+
+        elements = document.querySelectorAll('h1[id],h2[id],h3[id],h4[id],h5[id],h6[id]');
+        
+        activeElement = elements[0];
+        const id = encodeURI(activeElement.getAttribute('id')).toLowerCase();
+        document.querySelector(`.inner ul li a[href="#${id}"]`).classList.add('active');
+    }, false);
+
+    window.addEventListener('resize', function(event) {
+        checkTocPosition();
+    }, false);
+
+    window.addEventListener('scroll', () => {
+        
+        activeElement = Array.from(elements).find((element) => {
+            if ((getOffsetTop(element) - window.pageYOffset) > 0 &&
+                (getOffsetTop(element) - window.pageYOffset) < window.innerHeight/2) {
+                return element;
+            }
+        }) || activeElement
+
+        elements.forEach(element => {
+            const id = encodeURI(element.getAttribute('id')).toLowerCase();
+            if (element === activeElement){
+                document.querySelector(`.inner ul li a[href="#${id}"]`).classList.add('active');
+            } else {
+                document.querySelector(`.inner ul li a[href="#${id}"]`).classList.remove('active');
+            }
+        })
+    }, false);
+
+    const main = parseInt(getComputedStyle(document.body).getPropertyValue('--article-width'), 10);
+    const toc = parseInt(getComputedStyle(document.body).getPropertyValue('--toc-width'), 10);
+    const gap = parseInt(getComputedStyle(document.body).getPropertyValue('--gap'), 10);
+
+    function checkTocPosition() {
+        const width = document.body.scrollWidth;
+        if (width - main - (toc * 2) - (gap * 4) > 0) {
+            document.getElementById("toc-container").classList.add("wide");
+        } else {
+            document.getElementById("toc-container").classList.remove("wide");
+        }
+    }
+
+    function getOffsetTop(element) {
+        if (!element.getClientRects().length) {
+            return 0;
+        }
+        let rect = element.getBoundingClientRect();
+        let win = element.ownerDocument.defaultView;
+        return rect.top + win.pageYOffset;
+    }
+</script>
+        <div class="post-content"><h1 id="part1-introduction">part1 introduction<a hidden class="anchor" aria-hidden="true" href="#part1-introduction">#</a></h1>
+<ul>
+<li>前端runtime
+<ul>
+<li>web browser</li>
+<li>headless browser
+<ul>
+<li><a href="http://blog.csdn.net/u014745198/article/details/60757926" target="_blank" rel="noopener" style="color:#42b983";>http://blog.csdn.net/u014745198/article/details/60757926</a></li>
+<li>A headless browser is a web browser without a graphical user interface.</li>
+<li>那么浏览器该有的东西它都应该有，只是看不到界面而已。</li>
+<li>list of headless browsers: chrome/firefox/PhantomJS/HtmlUnit/TrifleJS/Splash/slimerjs</li>
+<li>Headless browsers are a web browser without a graphical user interface that can be controlled from a command line interface programmatically for the purpose of web page automation (e.g., functional testing, scraping, unit testing, etc.).</li>
+</ul>
+</li>
+<li>WebView
+<ul>
+<li>Webviews are used by a native OS, in a native application, to run web pages.</li>
+<li>list
+<ul>
+<li>Cordova (typically for native phone/tablet apps)</li>
+<li>NW.js (typically used for desktop apps)</li>
+<li>Electron (typically used for desktop apps)</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>compilation ouput
+<ul>
+<li>用户浏览器上的开发语言来写原生应用</li>
+<li>list
+<ul>
+<li>NativeScript</li>
+<li>React Native</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>web technologies employed by front-end developers
+<ul>
+<li>核心技术
+<ul>
+<li>Uniform Resource Locators (aka URLs)</li>
+<li>Hypertext Transfer Protocol (aka HTTP)</li>
+<li>Hyper Text Markup Language (aka HTML)</li>
+<li>Cascading Style Sheets (aka CSS)</li>
+<li>JavaScript Programming Language (aka ECMAScript 262)</li>
+<li>JavaScript Object Notation (aka JSON)</li>
+<li>Document Object Model (aka DOM)</li>
+<li>Web APIs (aka HTML5 and friends or Browser APIs)</li>
+<li>Web Content Accessibility Guidelines (aka WCAG) &amp; Accessible Rich Internet Applications (aka ARIA)</li>
+</ul>
+</li>
+<li>另一个完全技能列表 <a href="https://platform.html5.org/" target="_blank" rel="noopener" style="color:#42b983";>https://platform.html5.org/</a></li>
+<li>HTML
+<ul>
+<li>Most relevant specifications / documentation:
+<ul>
+<li><a href="http://www.w3.org/standards/techs/html#w3c_all" target="_blank" rel="noopener" style="color:#42b983";>All W3C HTML Spec</a></li>
+<li><a href="https://html.spec.whatwg.org/multipage" target="_blank" rel="noopener" style="color:#42b983";>The elements of HTML from the Living Standard</a></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes" target="_blank" rel="noopener" style="color:#42b983";>Global attributes</a></li>
+<li><a href="http://w3c.github.io/html/" target="_blank" rel="noopener" style="color:#42b983";>HTML 5.2 from W3C</a></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes" target="_blank" rel="noopener" style="color:#42b983";>HTML attribute reference</a></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element" target="_blank" rel="noopener" style="color:#42b983";>HTML element reference</a></li>
+<li><a href="https://html.spec.whatwg.org/multipage/syntax.html#syntax" target="_blank" rel="noopener" style="color:#42b983";>The HTML Syntax</a> from the Living Standard</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>CSS
+<ul>
+<li>Most relevant specifications / documentation:
+<ul>
+<li><a href="http://www.w3.org/Style/CSS/current-work#roadmap" target="_blank" rel="noopener" style="color:#42b983";>All W3C CSS Specifications</a></li>
+<li><a href="https://drafts.csswg.org/css2/" target="_blank" rel="noopener" style="color:#42b983";>Cascading Style Sheets Level 2 Revision 2 (CSS 2.2) Specification</a></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/Reference" target="_blank" rel="noopener" style="color:#42b983";>CSS reference</a></li>
+<li><a href="http://www.w3.org/TR/css3-selectors/" target="_blank" rel="noopener" style="color:#42b983";>Selectors Level 3</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>DOM
+<ul>
+<li>Most relevant specifications / documentation:
+<ul>
+<li><a href="https://www.w3.org/TR/DOM-Level-3-Events/" target="_blank" rel="noopener" style="color:#42b983";>Document Object Model (DOM) Level 3 Events Specification</a></li>
+<li><a href="https://dom.spec.whatwg.org/" target="_blank" rel="noopener" style="color:#42b983";>DOM Living Standard</a></li>
+<li><a href="https://www.w3.org/TR/2015/REC-dom-20151119/" target="_blank" rel="noopener" style="color:#42b983";>W3C DOM4</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>JavaScript
+<ul>
+<li>Most relevant specifications / documentation:
+<ul>
+<li><a href="https://tc39.github.io/ecma262/" target="_blank" rel="noopener" style="color:#42b983";>ECMAScript® 2017 Language Specification</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Web APIs (aka HTML5 and friends)
+<ul>
+<li>Most relevant documentation:
+<ul>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/API" target="_blank" rel="noopener" style="color:#42b983";>Web API Interfaces</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Hypertext Transfer Protocol (aka HTTP)
+<ul>
+<li>Most relevant specifications:
+<ul>
+<li><a href="https://tools.ietf.org/html/rfc2616" target="_blank" rel="noopener" style="color:#42b983";>Hypertext Transfer Protocol &ndash; HTTP/1.1</a></li>
+<li><a href="https://http2.github.io/" target="_blank" rel="noopener" style="color:#42b983";>HTTP/2</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Uniform Resource Locators (aka URL)
+<ul>
+<li>A URL is a specific type of uniform resource identifier (URI).</li>
+<li>Most relevant specifications:
+<ul>
+<li><a href="http://www.w3.org/Addressing/URL/url-spec.txt" target="_blank" rel="noopener" style="color:#42b983";>Uniform Resource Locators (URL)</a></li>
+<li><a href="https://url.spec.whatwg.org/" target="_blank" rel="noopener" style="color:#42b983";>URL Living Standard</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>JavaScript Object Notation (aka JSON)
+<ul>
+<li>Most relevant specifications:
+<ul>
+<li><a href="http://json.org/" target="_blank" rel="noopener" style="color:#42b983";>Introducing JSON</a></li>
+<li><a href="http://jsonapi.org/" target="_blank" rel="noopener" style="color:#42b983";>JSON API</a></li>
+<li><a href="http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf" target="_blank" rel="noopener" style="color:#42b983";>The JSON Data Interchange Format</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Front-End Dev Skills
+<ul>
+<li>Content Management Systems (aka CMS)</li>
+<li>Node.js</li>
+<li>Cross-Browser Testing</li>
+<li>Cross-Platform Testing</li>
+<li>Unit Testing</li>
+<li>Cross-Device Testing</li>
+<li>Accessibility / WAI-ARIA</li>
+<li>Search Engine Optimization (aka SEO)</li>
+<li>Interaction or User Interface Design</li>
+<li>User Experience</li>
+<li>Usability</li>
+<li>E-commerce Systems</li>
+<li>Portal Systems</li>
+<li>Wireframing</li>
+<li>CSS Layout / Grids</li>
+<li>DOM Manipulation (e.g., jQuery)</li>
+<li>Mobile Web Performance</li>
+<li>Load Testing</li>
+<li>Performance Testing</li>
+<li>Progressive Enhancement / Graceful Degradation</li>
+<li>Version Control (e.g., GIT)</li>
+<li>MVC / MVVM / MV*</li>
+<li>Functional Programming</li>
+<li>Data Formats (e.g., JSON, XML)</li>
+<li>Data APIs (e.g Restful API)</li>
+<li>Web Font Embedding</li>
+<li>Scalable Vector Graphics (aka SVG)</li>
+<li>Regular Expressions</li>
+<li>Content Strategy</li>
+<li>Microdata / Microformats</li>
+<li>Task Runners, Build Tools, Process Automation Tools</li>
+<li>Responsive Web Design</li>
+<li>Object-Oriented Programming</li>
+<li>Application Architecture</li>
+<li>Modules</li>
+<li>Dependency Managers</li>
+<li>Package Managers</li>
+<li>JavaScript Animation</li>
+<li>CSS Animation</li>
+<li>Charts / Graphs</li>
+<li>UI Widgets</li>
+<li>Code Quality Testing</li>
+<li>Code Coverage Testing</li>
+<li>Code Complexity Analysis</li>
+<li>Integration Testing</li>
+<li>Command Line / CLI</li>
+<li>Templating Strategies</li>
+<li>Templating Engines</li>
+<li>Single Page Applications</li>
+<li>XHR Requests (aka AJAX)</li>
+<li>Web/Browser Security</li>
+<li>HTML Semantics</li>
+<li>Browser Developer Tools</li>
+</ul>
+</li>
+<li>interviews
+<ul>
+<li>Questions you may get asked:
+<ul>
+<li><a href="https://medium.com/javascript-scene/10-interview-questions-every-javascript-developer-should-know-6fa6bdf5ad95" target="_blank" rel="noopener" style="color:#42b983";>10 Interview Questions Every JavaScript Developer Should Know</a></li>
+<li><a href="http://h5bp.github.io/Front-end-Developer-Interview-Questions/" target="_blank" rel="noopener" style="color:#42b983";>Front-End Job Interview Questions</a></li>
+<li><a href="http://davidshariff.com/quiz/" target="_blank" rel="noopener" style="color:#42b983";>Front End Web Development Quiz</a></li>
+<li><a href="http://thatjsdude.com/interview/index.html" target="_blank" rel="noopener" style="color:#42b983";>Interview Questions for Front-End-Developer</a></li>
+<li><a href="http://davidshariff.com/js-quiz/" target="_blank" rel="noopener" style="color:#42b983";>JavaScript Web Quiz</a></li>
+</ul>
+</li>
+<li>Questions you ask:
+<ul>
+<li><a href="https://github.com/ChiperSoft/InterviewThis" target="_blank" rel="noopener" style="color:#42b983";>An open source list of developer questions to ask prospective employers</a></li>
+</ul>
+</li>
+<li>Preparing:
+<ul>
+<li><a href="http://davidshariff.com/blog/preparing-for-a-front-end-web-development-interview-in-2017/" target="_blank" rel="noopener" style="color:#42b983";>Preparing for a Front-End Web Development Interview in 2017</a></li>
+<li><a href="https://www.interviewcake.com/" target="_blank" rel="noopener" style="color:#42b983";>Interview Cake</a> [$]</li>
+<li><a href="https://medium.freecodecamp.com/cracking-the-front-end-interview-9a34cd46237" target="_blank" rel="noopener" style="color:#42b983";>Cracking the front-end interview</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="part2-learning">part2 learning<a hidden class="anchor" aria-hidden="true" href="#part2-learning">#</a></h1>
+<ul>
+<li>
+<p>video materials</p>
+<ul>
+<li><a href="https://codecademy.com" target="_blank" rel="noopener" style="color:#42b983";>codecademy.com</a></li>
+<li><a href="https://www.codeschool.com/" target="_blank" rel="noopener" style="color:#42b983";>codeschool.com</a></li>
+<li><a href="https://egghead.io/" target="_blank" rel="noopener" style="color:#42b983";>egghead.io</a></li>
+<li><a href="https://www.eventedmind.com/" target="_blank" rel="noopener" style="color:#42b983";>eventedmind.com</a></li>
+<li><a href="https://frontendmasters.com/" target="_blank" rel="noopener" style="color:#42b983";>Frontend Masters</a></li>
+<li><a href="https://www.freecodecamp.com" target="_blank" rel="noopener" style="color:#42b983";>Freecodecamp</a></li>
+<li><a href="https://www.khanacademy.org/computing/computer-programming" target="_blank" rel="noopener" style="color:#42b983";>Khan Academy</a></li>
+<li><a href="https://laracasts.com/" target="_blank" rel="noopener" style="color:#42b983";>laracasts.com</a></li>
+<li><a href="http://www.lynda.com/" target="_blank" rel="noopener" style="color:#42b983";>lynda.com</a> [careful, quality varies]</li>
+<li><a href="https://mijingo.com/" target="_blank" rel="noopener" style="color:#42b983";>mijingo.com</a></li>
+<li><a href="http://www.pluralsight.com/" target="_blank" rel="noopener" style="color:#42b983";>pluralsight.com</a> [careful, quality varies]</li>
+<li><a href="https://teamtreehouse.com/" target="_blank" rel="noopener" style="color:#42b983";>Treehouse</a></li>
+<li><a href="https://tutsplus.com/courses" target="_blank" rel="noopener" style="color:#42b983";>tutsplus.com</a></li>
+<li><a href="https://www.udacity.com/courses/web-development" target="_blank" rel="noopener" style="color:#42b983";>Udacity</a> [careful, quality varies]</li>
+</ul>
+</li>
+<li>
+<p>How Does the Internet Work?</p>
+<ul>
+<li><a href="http://web.stanford.edu/class/msande91si/www-spr04/readings/week1/InternetWhitepaper.htm" target="_blank" rel="noopener" style="color:#42b983";>http://web.stanford.edu/class/msande91si/www-spr04/readings/week1/InternetWhitepaper.htm</a></li>
+<li>layers: application/TCP/IP/Harware</li>
+<li>If the message to be sent is long, each stack layer that the message passes through may break the message up into smaller chunks of data.</li>
+<li>In TCP layer, Each packet is assigned a port number.</li>
+<li>IP layer, 添加IP地址</li>
+</ul>
+</li>
+<li>
+<p>learn web browsers</p>
+<ul>
+<li>The <a href="https://www.sitepoint.com/browser-trends-september-2016-browser-wars/" target="_blank" rel="noopener" style="color:#42b983";>most commonly used browsers</a> (on any device) are:
+<ol>
+<li><a href="http://www.google.com/chrome/" target="_blank" rel="noopener" style="color:#42b983";>Chrome</a> (engine: <a href="https://en.wikipedia.org/wiki/Blink_%28layout_engine%29" target="_blank" rel="noopener" style="color:#42b983";>Blink</a> + <a href="https://en.wikipedia.org/wiki/V8_%28JavaScript_engine%29" target="_blank" rel="noopener" style="color:#42b983";>V8</a>)</li>
+<li><a href="https://www.mozilla.org/en-US/firefox/new/" target="_blank" rel="noopener" style="color:#42b983";>Firefox</a> (engine: <a href="https://en.wikipedia.org/wiki/Gecko_%28software%29" target="_blank" rel="noopener" style="color:#42b983";>Gecko</a> + <a href="https://en.wikipedia.org/wiki/SpiderMonkey_%28software%29" target="_blank" rel="noopener" style="color:#42b983";>SpiderMonkey</a>)</li>
+<li><a href="http://windows.microsoft.com/en-us/internet-explorer/download-ie" target="_blank" rel="noopener" style="color:#42b983";>Internet Explorer</a> (engine: <a href="https://en.wikipedia.org/wiki/Trident_%28layout_engine%29" target="_blank" rel="noopener" style="color:#42b983";>Trident</a> + <a href="https://en.wikipedia.org/wiki/Chakra_%28JScript_engine%29" target="_blank" rel="noopener" style="color:#42b983";>Chakra</a>)</li>
+<li><a href="https://www.apple.com/safari/" target="_blank" rel="noopener" style="color:#42b983";>Safari</a> (engine: <a href="https://en.wikipedia.org/wiki/WebKit" target="_blank" rel="noopener" style="color:#42b983";>Webkit</a> + <a href="https://trac.webkit.org/wiki/SquirrelFish" target="_blank" rel="noopener" style="color:#42b983";>SquirrelFish</a>)</li>
+</ol>
+</li>
+<li>The Most Commonly Used Headless Browser Are:
+<ul>
+<li><a href="http://phantomjs.org/" target="_blank" rel="noopener" style="color:#42b983";>PhantomJS</a> (engine: <a href="https://en.wikipedia.org/wiki/WebKit" target="_blank" rel="noopener" style="color:#42b983";>Webkit</a> + SquirrelFish)</li>
+<li><a href="http://slimerjs.org/" target="_blank" rel="noopener" style="color:#42b983";>SlimerJS</a> (engine: <a href="https://en.wikipedia.org/wiki/Gecko_%28software%29" target="_blank" rel="noopener" style="color:#42b983";>Gecko</a> + <a href="https://en.wikipedia.org/wiki/SpiderMonkey_%28software%29" target="_blank" rel="noopener" style="color:#42b983";>SpiderMonkey</a>)</li>
+<li><a href="http://triflejs.org/" target="_blank" rel="noopener" style="color:#42b983";>TrifleJS</a> (engine: <a href="https://en.wikipedia.org/wiki/Trident_%28layout_engine%29" target="_blank" rel="noopener" style="color:#42b983";>Trident</a> + <a href="https://en.wikipedia.org/wiki/Chakra_%28JScript_engine%29" target="_blank" rel="noopener" style="color:#42b983";>Chakra</a>)</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>DNS</p>
+<ul>
+<li>wiki:The Domain Name System (DNS) is a hierarchical distributed naming system for computers, services, or any resource connected to the Internet or a private network. It associates various information with domain names assigned to each of the participating entities. Most prominently, it translates domain names, which can be easily memorized by humans, to the numerical IP addresses needed for the purpose of computer services and devices worldwide. The Domain Name System is an essential component of the functionality of most Internet services because it is the Internet&rsquo;s primary directory service.</li>
+</ul>
+</li>
+<li>
+<p>Learn HTTP/Networks</p>
+<ul>
+<li>HTTP Specifications
+<ul>
+<li><a href="https://http2.github.io/" target="_blank" rel="noopener" style="color:#42b983";>HTTP/2</a></li>
+<li><a href="https://tools.ietf.org/html/rfc2616" target="_blank" rel="noopener" style="color:#42b983";>Hypertext Transfer Protocol &ndash; HTTP/1.1</a></li>
+</ul>
+</li>
+<li>HTPP STATUS code
+<ul>
+<li><a href="https://httpstatuses.com/" target="_blank" rel="noopener" style="color:#42b983";>https://httpstatuses.com/</a></li>
+</ul>
+</li>
+<li>http book:  High Performance Browser Networking
+<ul>
+<li>content: networks/transport protocols/application protocols/apis(XHR websocket webrtc)</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>Learn Web Hosting</p>
+<ul>
+<li><a href="https://www.whoishostingthis.com/resources/web-hosting/" target="_blank" rel="noopener" style="color:#42b983";>https://www.whoishostingthis.com/resources/web-hosting/</a></li>
+</ul>
+</li>
+<li>
+<p>Learn General Front-End Development</p>
+</li>
+<li>
+<p>Learn User Interface/Interaction Design</p>
+</li>
+<li>
+<p>Learn HTML &amp; CSS</p>
+<ul>
+<li><a href="https://learn.shayhowe.com/advanced-html-css/complex-selectors/" target="_blank" rel="noopener" style="color:#42b983";>https://learn.shayhowe.com/advanced-html-css/complex-selectors/</a></li>
+<li><a href="https://learn.shayhowe.com/html-css/building-your-first-web-page/" target="_blank" rel="noopener" style="color:#42b983";>https://learn.shayhowe.com/html-css/building-your-first-web-page/</a></li>
+<li><a href="https://code.tutsplus.com/tutorials/the-30-css-selectors-you-must-memorize--net-16048" target="_blank" rel="noopener" style="color:#42b983";>https://code.tutsplus.com/tutorials/the-30-css-selectors-you-must-memorize--net-16048</a></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/A_re-introduction_to_JavaScript" target="_blank" rel="noopener" style="color:#42b983";>https://developer.mozilla.org/en-US/docs/Web/JavaScript/A_re-introduction_to_JavaScript</a></li>
+</ul>
+</li>
+<li>
+<p>Learn DOM, BOM, &amp; jQuery</p>
+<ul>
+<li>document object model <a href="http://eloquentjavascript.net/13_dom.html" target="_blank" rel="noopener" style="color:#42b983";>http://eloquentjavascript.net/13_dom.html</a>
+<ul>
+<li>document.documentElement as root</li>
+<li>each DOM node object has a <code>nodeType </code>  property,指明节点类型,其实是枚举类, <code>document.**_NODE </code> 是这些枚举类</li>
+<li>all element node have a <code>getElementBytTagName getElementBytTagId getElementByClassId </code>method.</li>
+<li>element returned by <code>querySelectorAll </code> method is not live. It won&rsquo;t change when you change the document.</li>
+<li><a href="https://www.codecademy.com/courses/web-beginner-en-bay3D/0/1?curriculum_id=50a3fad8c7a770b5fd0007a1" target="_blank" rel="noopener" style="color:#42b983";>https://www.codecademy.com/courses/web-beginner-en-bay3D/0/1?curriculum_id=50a3fad8c7a770b5fd0007a1</a></li>
+<li>book DOM Enlightenment: <a href="http://domenlightenment.com/" target="_blank" rel="noopener" style="color:#42b983";>http://domenlightenment.com/</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>Learn Web/Browser APIs</p>
+<ul>
+<li>HTML5: <a href="http://apress.jensimmons.com/v5/pro-html5-programming/ch0.html" target="_blank" rel="noopener" style="color:#42b983";>http://apress.jensimmons.com/v5/pro-html5-programming/ch0.html</a></li>
+<li>api 文档: <a href="http://html5index.org/" target="_blank" rel="noopener" style="color:#42b983";>http://html5index.org/</a></li>
+</ul>
+</li>
+<li>
+<p>Learn Computer Science via JS</p>
+<ul>
+<li><a href="https://github.com/nzakas/computer-science-in-javascript" target="_blank" rel="noopener" style="color:#42b983";>https://github.com/nzakas/computer-science-in-javascript</a></li>
+</ul>
+</li>
+<li>
+<p>Learn Front-End Application Architecture</p>
+</li>
+<li>
+<p>Learn Build and task automation</p>
+<ul>
+<li>Build automation is the process of automating the creation of a software build and the associated processes including: compiling computer source code into binary code, packaging binary code, and running automated tests.</li>
+</ul>
+</li>
+</ul>
+
+
+        </div>
+
+        <footer class="post-footer">
+            
+<nav class="paginav">
+  <a class="prev" href="http://localhost:1313/chester-blog/posts/2018-01-10-%E5%85%A8%E6%A0%88%E4%B9%8B%E8%B7%AF/">
+    <span class="title">« 上一页</span>
+    <br>
+    <span>全栈之路</span>
+  </a>
+  <a class="next" href="http://localhost:1313/chester-blog/posts/2018-01-09-hfht%E7%AE%97%E6%B3%95/">
+    <span class="title">下一页 »</span>
+    <br>
+    <span>HFHT算法</span>
+  </a>
+</nav>
+
+        </footer>
+    </div>
+
+
+
+<div>
+    <div class="pagination__title">
+        <span class="pagination__title-h" style="font-size: 20px;">💬评论</span>
+        <hr />
+    </div>
+
+    <div id="tcomment"></div>
+
+    <script src="https://image.lvbibir.cn/js/1.6.40/twikoo.all.min.js">
+    </script>
+    
+
+    
+
+    <script>
+        twikoo.init({
+            envId: "https://twikoo.lvbibir.cn/", 
+            el: "#tcomment",
+            lang: 'zh-CN',
+            
+            path: window.TWIKOO_MAGIC_PATH||window.location.pathname,
+            
+            
+            
+            
+            
+            
+            
+        });
+    </script>
+
+</div>
+</article>
+</main>
+
+
+<footer class="footer">
+
+    <a href="https://gohugo.io/" target="_blank">
+        
+        <img style="display: unset;" src="https://image.lvbibir.cn/blog/frame-hugo-blue.svg">
+    </a>
+    <a href="https://github.com/adityatelange/hugo-PaperMod" target="_blank">
+        
+        <img style="display: unset;" src="https://image.lvbibir.cn/blog/theme-papermod-lightgrey.svg">
+    </a>
+    <a href="https://cn.aliyun.com/" target="_blank">
+        
+        <img style="display: unset;" src="https://image.lvbibir.cn/blog/图床-阿里云-orange.svg">
+    </a>
+
+    <br>
+
+    <span id="runtime_span"></span>
+    <script
+        type="text/javascript">function show_runtime() { window.setTimeout("show_runtime()", 1000); X = new Date("11/11/2025 1:00:00"); Y = new Date(); T = (Y.getTime() - X.getTime()); M = 24 * 60 * 60 * 1000; a = T / M; A = Math.floor(a); b = (a - A) * 24; B = Math.floor(b); c = (b - B) * 60; C = Math.floor((b - B) * 60); D = Math.floor((c - C) * 60); runtime_span.innerHTML = "网站已运行" + A + "天" + B + "小时" + C + "分" + D + "秒" } show_runtime();</script>
+    |
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span id="busuanzi_container">
+        
+        总访客数:  <span id="busuanzi_value_site_uv"></span>
+        |
+        总访问量:  <span id="busuanzi_value_site_pv"></span>
+    </span>
+
+    <br>
+
+    
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <span class="topInner">
+        <svg class="topSvg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+            <path d="M12 6H0l6-6z" />
+        </svg>
+        <span id="read_progress"></span>
+    </span>
+</a>
+
+<script>
+    document.addEventListener('scroll', function (e) {
+        const readProgress = document.getElementById("read_progress");
+        const scrollHeight = document.documentElement.scrollHeight;
+        const clientHeight = document.documentElement.clientHeight;
+        const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+        
+        readProgress.innerText = ((scrollTop / (scrollHeight - clientHeight)).toFixed(2) * 100).toFixed(0);
+    })
+</script>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    let mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 400 || document.documentElement.scrollTop > 400) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+
+
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerText = '复制';
+
+        function copyingDone() {
+            copybutton.innerText = '已复制！';
+            setTimeout(() => {
+                copybutton.innerText = '复制';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) {
+            }
+            ;
+            selection.removeRange(range);
+        });
+
+        let language = codeblock.className.replaceAll("language-", "")
+        let macTool = document.createElement("div")
+        let macTool1 = document.createElement("div")
+        let macTool2 = document.createElement("div")
+        let macTool3 = document.createElement("div")
+        let languageType = document.createElement("div")
+        languageType.innerText = language
+        macTool.setAttribute('class', 'mac-tool')
+        macTool1.setAttribute('class', 'mac bb1')
+        macTool2.setAttribute('class', 'mac bb2')
+        macTool3.setAttribute('class', 'mac bb3')
+        languageType.setAttribute('class', 'language-type')
+        macTool.appendChild(macTool1)
+        macTool.appendChild(macTool2)
+        macTool.appendChild(macTool3)
+        macTool.appendChild(languageType)
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+            container.appendChild(macTool)
+        } else if (container.parentNode.firstChild === container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName === "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+            container.appendChild(macTool)
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+            container.appendChild(macTool)
+        }
+    });
+</script>
+
+</body>
+
+</html>

@@ -1,0 +1,932 @@
+<!DOCTYPE html>
+<html lang="zh" dir="auto">
+
+<head><script src="/chester-blog/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=chester-blog/livereload" data-no-instant defer></script><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>前端系列（四） -Programming-JavaScript-Applications | Chester&#39;s Blog</title>
+<meta name="keywords" content="读书">
+<meta name="description" content="https://www.safaribooksonline.com/library/view/programming-javascript-applications/9781491950289/ch03.html chapter 1 The JavaScript Revolutioin UnderScore.js functional programming testsuite annotated source code 1.1 anatomy of a typical modern JavaScript App 1.1.1 infrascture data store vpn/firewall(protect data store from unauthorized access) black box JSON Restful Web service Layer various third-party APIs,(BaaS) An app server/content management server to route requests and deliver pages to the client static content delivery network(CDN) for cached files(like iamges,javascript,CSS,and client-side templates) The client: Browser 1.1.1.1 NoSQL data stores Document-oriented data stsores commonly store data in XML format, while object-oriented data stores commonly employ the JSON format. JSON-based NoSQL data stores include MongoDB and CouchDB 1.1.1.2 restful json web servies RESTful web services use HTTP verbs to tell the server what action the client intends. The actions supported are: Create a new entry in the resource collection: HTTP POST. Retrieve a resource representation: HTTP GET verb. Update">
+<meta name="author" content="作者:lvbibir">
+<link rel="canonical" href="http://localhost:1313/chester-blog/posts/2018-01-23-%E8%AF%BB%E4%B9%A6-programming-javascript-applications/">
+<link crossorigin="anonymous" href="/chester-blog/assets/css/stylesheet.a3b4d2cae219ae904272a1beae2d019e95573341f245e12d4effba204604461c.css" integrity="sha256-o7TSyuIZrpBCcqG&#43;ri0BnpVXM0HyReEtTv&#43;6IEYERhw=" rel="preload stylesheet" as="style">
+<script defer crossorigin="anonymous" src="/chester-blog/assets/js/highlight.f413e19d0714851f6474e7ee9632408e58ac146fbdbe62747134bea2fa3415e0.js" integrity="sha256-9BPhnQcUhR9kdOfuljJAjlisFG&#43;9vmJ0cTS&#43;ovo0FeA="
+    onload="hljs.initHighlightingOnLoad();"></script>
+<link rel="icon" href="https://image.lvbibir.cn/blog/avatar.webp">
+<link rel="icon" type="image/png" sizes="16x16" href="https://image.lvbibir.cn/blog/avatar.webp">
+<link rel="icon" type="image/png" sizes="32x32" href="https://image.lvbibir.cn/blog/avatar.webp">
+<link rel="apple-touch-icon" href="https://image.lvbibir.cn/blog/avatar.webp">
+<link rel="mask-icon" href="https://image.lvbibir.cn/blog/avatar.webp">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="zh" href="http://localhost:1313/chester-blog/posts/2018-01-23-%E8%AF%BB%E4%B9%A6-programming-javascript-applications/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --hljs-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript>
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = ""; 
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.25/dist/katex.min.css" integrity="sha384-WcoG4HRXMzYzfCgiyfrySxx90XSl2rxY5mnVY5TwtWE6KLrArNKn0T/mOgNL0Mmi" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.25/dist/katex.min.js" integrity="sha384-J+9dG2KMoiR9hqcFao0IBLwxt6zpcyN68IgwzsCSkbreXUjmNVRhPFTssqdSGjwQ" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.25/dist/contrib/auto-render.min.js" integrity="sha384-hCXGrW6PitJEwbkoStFjeJxv+fSOOQKOPbJxSfM6G5sWZjAyWhXiTIIAmQqnlLlh" crossorigin="anonymous"
+    onload="renderMathInElement(document.body);"></script>
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        renderMathInElement(document.body, {
+            delimiters: [
+                {left: "$$", right: "$$", display: true},
+                {left: "$", right: "$", display: false}
+            ]
+        });
+    });
+</script><meta property="og:title" content="前端系列（四） -Programming-JavaScript-Applications" />
+<meta property="og:description" content="https://www.safaribooksonline.com/library/view/programming-javascript-applications/9781491950289/ch03.html chapter 1 The JavaScript Revolutioin UnderScore.js functional programming testsuite annotated source code 1.1 anatomy of a typical modern JavaScript App 1.1.1 infrascture data store vpn/firewall(protect data store from unauthorized access) black box JSON Restful Web service Layer various third-party APIs,(BaaS) An app server/content management server to route requests and deliver pages to the client static content delivery network(CDN) for cached files(like iamges,javascript,CSS,and client-side templates) The client: Browser 1.1.1.1 NoSQL data stores Document-oriented data stsores commonly store data in XML format, while object-oriented data stores commonly employ the JSON format. JSON-based NoSQL data stores include MongoDB and CouchDB 1.1.1.2 restful json web servies RESTful web services use HTTP verbs to tell the server what action the client intends. The actions supported are: Create a new entry in the resource collection: HTTP POST. Retrieve a resource representation: HTTP GET verb. Update" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://localhost:1313/chester-blog/posts/2018-01-23-%E8%AF%BB%E4%B9%A6-programming-javascript-applications/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2018-01-23T00:01:52+00:00" />
+<meta property="article:modified_time" content="2018-01-23T00:01:52+00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="前端系列（四） -Programming-JavaScript-Applications"/>
+<meta name="twitter:description" content="https://www.safaribooksonline.com/library/view/programming-javascript-applications/9781491950289/ch03.html chapter 1 The JavaScript Revolutioin UnderScore.js functional programming testsuite annotated source code 1.1 anatomy of a typical modern JavaScript App 1.1.1 infrascture data store vpn/firewall(protect data store from unauthorized access) black box JSON Restful Web service Layer various third-party APIs,(BaaS) An app server/content management server to route requests and deliver pages to the client static content delivery network(CDN) for cached files(like iamges,javascript,CSS,and client-side templates) The client: Browser 1.1.1.1 NoSQL data stores Document-oriented data stsores commonly store data in XML format, while object-oriented data stores commonly employ the JSON format. JSON-based NoSQL data stores include MongoDB and CouchDB 1.1.1.2 restful json web servies RESTful web services use HTTP verbs to tell the server what action the client intends. The actions supported are: Create a new entry in the resource collection: HTTP POST. Retrieve a resource representation: HTTP GET verb. Update"/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "📚 文章",
+      "item": "http://localhost:1313/chester-blog/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "前端系列（四） -Programming-JavaScript-Applications",
+      "item": "http://localhost:1313/chester-blog/posts/2018-01-23-%E8%AF%BB%E4%B9%A6-programming-javascript-applications/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "前端系列（四） -Programming-JavaScript-Applications",
+  "name": "前端系列（四） -Programming-JavaScript-Applications",
+  "description": "https://www.safaribooksonline.com/library/view/programming-javascript-applications/9781491950289/ch03.html chapter 1 The JavaScript Revolutioin UnderScore.js functional programming testsuite annotated source code 1.1 anatomy of a typical modern JavaScript App 1.1.1 infrascture data store vpn/firewall(protect data store from unauthorized access) black box JSON Restful Web service Layer various third-party APIs,(BaaS) An app server/content management server to route requests and deliver pages to the client static content delivery network(CDN) for cached files(like iamges,javascript,CSS,and client-side templates) The client: Browser 1.1.1.1 NoSQL data stores Document-oriented data stsores commonly store data in XML format, while object-oriented data stores commonly employ the JSON format. JSON-based NoSQL data stores include MongoDB and CouchDB 1.1.1.2 restful json web servies RESTful web services use HTTP verbs to tell the server what action the client intends. The actions supported are: Create a new entry in the resource collection: HTTP POST. Retrieve a resource representation: HTTP GET verb. Update",
+  "keywords": [
+    "读书"
+  ],
+  "articleBody": "https://www.safaribooksonline.com/library/view/programming-javascript-applications/9781491950289/ch03.html\nchapter 1 The JavaScript Revolutioin UnderScore.js functional programming testsuite annotated source code 1.1 anatomy of a typical modern JavaScript App 1.1.1 infrascture data store vpn/firewall(protect data store from unauthorized access) black box JSON Restful Web service Layer various third-party APIs,(BaaS) An app server/content management server to route requests and deliver pages to the client static content delivery network(CDN) for cached files(like iamges,javascript,CSS,and client-side templates) The client: Browser 1.1.1.1 NoSQL data stores Document-oriented data stsores commonly store data in XML format, while object-oriented data stores commonly employ the JSON format.\nJSON-based NoSQL data stores include MongoDB and CouchDB\n1.1.1.2 restful json web servies RESTful web services use HTTP verbs to tell the server what action the client intends. The actions supported are: Create a new entry in the resource collection: HTTP POST. Retrieve a resource representation: HTTP GET verb. Update (replace) the resource: HTTP PUT. Delete a resource: HTTP DELETE. similar to CRUD (create, retrieve, update, delete) Use PUT to change the user’s display name by hitting /users/userid with the updated user record. Note that this will completely replace the user record, so make sure that the representation you PUT contains everything you want it to contain. chapter2 functions 2.0 intro 2.0.1 programming guidelines don’t repeat yourself do one thing(DOT) keep it simple stupid(KISS) This tends to happen when a single line of code is used to accomplish more than a single atomic goal. less is more 2.1 minimize side effects If your function operates on outside variables, return a copy instead of the original. A pure function has no side effects. It does not alter existing variables or program state in any way, and always returns the same value given the same inputs. Wherever possible, make sure that your functions don’t change anything outside the function itself. Return amended copies rather than originals. Note that you can still alter program state. REST works this way: you get a copy of the data resource (called a representation), manipulate it, and send the copy back to the server. Sometimes performance implications make this advice impractical, but it’s helpful to consider the possibility of using pure functions. 2.2 function definition It’s best to avoid conditional function declarations entirely. Function declaration tends to encourage large piles of loosely related functions to grow in your module, with no real hints about what goes where, whether it’s public or private, or how the functions work together 不推荐深层次的匿名function调用,debug起来很麻烦,因为都没有名字,鼓励下面这种 method literal形式,有关系的funciton通过这种形式组织起来,grouped together littering your stack trace with anonnymous functions var lightBulbAPI = { toggle: function () {}, getState: function () {}, off: function () {}, on: function () {}, blink: function () {} }; 2.2.1 named function expresson Unlike function declarations, the name you assign is only available from within the function From outside the function, you must access the function through the variable it’s assigned to or the parameter it’s passed in on: var lightbulbAPI = { toggle: function toggle() {}, getState: function getState() {}, off: function off() {}, on: function on() {}, blink: function blink() {} }; 2.2.2 lambdas Lambdas are frequently confused with anonymous functions, closures, first-class functions, and higher order functions. The concepts are all similar, but they mean different things. It is common to confuse the words “closure” and “lambda” as synonyms. That is not accurate. Not all lambdas are closures, and not all closures are lambdas. A closure is created when a function references data that is contained outside the function scope. A lambda is a function that is used as a value (assigned to a variable or passed between functions). Some languages support lambdas but do not support closures. Higher-order functions are functions that consume or return functions as data. Lambdas get passed to and/or returned from higher order functions, and a function might be both a lambda and a higher order function, but not all higher order functions are lambdas. If a function is used as an argument or return value, it’s a lambda. 2.2.3 Immediately Invoked Function Expressions (function () { var isOn = false, toggle = function toggle() { isOn = !isOn; return isOn; }, getState = function getState() { // Implementation... }, off = function off() { // Implementation... }, on = function on() { // Implementation... }, blink = function blink() { // Implementation... }, lightbulb = { toggle: toggle, getState: getState, off: off, on: on, blink: blink }; test('Prototypes with IIFE.', function () { equal(lightbulb.toggle(), true, 'Lightbulb turns on.'); equal(lightbulb.toggle(), false, 'Lightbulb turns off.'); }); }()); 2.2.4 method context Method invocation applies the function to the object to which it is attached. It takes the form object.methodName() (dot notation) or object['methodName']() (square bracket notation) someMethod.call(context, argument1, argument2, ...); someMethod.apply(context, someArray); toggle = lightbulb.toggle.bind(lightbulb); 这样 toggle代码中的this总是指向 lightbulb,如果不这样bind,那么this可能会指向更上层的object 2.3 function scope Variable scope is the section of code in which the identifier refers to the expected value. Outside a variable’s scope, the variable is undefined or replaced by another variable with the same name. The desire to use block scope can be a good code smell that indicates that it may be time to break a function into smaller pieces in order to encourage readability, organization, and code reuse. It’s a good idea to keep functions small. 2.3.1 hoisting JavaScript builds its execution environment in two passes. The declaration pass sets up the runtime environment, where it scans for all variable and function declarations and creates the identifiers. The second pass is the execution pass. After the first pass, all declared functions are available, but variables are still undefined. var x = 1; (function () { console.log(x); var x = 2; }()); 等同于 var x = 1; (function () { var x; // Declaration is hoisted and x is undefined. console.log(x); x = 2; // Initialization is still down here. }()); 结果是undefined Functions behave a little differently. Both the identifier number and the function body are hoisted, test('Function declaration hoisting', function () { function number() { return 1; } (function () { equal(number(), 2, 'Inner scope wins.'); function number() { return 2; } }()); equal(number(), 1, 'Outer scope still works.'); }); 等价于 test('Function declaration hoisted.', function () { function number() { return 1; } (function () { function number() { return 2; } equal(number(), 2, 'Inner scope wins.'); }()); equal(number(), 1, 'Outer scope still works.'); }); Function expressions do not share this behavior, because they do not declare a function. Instead, they declare a variable and are subject to the same variable-hoisting behavior: If you declare all of your variables at the top of your function, and define your functions before you try to use them, you’ll never need to worry about any of this. This practice can substantially reduce scope-related bugs. 2.3.2 closures In a nutshell, a closure stores function state, even after the function has returned. To create a closure, simply define a function inside another function and expose it. To expose a function, return it or pass it to another function. The inner function will have access to the variables declared in the outer function. This technique is commonly used to give objects data privacy.\n2.4 Method Design some principle Keep It Simple, Stupid (KISS) Do One Thing (DOT), and do it well Don’t Repeat Yourself (DRY) 2.4.1 named parameters var newUser = createUser({ name: 'Mike', showInSearch: false }); //or 这种方法不更改其他object,创建了新的object,是的代码可重用 return $.extend({}, userProto, options); 2.4.2 Function Polymorphism 基于conditon logic branch 实现多态\nThis manual style of dynamic dispatch is a common technique in jQuery plug-ins in order to enable developers to add many methods to a plug-in without adding them all to the jQuery prototype (jQuery.fn). Using this technique, you can claim a single name on the jQuery prototype and add as many methods as you like to it. Users then select the method they want to invoke using: $(selection).yourPlugin('methodName', params);\n2.4.3 Generics and Collection Polymorphism 2.4.4 function chaining and fluent APIS Chaining has its disadvantages. It can encourage you to do too much in a single line of code, it can encourage you to write too much procedural code, and it can be difficult to debug. It’s tough to set a breakpoint in the middle of a chain.\n2.5 Functional programming 2.5.1 stateless functions (pure functions) Pure functions are stateless. This means that they do not use or modify variables, objects, or arrays that were defined outside the function. Given the same inputs, stateless functions will always return the same output. Stateless functions won’t break if you call them at different times.\nTo maximize code reuse, try to make as many functions as possible both stateless and generic (or polymorphic). Many jQuery methods satisfy both requirements. Such functions tend to be very useful library methods.\n2.5.2 partial application and currying You may have heard this process described as currying. The two are commonly confused, but there is a difference. Currying is the process of transforming a function that takes multiple arguments into a chain of functions, each of which takes no more than one argument.\n2.6 Asynchronous Operations 2.6.2 Promises and Deferreds The difference between a promise and a callback is that a promise is an object that gets returned from the callee, instead of a function that gets passed into and invoked by the callee. With promises, it’s much easier to add additional callbacks if you need them and to isolate those callbacks from each other so that the callback code can be organized independently of the initiating call.\nchapter 3 objects Primitive types behave like objects when you use the property access notations, but you can’t assign new properties to them. Primitives get wrapped with an object temporarily, and then that object is immediately thrown away. Any attempt to assign values to properties will seem to succeed, but subsequent attempts to access that new property will fail.\nit’s possible to create an object on demand at the precise moment it’s needed (lazy instantiation), the singleton is reduced to an object literal.\nJavaScript is not a classical OO language. It’s a prototypal language.\n3.1 classical inheritance is obsolete Those who are unaware they are walking in darkness will never seek the light.\ntwo foundational principles of object-oriented design:\nProgram to an interface, not an implementation. Favor object composition over class inheritance. Classical inheritance breaks the principle of encapsulation and tightly couples the child class to its ancestors.\ninheritance causes several problems: tight coupling Multiple inheritance is complicated Brittle architecture The gorilla/banana problem ",
+  "wordCount" : "1926",
+  "inLanguage": "zh",
+  "datePublished": "2018-01-23T00:01:52Z",
+  "dateModified": "2018-01-23T00:01:52Z",
+  "author":{
+    "@type": "Person",
+    "name": "lvbibir"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "http://localhost:1313/chester-blog/posts/2018-01-23-%E8%AF%BB%E4%B9%A6-programming-javascript-applications/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Chester's Blog",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://image.lvbibir.cn/blog/avatar.webp"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="http://localhost:1313/chester-blog/" accesskey="h" title="Chester&#39;s Blog (Alt + H)">
+                <img src="https://image.lvbibir.cn/blog/avatar.webp" alt="" aria-label="logo"
+                    height="35">Chester&#39;s Blog</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+                <ul class="lang-switch"><li>|</li>
+                </ul>
+            </div>
+        </div>
+        <ul id="menu">
+            <li class="menu-item">
+                <a href="http://localhost:1313/chester-blog/categories" title="🤙🏿 分类">
+                    <span>🤙🏿 分类</span>
+                    
+                </a>
+            
+            </li>
+            <li class="menu-item">
+                <a href="http://localhost:1313/chester-blog/tags" title="🏷️ 标签">
+                    <span>🏷️ 标签</span>
+                    
+                </a>
+            
+            </li>
+            <li class="menu-item">
+                <a href="http://localhost:1313/chester-blog/archives" title="📈 归档">
+                    <span>📈 归档</span>
+                    
+                </a>
+            
+            </li>
+            <li class="menu-item">
+                <a href="http://localhost:1313/chester-blog/talk" title="💬 说说">
+                    <span>💬 说说</span>
+                    
+                </a>
+            
+            </li>
+            <li class="menu-item">
+                <a href="http://localhost:1313/chester-blog/search" title="🔍 搜索 (Alt &#43; /)" accesskey=/>
+                    <span>🔍 搜索</span>
+                    
+                </a>
+            
+            </li>
+            <li class="menu-item">
+                <a href="http://localhost:1313/chester-blog/about" title="🙋🏻‍♂️ 关于">
+                    <span>🙋🏻‍♂️ 关于</span>
+                    
+                </a>
+            
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main page">
+<article class="post-single">
+    <div id="single-content">
+        <header class="post-header">
+            <div class="breadcrumbs"><a href="http://localhost:1313/chester-blog/">主页</a>&nbsp;»&nbsp;<a href="http://localhost:1313/chester-blog/posts/">📚 文章</a></div>
+            <h1 class="post-title">
+                前端系列（四） -Programming-JavaScript-Applications
+            </h1>
+            <div class="post-meta">创建: 2018-01-23 | 更新: 2018-01-23 | 字数: 1926字 | 作者:lvbibir
+
+
+                |&nbsp;标签:&nbsp;
+                <ul class="post-tags-meta">
+                    <a href="http://localhost:1313/chester-blog/tags/%E8%AF%BB%E4%B9%A6/">读书</a>
+                </ul>
+
+                
+                <span id="busuanzi_container_page_pv">
+                    &nbsp;|&nbsp;访问:&nbsp;<span id="busuanzi_value_page_pv"></span>
+                </span>
+
+</div>
+        </header> <aside id="toc-container" class="toc-container wide">
+    <div class="toc">
+        <details  open>
+        <summary accesskey="c" title="(Alt + C)">
+            <span class="details">目录</span>
+        </summary>
+
+        <div class="inner"><ul>
+                <li>
+                    <a href="#chapter-1-the-javascript-revolutioin" aria-label="chapter 1 The JavaScript Revolutioin">chapter 1 The JavaScript Revolutioin</a><ul>
+                        
+                <li>
+                    <a href="#11-anatomy-of-a-typical-modern-javascript-app" aria-label="1.1 anatomy of a typical modern JavaScript App">1.1 anatomy of a typical modern JavaScript App</a><ul>
+                        
+                <li>
+                    <a href="#111-infrascture" aria-label="1.1.1 infrascture">1.1.1 infrascture</a><ul>
+                        
+                <li>
+                    <a href="#1111-nosql-data-stores" aria-label="1.1.1.1 NoSQL data stores">1.1.1.1 NoSQL data stores</a></li>
+                <li>
+                    <a href="#1112-restful-json-web-servies" aria-label="1.1.1.2 restful json web servies">1.1.1.2 restful json web servies</a></li></ul>
+                </li></ul>
+                </li></ul>
+                </li>
+                <li>
+                    <a href="#chapter2-functions" aria-label="chapter2 functions">chapter2 functions</a><ul>
+                        
+                <li>
+                    <a href="#20-intro" aria-label="2.0 intro">2.0 intro</a><ul>
+                        
+                <li>
+                    <a href="#201-programming-guidelines" aria-label="2.0.1 programming guidelines">2.0.1 programming guidelines</a></li></ul>
+                </li>
+                <li>
+                    <a href="#21-minimize-side-effects" aria-label="2.1 minimize side effects">2.1 minimize side effects</a></li>
+                <li>
+                    <a href="#22-function-definition" aria-label="2.2 function definition">2.2 function definition</a><ul>
+                        
+                <li>
+                    <a href="#221-named-function-expresson" aria-label="2.2.1 named function expresson">2.2.1 named function expresson</a></li>
+                <li>
+                    <a href="#222-lambdas" aria-label="2.2.2 lambdas">2.2.2 lambdas</a></li>
+                <li>
+                    <a href="#223-immediately-invoked-function-expressions" aria-label="2.2.3 Immediately Invoked Function Expressions">2.2.3 Immediately Invoked Function Expressions</a></li>
+                <li>
+                    <a href="#224-method-context" aria-label="2.2.4 method context">2.2.4 method context</a></li></ul>
+                </li>
+                <li>
+                    <a href="#23-function-scope" aria-label="2.3 function scope">2.3 function scope</a><ul>
+                        
+                <li>
+                    <a href="#231-hoisting" aria-label="2.3.1 hoisting">2.3.1 hoisting</a></li>
+                <li>
+                    <a href="#232-closures" aria-label="2.3.2 closures">2.3.2 closures</a></li></ul>
+                </li>
+                <li>
+                    <a href="#24-method-design" aria-label="2.4 Method Design">2.4 Method Design</a><ul>
+                        
+                <li>
+                    <a href="#241-named-parameters" aria-label="2.4.1 named parameters">2.4.1 named parameters</a></li>
+                <li>
+                    <a href="#242-function-polymorphism" aria-label="2.4.2 Function Polymorphism">2.4.2 Function Polymorphism</a></li>
+                <li>
+                    <a href="#243-generics-and-collection-polymorphism" aria-label="2.4.3 Generics and Collection Polymorphism">2.4.3 Generics and Collection Polymorphism</a></li>
+                <li>
+                    <a href="#244--function-chaining-and-fluent-apis" aria-label="2.4.4  function chaining and fluent APIS">2.4.4  function chaining and fluent APIS</a></li></ul>
+                </li>
+                <li>
+                    <a href="#25-functional-programming" aria-label="2.5 Functional programming">2.5 Functional programming</a><ul>
+                        
+                <li>
+                    <a href="#251-stateless-functions-pure-functions" aria-label="2.5.1 stateless functions (pure functions)">2.5.1 stateless functions (pure functions)</a></li>
+                <li>
+                    <a href="#252-partial-application-and-currying" aria-label="2.5.2 partial application and currying">2.5.2 partial application and currying</a></li></ul>
+                </li>
+                <li>
+                    <a href="#26--asynchronous-operations" aria-label="2.6  Asynchronous Operations">2.6  Asynchronous Operations</a><ul>
+                        
+                <li>
+                    <a href="#262-promises-and-deferreds" aria-label="2.6.2 Promises and Deferreds">2.6.2 Promises and Deferreds</a></li></ul>
+                </li></ul>
+                </li>
+                <li>
+                    <a href="#chapter-3-objects" aria-label="chapter 3 objects">chapter 3 objects</a><ul>
+                        
+                <li>
+                    <a href="#31-classical-inheritance-is-obsolete" aria-label="3.1 classical inheritance is obsolete">3.1 classical inheritance is obsolete</a>
+                </li>
+            </ul>
+            </li>
+            </ul>
+        </div>
+        </details>
+    </div>
+</aside>
+<script>
+    let activeElement;
+    let elements;
+    window.addEventListener('DOMContentLoaded', function (event) {
+        checkTocPosition();
+
+        elements = document.querySelectorAll('h1[id],h2[id],h3[id],h4[id],h5[id],h6[id]');
+        
+        activeElement = elements[0];
+        const id = encodeURI(activeElement.getAttribute('id')).toLowerCase();
+        document.querySelector(`.inner ul li a[href="#${id}"]`).classList.add('active');
+    }, false);
+
+    window.addEventListener('resize', function(event) {
+        checkTocPosition();
+    }, false);
+
+    window.addEventListener('scroll', () => {
+        
+        activeElement = Array.from(elements).find((element) => {
+            if ((getOffsetTop(element) - window.pageYOffset) > 0 &&
+                (getOffsetTop(element) - window.pageYOffset) < window.innerHeight/2) {
+                return element;
+            }
+        }) || activeElement
+
+        elements.forEach(element => {
+            const id = encodeURI(element.getAttribute('id')).toLowerCase();
+            if (element === activeElement){
+                document.querySelector(`.inner ul li a[href="#${id}"]`).classList.add('active');
+            } else {
+                document.querySelector(`.inner ul li a[href="#${id}"]`).classList.remove('active');
+            }
+        })
+    }, false);
+
+    const main = parseInt(getComputedStyle(document.body).getPropertyValue('--article-width'), 10);
+    const toc = parseInt(getComputedStyle(document.body).getPropertyValue('--toc-width'), 10);
+    const gap = parseInt(getComputedStyle(document.body).getPropertyValue('--gap'), 10);
+
+    function checkTocPosition() {
+        const width = document.body.scrollWidth;
+        if (width - main - (toc * 2) - (gap * 4) > 0) {
+            document.getElementById("toc-container").classList.add("wide");
+        } else {
+            document.getElementById("toc-container").classList.remove("wide");
+        }
+    }
+
+    function getOffsetTop(element) {
+        if (!element.getClientRects().length) {
+            return 0;
+        }
+        let rect = element.getBoundingClientRect();
+        let win = element.ownerDocument.defaultView;
+        return rect.top + win.pageYOffset;
+    }
+</script>
+        <div class="post-content"><p><a href="https://www.safaribooksonline.com/library/view/programming-javascript-applications/9781491950289/ch03.html" target="_blank" rel="noopener" style="color:#42b983";>https://www.safaribooksonline.com/library/view/programming-javascript-applications/9781491950289/ch03.html</a></p>
+<h1 id="chapter-1-the-javascript-revolutioin">chapter 1 The JavaScript Revolutioin<a hidden class="anchor" aria-hidden="true" href="#chapter-1-the-javascript-revolutioin">#</a></h1>
+<ul>
+<li><a href="http://underscorejs.org/" target="_blank" rel="noopener" style="color:#42b983";>UnderScore.js</a> functional programming
+<ul>
+<li><a href="http://underscorejs.org/test/" target="_blank" rel="noopener" style="color:#42b983";>testsuite</a></li>
+<li><a href="http://underscorejs.org/docs/underscore.html" target="_blank" rel="noopener" style="color:#42b983";>annotated source code</a></li>
+</ul>
+</li>
+</ul>
+<h2 id="11-anatomy-of-a-typical-modern-javascript-app">1.1 anatomy of a typical modern JavaScript App<a hidden class="anchor" aria-hidden="true" href="#11-anatomy-of-a-typical-modern-javascript-app">#</a></h2>
+<h3 id="111-infrascture">1.1.1 infrascture<a hidden class="anchor" aria-hidden="true" href="#111-infrascture">#</a></h3>
+<ul>
+<li>data store</li>
+<li>vpn/firewall(protect data store from unauthorized access)</li>
+<li>black box JSON Restful Web service Layer</li>
+<li>various third-party APIs,(BaaS)</li>
+<li>An app server/content management server to route requests and deliver pages to the client</li>
+<li>static content delivery network(CDN) for cached files(like iamges,javascript,CSS,and client-side templates)</li>
+<li>The client: Browser
+<img loading="lazy" src="http://orm-chimera-prod.s3.amazonaws.com/1234000000262/images/pjap_0101.png" alt="infracsturetures"  />
+</li>
+</ul>
+<h4 id="1111-nosql-data-stores">1.1.1.1 NoSQL data stores<a hidden class="anchor" aria-hidden="true" href="#1111-nosql-data-stores">#</a></h4>
+<p>Document-oriented data stsores commonly store data in XML format, while object-oriented data stores commonly employ the JSON format.</p>
+<p>JSON-based NoSQL data stores include MongoDB and CouchDB</p>
+<h4 id="1112-restful-json-web-servies">1.1.1.2 restful json web servies<a hidden class="anchor" aria-hidden="true" href="#1112-restful-json-web-servies">#</a></h4>
+<ul>
+<li>RESTful web services use HTTP verbs to tell the server what action the client intends. The actions supported are:
+<ul>
+<li>Create a new entry in the resource collection: HTTP POST.</li>
+<li>Retrieve a resource representation: HTTP GET verb.</li>
+<li>Update (replace) the resource: HTTP PUT.</li>
+<li>Delete a resource: HTTP DELETE.</li>
+<li>similar to  CRUD (create, retrieve, update, delete)</li>
+<li>Use PUT to change the user&rsquo;s display name by hitting /users/userid with the updated user record. Note that this will completely replace the user record, so make sure that the representation you PUT contains everything you want it to contain.</li>
+</ul>
+</li>
+</ul>
+<p><img loading="lazy" src="http://orm-chimera-prod.s3.amazonaws.com/1234000000262/images/pjap_0102.png" alt="restful sequence"  />
+</p>
+<h1 id="chapter2-functions">chapter2 functions<a hidden class="anchor" aria-hidden="true" href="#chapter2-functions">#</a></h1>
+<h2 id="20-intro">2.0 intro<a hidden class="anchor" aria-hidden="true" href="#20-intro">#</a></h2>
+<h3 id="201-programming-guidelines">2.0.1 programming guidelines<a hidden class="anchor" aria-hidden="true" href="#201-programming-guidelines">#</a></h3>
+<ul>
+<li>don&rsquo;t repeat yourself</li>
+<li>do one thing(DOT)</li>
+<li>keep it simple stupid(KISS)
+<ul>
+<li>This tends to happen when a single line of code is used to accomplish more than a single atomic goal.</li>
+</ul>
+</li>
+<li>less is more</li>
+</ul>
+<h2 id="21-minimize-side-effects">2.1 minimize side effects<a hidden class="anchor" aria-hidden="true" href="#21-minimize-side-effects">#</a></h2>
+<ul>
+<li>If your function operates on outside variables, return a copy instead of the original.</li>
+<li>A pure function has no side effects. It does not alter existing variables or program state in any way, and always returns the same value given the same inputs.</li>
+<li>Wherever possible, make sure that your functions don&rsquo;t change anything outside the function itself. Return amended copies rather than originals. Note that you can still alter program state. REST works this way: you get a copy of the data resource (called a representation), manipulate it, and send the copy back to the server. Sometimes performance implications make this advice impractical, but it&rsquo;s helpful to consider the possibility of using pure functions.</li>
+</ul>
+<h2 id="22-function-definition">2.2 function definition<a hidden class="anchor" aria-hidden="true" href="#22-function-definition">#</a></h2>
+<ul>
+<li>It&rsquo;s best to avoid conditional function declarations entirely.</li>
+<li>Function declaration tends to encourage large piles of loosely related functions to grow in your module, with no real hints about what goes where, whether it’s public or private, or how the functions work together</li>
+<li>不推荐深层次的匿名function调用,debug起来很麻烦,因为都没有名字,鼓励下面这种 method literal形式,有关系的funciton通过这种形式组织起来,grouped together
+<ul>
+<li>littering your stack trace with anonnymous functions</li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#815ba4">var</span> <span style="color:#06b6ef">lightBulbAPI</span> <span style="color:#5bc4bf">=</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#06b6ef">toggle</span><span style="color:#5bc4bf">:</span> <span style="color:#815ba4">function</span> () {},
+</span></span><span style="display:flex;"><span>    <span style="color:#06b6ef">getState</span><span style="color:#5bc4bf">:</span> <span style="color:#815ba4">function</span> () {},
+</span></span><span style="display:flex;"><span>    <span style="color:#06b6ef">off</span><span style="color:#5bc4bf">:</span> <span style="color:#815ba4">function</span> () {},
+</span></span><span style="display:flex;"><span>    <span style="color:#06b6ef">on</span><span style="color:#5bc4bf">:</span> <span style="color:#815ba4">function</span> () {},
+</span></span><span style="display:flex;"><span>    <span style="color:#06b6ef">blink</span><span style="color:#5bc4bf">:</span> <span style="color:#815ba4">function</span> () {}
+</span></span><span style="display:flex;"><span>  };
+</span></span></code></pre></div><h3 id="221-named-function-expresson">2.2.1 named function expresson<a hidden class="anchor" aria-hidden="true" href="#221-named-function-expresson">#</a></h3>
+<ul>
+<li>Unlike function declarations, the name you assign is only available from within the function</li>
+<li>From outside the function, you must access the function through the variable it&rsquo;s assigned to or the parameter it&rsquo;s passed in on:</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span>    <span style="color:#815ba4">var</span> <span style="color:#06b6ef">lightbulbAPI</span> <span style="color:#5bc4bf">=</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#06b6ef">toggle</span><span style="color:#5bc4bf">:</span> <span style="color:#815ba4">function</span> <span style="color:#06b6ef">toggle</span>() {},
+</span></span><span style="display:flex;"><span>    <span style="color:#06b6ef">getState</span><span style="color:#5bc4bf">:</span> <span style="color:#815ba4">function</span> <span style="color:#06b6ef">getState</span>() {},
+</span></span><span style="display:flex;"><span>    <span style="color:#06b6ef">off</span><span style="color:#5bc4bf">:</span> <span style="color:#815ba4">function</span> <span style="color:#06b6ef">off</span>() {},
+</span></span><span style="display:flex;"><span>    <span style="color:#06b6ef">on</span><span style="color:#5bc4bf">:</span> <span style="color:#815ba4">function</span> <span style="color:#06b6ef">on</span>() {},
+</span></span><span style="display:flex;"><span>    <span style="color:#06b6ef">blink</span><span style="color:#5bc4bf">:</span> <span style="color:#815ba4">function</span> <span style="color:#06b6ef">blink</span>() {}
+</span></span><span style="display:flex;"><span>  };
+</span></span></code></pre></div><h3 id="222-lambdas">2.2.2 lambdas<a hidden class="anchor" aria-hidden="true" href="#222-lambdas">#</a></h3>
+<ul>
+<li>Lambdas are frequently confused with anonymous functions, closures, first-class functions, and higher order functions. The concepts are all similar, but they mean different things.</li>
+<li>It is common to confuse the words &ldquo;closure&rdquo; and &ldquo;lambda&rdquo; as synonyms. That is not accurate. Not all lambdas are closures, and not all closures are lambdas. A closure is created when a function references data that is contained outside the function scope. A lambda is a function that is used as a value (assigned to a variable or passed between functions). Some languages support lambdas but do not support closures.</li>
+<li>Higher-order functions are functions that consume or return functions as data. Lambdas get passed to and/or returned from higher order functions, and a function might be both a lambda and a higher order function, but not all higher order functions are lambdas.</li>
+<li>If a function is used as an argument or return value, it&rsquo;s a lambda.</li>
+</ul>
+<h3 id="223-immediately-invoked-function-expressions">2.2.3 Immediately Invoked Function Expressions<a hidden class="anchor" aria-hidden="true" href="#223-immediately-invoked-function-expressions">#</a></h3>
+<div class="highlight"><pre tabindex="0" style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span>(<span style="color:#815ba4">function</span> () {
+</span></span><span style="display:flex;"><span>  <span style="color:#815ba4">var</span> <span style="color:#06b6ef">isOn</span> <span style="color:#5bc4bf">=</span> <span style="color:#815ba4">false</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#06b6ef">toggle</span> <span style="color:#5bc4bf">=</span> <span style="color:#815ba4">function</span> <span style="color:#06b6ef">toggle</span>() {
+</span></span><span style="display:flex;"><span>      <span style="color:#06b6ef">isOn</span> <span style="color:#5bc4bf">=</span> <span style="color:#5bc4bf">!</span><span style="color:#06b6ef">isOn</span>;
+</span></span><span style="display:flex;"><span>      <span style="color:#815ba4">return</span> <span style="color:#06b6ef">isOn</span>;
+</span></span><span style="display:flex;"><span>    },
+</span></span><span style="display:flex;"><span>    <span style="color:#06b6ef">getState</span> <span style="color:#5bc4bf">=</span> <span style="color:#815ba4">function</span> <span style="color:#06b6ef">getState</span>() {
+</span></span><span style="display:flex;"><span>      <span style="color:#776e71">// Implementation...
+</span></span></span><span style="display:flex;"><span><span style="color:#776e71"></span>    },
+</span></span><span style="display:flex;"><span>    <span style="color:#06b6ef">off</span> <span style="color:#5bc4bf">=</span> <span style="color:#815ba4">function</span> <span style="color:#06b6ef">off</span>() {
+</span></span><span style="display:flex;"><span>      <span style="color:#776e71">// Implementation...
+</span></span></span><span style="display:flex;"><span><span style="color:#776e71"></span>    },
+</span></span><span style="display:flex;"><span>    <span style="color:#06b6ef">on</span> <span style="color:#5bc4bf">=</span> <span style="color:#815ba4">function</span> <span style="color:#06b6ef">on</span>() {
+</span></span><span style="display:flex;"><span>      <span style="color:#776e71">// Implementation...
+</span></span></span><span style="display:flex;"><span><span style="color:#776e71"></span>    },
+</span></span><span style="display:flex;"><span>    <span style="color:#06b6ef">blink</span> <span style="color:#5bc4bf">=</span> <span style="color:#815ba4">function</span> <span style="color:#06b6ef">blink</span>() {
+</span></span><span style="display:flex;"><span>      <span style="color:#776e71">// Implementation...
+</span></span></span><span style="display:flex;"><span><span style="color:#776e71"></span>    },
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#06b6ef">lightbulb</span> <span style="color:#5bc4bf">=</span> {
+</span></span><span style="display:flex;"><span>      <span style="color:#06b6ef">toggle</span><span style="color:#5bc4bf">:</span> <span style="color:#06b6ef">toggle</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#06b6ef">getState</span><span style="color:#5bc4bf">:</span> <span style="color:#06b6ef">getState</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#06b6ef">off</span><span style="color:#5bc4bf">:</span> <span style="color:#06b6ef">off</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#06b6ef">on</span><span style="color:#5bc4bf">:</span> <span style="color:#06b6ef">on</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#06b6ef">blink</span><span style="color:#5bc4bf">:</span> <span style="color:#06b6ef">blink</span>
+</span></span><span style="display:flex;"><span>    };
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06b6ef">test</span>(<span style="color:#48b685">&#39;Prototypes with IIFE.&#39;</span>, <span style="color:#815ba4">function</span> () {
+</span></span><span style="display:flex;"><span>    <span style="color:#06b6ef">equal</span>(<span style="color:#06b6ef">lightbulb</span>.<span style="color:#06b6ef">toggle</span>(), <span style="color:#815ba4">true</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#48b685">&#39;Lightbulb turns on.&#39;</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#06b6ef">equal</span>(<span style="color:#06b6ef">lightbulb</span>.<span style="color:#06b6ef">toggle</span>(), <span style="color:#815ba4">false</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#48b685">&#39;Lightbulb turns off.&#39;</span>);
+</span></span><span style="display:flex;"><span>  });
+</span></span><span style="display:flex;"><span>}());
+</span></span></code></pre></div><h3 id="224-method-context">2.2.4 method context<a hidden class="anchor" aria-hidden="true" href="#224-method-context">#</a></h3>
+<ul>
+<li>Method invocation applies the function to the object to which it is attached. It takes the form <code>object.methodName() (dot notation) or object['methodName']() (square bracket notation)</code></li>
+<li><code>someMethod.call(context, argument1, argument2, ...);</code></li>
+<li><code>someMethod.apply(context, someArray);</code></li>
+<li><code>toggle = lightbulb.toggle.bind(lightbulb);</code>  这样 toggle代码中的this总是指向 lightbulb,如果不这样bind,那么this可能会指向更上层的object</li>
+</ul>
+<h2 id="23-function-scope">2.3 function scope<a hidden class="anchor" aria-hidden="true" href="#23-function-scope">#</a></h2>
+<ul>
+<li>Variable scope is the section of code in which the identifier refers to the expected value. Outside a variable&rsquo;s scope, the variable is undefined or replaced by another variable with the same name.</li>
+<li>The desire to use block scope can be a good code smell that indicates that it may be time to break a function into smaller pieces in order to encourage readability, organization, and code reuse. It&rsquo;s a good idea to keep functions small.</li>
+</ul>
+<h3 id="231-hoisting">2.3.1 hoisting<a hidden class="anchor" aria-hidden="true" href="#231-hoisting">#</a></h3>
+<ul>
+<li>JavaScript builds its execution environment in two passes. The declaration pass sets up the runtime environment, where it scans for all variable and function declarations and creates the identifiers. The second pass is the execution pass. After the first pass, all declared functions are available, but variables are still undefined.</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#815ba4">var</span> <span style="color:#06b6ef">x</span> <span style="color:#5bc4bf">=</span> <span style="color:#f99b15">1</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>(<span style="color:#815ba4">function</span> () {
+</span></span><span style="display:flex;"><span>  <span style="color:#06b6ef">console</span>.<span style="color:#06b6ef">log</span>(<span style="color:#06b6ef">x</span>);
+</span></span><span style="display:flex;"><span>  <span style="color:#815ba4">var</span> <span style="color:#06b6ef">x</span> <span style="color:#5bc4bf">=</span> <span style="color:#f99b15">2</span>;
+</span></span><span style="display:flex;"><span>}());
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#06b6ef">等同于</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#815ba4">var</span> <span style="color:#06b6ef">x</span> <span style="color:#5bc4bf">=</span> <span style="color:#f99b15">1</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>(<span style="color:#815ba4">function</span> () {
+</span></span><span style="display:flex;"><span>  <span style="color:#815ba4">var</span> <span style="color:#06b6ef">x</span>; <span style="color:#776e71">// Declaration is hoisted and x is undefined.
+</span></span></span><span style="display:flex;"><span><span style="color:#776e71"></span>  <span style="color:#06b6ef">console</span>.<span style="color:#06b6ef">log</span>(<span style="color:#06b6ef">x</span>);
+</span></span><span style="display:flex;"><span>  <span style="color:#06b6ef">x</span> <span style="color:#5bc4bf">=</span> <span style="color:#f99b15">2</span>; <span style="color:#776e71">// Initialization is still down here.
+</span></span></span><span style="display:flex;"><span><span style="color:#776e71"></span>}());
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#06b6ef">结果是undefined</span>
+</span></span></code></pre></div><ul>
+<li>Functions behave a little differently. Both the identifier number and the function body are hoisted,</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#06b6ef">test</span>(<span style="color:#48b685">&#39;Function declaration hoisting&#39;</span>, <span style="color:#815ba4">function</span> () {
+</span></span><span style="display:flex;"><span>  <span style="color:#815ba4">function</span> <span style="color:#06b6ef">number</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#815ba4">return</span> <span style="color:#f99b15">1</span>;
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  (<span style="color:#815ba4">function</span> () {
+</span></span><span style="display:flex;"><span>    <span style="color:#06b6ef">equal</span>(<span style="color:#06b6ef">number</span>(), <span style="color:#f99b15">2</span>, <span style="color:#48b685">&#39;Inner scope wins.&#39;</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#815ba4">function</span> <span style="color:#06b6ef">number</span>() {
+</span></span><span style="display:flex;"><span>      <span style="color:#815ba4">return</span> <span style="color:#f99b15">2</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>  }());
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06b6ef">equal</span>(<span style="color:#06b6ef">number</span>(), <span style="color:#f99b15">1</span>, <span style="color:#48b685">&#39;Outer scope still works.&#39;</span>);
+</span></span><span style="display:flex;"><span>});
+</span></span><span style="display:flex;"><span><span style="color:#06b6ef">等价于</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#06b6ef">test</span>(<span style="color:#48b685">&#39;Function declaration hoisted.&#39;</span>, <span style="color:#815ba4">function</span> () {
+</span></span><span style="display:flex;"><span>  <span style="color:#815ba4">function</span> <span style="color:#06b6ef">number</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#815ba4">return</span> <span style="color:#f99b15">1</span>;
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  (<span style="color:#815ba4">function</span> () {
+</span></span><span style="display:flex;"><span>    <span style="color:#815ba4">function</span> <span style="color:#06b6ef">number</span>() {
+</span></span><span style="display:flex;"><span>      <span style="color:#815ba4">return</span> <span style="color:#f99b15">2</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#06b6ef">equal</span>(<span style="color:#06b6ef">number</span>(), <span style="color:#f99b15">2</span>, <span style="color:#48b685">&#39;Inner scope wins.&#39;</span>);
+</span></span><span style="display:flex;"><span>  }());
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#06b6ef">equal</span>(<span style="color:#06b6ef">number</span>(), <span style="color:#f99b15">1</span>, <span style="color:#48b685">&#39;Outer scope still works.&#39;</span>);
+</span></span><span style="display:flex;"><span>});
+</span></span></code></pre></div><ul>
+<li>Function expressions do not share this behavior, because they do not declare a function. Instead, they declare a variable and are subject to the same variable-hoisting behavior:</li>
+<li>If you declare all of your variables at the top of your function, and define your functions before you try to use them, you&rsquo;ll never need to worry about any of this. This practice can substantially reduce scope-related bugs.</li>
+</ul>
+<h3 id="232-closures">2.3.2 closures<a hidden class="anchor" aria-hidden="true" href="#232-closures">#</a></h3>
+<p>In a nutshell, a closure stores function state, even after the function has returned. To create a closure, simply define a function inside another function and expose it. To expose a function, return it or pass it to another function. The inner function will have access to the variables declared in the outer function. This technique is commonly used to give objects data privacy.</p>
+<h2 id="24-method-design">2.4 Method Design<a hidden class="anchor" aria-hidden="true" href="#24-method-design">#</a></h2>
+<ul>
+<li>some principle
+<ul>
+<li>Keep It Simple, Stupid (KISS)</li>
+<li>Do One Thing (DOT), and do it well</li>
+<li>Don&rsquo;t Repeat Yourself (DRY)</li>
+</ul>
+</li>
+</ul>
+<h3 id="241-named-parameters">2.4.1 named parameters<a hidden class="anchor" aria-hidden="true" href="#241-named-parameters">#</a></h3>
+<div class="highlight"><pre tabindex="0" style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#815ba4">var</span> <span style="color:#06b6ef">newUser</span> <span style="color:#5bc4bf">=</span> <span style="color:#06b6ef">createUser</span>({
+</span></span><span style="display:flex;"><span>  <span style="color:#06b6ef">name</span><span style="color:#5bc4bf">:</span> <span style="color:#48b685">&#39;Mike&#39;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#06b6ef">showInSearch</span><span style="color:#5bc4bf">:</span> <span style="color:#815ba4">false</span>
+</span></span><span style="display:flex;"><span>});
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#776e71">//or 这种方法不更改其他object,创建了新的object,是的代码可重用
+</span></span></span><span style="display:flex;"><span><span style="color:#776e71"></span><span style="color:#815ba4">return</span> <span style="color:#06b6ef">$</span>.<span style="color:#06b6ef">extend</span>({}, <span style="color:#06b6ef">userProto</span>, <span style="color:#06b6ef">options</span>);
+</span></span></code></pre></div><h3 id="242-function-polymorphism">2.4.2 Function Polymorphism<a hidden class="anchor" aria-hidden="true" href="#242-function-polymorphism">#</a></h3>
+<p>基于conditon logic branch 实现多态</p>
+<p>This manual style of dynamic dispatch is a common technique in jQuery plug-ins in order to enable developers to add many methods to a plug-in without adding them all to the jQuery prototype (jQuery.fn). Using this technique, you can claim a single name on the jQuery prototype and add as many methods as you like to it. Users then select the method they want to invoke using:
+<code>$(selection).yourPlugin('methodName', params);</code></p>
+<h3 id="243-generics-and-collection-polymorphism">2.4.3 Generics and Collection Polymorphism<a hidden class="anchor" aria-hidden="true" href="#243-generics-and-collection-polymorphism">#</a></h3>
+<h3 id="244--function-chaining-and-fluent-apis">2.4.4  function chaining and fluent APIS<a hidden class="anchor" aria-hidden="true" href="#244--function-chaining-and-fluent-apis">#</a></h3>
+<p>Chaining has its disadvantages. It can encourage you to do too much in a single line of code, it can encourage you to write too much procedural code, and it can be difficult to debug. It&rsquo;s tough to set a breakpoint in the middle of a chain.</p>
+<h2 id="25-functional-programming">2.5 Functional programming<a hidden class="anchor" aria-hidden="true" href="#25-functional-programming">#</a></h2>
+<h3 id="251-stateless-functions-pure-functions">2.5.1 stateless functions (pure functions)<a hidden class="anchor" aria-hidden="true" href="#251-stateless-functions-pure-functions">#</a></h3>
+<p>Pure functions are stateless. This means that they do not use or modify variables, objects, or arrays that were defined outside the function. Given the same inputs, stateless functions will always return the same output. Stateless functions won&rsquo;t break if you call them at different times.</p>
+<p>To maximize code reuse, try to make as many functions as possible both stateless and generic (or polymorphic). Many jQuery methods satisfy both requirements. Such functions tend to be very useful library methods.</p>
+<h3 id="252-partial-application-and-currying">2.5.2 partial application and currying<a hidden class="anchor" aria-hidden="true" href="#252-partial-application-and-currying">#</a></h3>
+<p>You may have heard this process described as currying. The two are commonly confused, but there is a difference. Currying is the process of transforming a function that takes multiple arguments into a chain of functions, each of which takes no more than one argument.</p>
+<h2 id="26--asynchronous-operations">2.6  Asynchronous Operations<a hidden class="anchor" aria-hidden="true" href="#26--asynchronous-operations">#</a></h2>
+<h3 id="262-promises-and-deferreds">2.6.2 Promises and Deferreds<a hidden class="anchor" aria-hidden="true" href="#262-promises-and-deferreds">#</a></h3>
+<p>The difference between a promise and a callback is that a promise is an object that gets returned from the callee, instead of a function that gets passed into and invoked by the callee. With promises, it&rsquo;s much easier to add additional callbacks if you need them and to isolate those callbacks from each other so that the callback code can be organized independently of the initiating call.</p>
+<h1 id="chapter-3-objects">chapter 3 objects<a hidden class="anchor" aria-hidden="true" href="#chapter-3-objects">#</a></h1>
+<p>Primitive types behave like objects when you use the property access notations, but you can&rsquo;t assign new properties to them. Primitives get wrapped with an object temporarily, and then that object is immediately thrown away. Any attempt to assign values to properties will seem to succeed, but subsequent attempts to access that new property will fail.</p>
+<p>it&rsquo;s possible to create an object on demand at the precise moment it&rsquo;s needed (lazy instantiation), the singleton is reduced to an object literal.</p>
+<p>JavaScript is not a classical OO language. It&rsquo;s a prototypal language.</p>
+<h2 id="31-classical-inheritance-is-obsolete">3.1 classical inheritance is obsolete<a hidden class="anchor" aria-hidden="true" href="#31-classical-inheritance-is-obsolete">#</a></h2>
+<p>Those who are unaware they are walking in darkness will never seek the light.</p>
+<p>two foundational principles of object-oriented design:</p>
+<ul>
+<li>Program to an interface, not an implementation.</li>
+<li>Favor object composition over class inheritance.</li>
+</ul>
+<p>Classical inheritance breaks the principle of encapsulation and tightly couples the child class to its ancestors.</p>
+<ul>
+<li>inheritance causes several problems:
+<ul>
+<li>tight coupling</li>
+<li>Multiple inheritance is complicated</li>
+<li>Brittle architecture</li>
+<li>The gorilla/banana problem</li>
+</ul>
+</li>
+</ul>
+
+
+        </div>
+
+        <footer class="post-footer">
+            
+<nav class="paginav">
+  <a class="prev" href="http://localhost:1313/chester-blog/posts/2018-06-10-dl4j%E7%B3%BB%E5%88%97-%E9%A1%B9%E7%9B%AE%E6%A6%82%E8%A7%88/">
+    <span class="title">« 上一页</span>
+    <br>
+    <span>DAI工程化系列（一） L4j系列-项目概览</span>
+  </a>
+  <a class="next" href="http://localhost:1313/chester-blog/posts/2018-01-22-%E8%AF%BB%E4%B9%A6-static-site-generators/">
+    <span class="title">下一页 »</span>
+    <br>
+    <span>读书-static-site-generators</span>
+  </a>
+</nav>
+
+        </footer>
+    </div>
+
+
+
+<div>
+    <div class="pagination__title">
+        <span class="pagination__title-h" style="font-size: 20px;">💬评论</span>
+        <hr />
+    </div>
+
+    <div id="tcomment"></div>
+
+    <script src="https://image.lvbibir.cn/js/1.6.40/twikoo.all.min.js">
+    </script>
+    
+
+    
+
+    <script>
+        twikoo.init({
+            envId: "https://twikoo.lvbibir.cn/", 
+            el: "#tcomment",
+            lang: 'zh-CN',
+            
+            path: window.TWIKOO_MAGIC_PATH||window.location.pathname,
+            
+            
+            
+            
+            
+            
+            
+        });
+    </script>
+
+</div>
+</article>
+</main>
+
+
+<footer class="footer">
+
+    <a href="https://gohugo.io/" target="_blank">
+        
+        <img style="display: unset;" src="https://image.lvbibir.cn/blog/frame-hugo-blue.svg">
+    </a>
+    <a href="https://github.com/adityatelange/hugo-PaperMod" target="_blank">
+        
+        <img style="display: unset;" src="https://image.lvbibir.cn/blog/theme-papermod-lightgrey.svg">
+    </a>
+    <a href="https://cn.aliyun.com/" target="_blank">
+        
+        <img style="display: unset;" src="https://image.lvbibir.cn/blog/图床-阿里云-orange.svg">
+    </a>
+
+    <br>
+
+    <span id="runtime_span"></span>
+    <script
+        type="text/javascript">function show_runtime() { window.setTimeout("show_runtime()", 1000); X = new Date("11/11/2025 1:00:00"); Y = new Date(); T = (Y.getTime() - X.getTime()); M = 24 * 60 * 60 * 1000; a = T / M; A = Math.floor(a); b = (a - A) * 24; B = Math.floor(b); c = (b - B) * 60; C = Math.floor((b - B) * 60); D = Math.floor((c - C) * 60); runtime_span.innerHTML = "网站已运行" + A + "天" + B + "小时" + C + "分" + D + "秒" } show_runtime();</script>
+    |
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span id="busuanzi_container">
+        
+        总访客数:  <span id="busuanzi_value_site_uv"></span>
+        |
+        总访问量:  <span id="busuanzi_value_site_pv"></span>
+    </span>
+
+    <br>
+
+    
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <span class="topInner">
+        <svg class="topSvg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+            <path d="M12 6H0l6-6z" />
+        </svg>
+        <span id="read_progress"></span>
+    </span>
+</a>
+
+<script>
+    document.addEventListener('scroll', function (e) {
+        const readProgress = document.getElementById("read_progress");
+        const scrollHeight = document.documentElement.scrollHeight;
+        const clientHeight = document.documentElement.clientHeight;
+        const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+        
+        readProgress.innerText = ((scrollTop / (scrollHeight - clientHeight)).toFixed(2) * 100).toFixed(0);
+    })
+</script>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    let mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 400 || document.documentElement.scrollTop > 400) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+
+
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerText = '复制';
+
+        function copyingDone() {
+            copybutton.innerText = '已复制！';
+            setTimeout(() => {
+                copybutton.innerText = '复制';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) {
+            }
+            ;
+            selection.removeRange(range);
+        });
+
+        let language = codeblock.className.replaceAll("language-", "")
+        let macTool = document.createElement("div")
+        let macTool1 = document.createElement("div")
+        let macTool2 = document.createElement("div")
+        let macTool3 = document.createElement("div")
+        let languageType = document.createElement("div")
+        languageType.innerText = language
+        macTool.setAttribute('class', 'mac-tool')
+        macTool1.setAttribute('class', 'mac bb1')
+        macTool2.setAttribute('class', 'mac bb2')
+        macTool3.setAttribute('class', 'mac bb3')
+        languageType.setAttribute('class', 'language-type')
+        macTool.appendChild(macTool1)
+        macTool.appendChild(macTool2)
+        macTool.appendChild(macTool3)
+        macTool.appendChild(languageType)
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+            container.appendChild(macTool)
+        } else if (container.parentNode.firstChild === container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName === "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+            container.appendChild(macTool)
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+            container.appendChild(macTool)
+        }
+    });
+</script>
+
+</body>
+
+</html>

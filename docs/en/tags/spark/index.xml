@@ -2,26 +2,26 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>Spark on Chester&#39;s Blog</title>
-    <link>https://chesterwang.github.io/chester-blog/en/tags/spark/</link>
+    <link>http://localhost:1313/chester-blog/en/tags/spark/</link>
     <description>Recent content in Spark on Chester&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Sun, 17 Jul 2016 00:00:00 +0000</lastBuildDate><atom:link href="https://chesterwang.github.io/chester-blog/en/tags/spark/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 17 Jul 2016 00:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/chester-blog/en/tags/spark/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Ender&#39;s Game 笔记</title>
-      <link>https://chesterwang.github.io/chester-blog/en/posts/2016-07-17-enders-game-notes/</link>
+      <link>http://localhost:1313/chester-blog/en/posts/2016-07-17-enders-game-notes/</link>
       <pubDate>Sun, 17 Jul 2016 00:00:00 +0000</pubDate>
       
-      <guid>https://chesterwang.github.io/chester-blog/en/posts/2016-07-17-enders-game-notes/</guid>
+      <guid>http://localhost:1313/chester-blog/en/posts/2016-07-17-enders-game-notes/</guid>
       <description>故事梗概: 某家庭有三个孩子,老大Peter性情残暴,老二Valentine,老三Ender经常被老大欺负。某日，老三被某军事学校邀请，Ender因无法忍受哥哥的折磨接受了邀请从而逃离了家庭，从此踏上军事训练之路。 训练之中Ender表现突出，并结识了Alai等好友。最终晋级终极训练</description>
     </item>
     
     <item>
       <title>spark dataframe操作总结!</title>
-      <link>https://chesterwang.github.io/chester-blog/en/posts/2016-07-16-spark-dataframe-summary/</link>
+      <link>http://localhost:1313/chester-blog/en/posts/2016-07-16-spark-dataframe-summary/</link>
       <pubDate>Sat, 16 Jul 2016 00:00:00 +0000</pubDate>
       
-      <guid>https://chesterwang.github.io/chester-blog/en/posts/2016-07-16-spark-dataframe-summary/</guid>
+      <guid>http://localhost:1313/chester-blog/en/posts/2016-07-16-spark-dataframe-summary/</guid>
       <description>spark datagrame的操作总结 资料 https://databricks.com/blog/2016/01/04/introducing-apache-spark-datasets.html Spark Datasets, an extension of the DataFrame API that provides a type-safe, object-oriented programming interface. Datasets extend these benefits with compile-time type safety – meaning production applications can be checked for errors before they are run. 这点非常重要，因为在这种大数据应用开发中，构造测试数据和运行测试程序都比较麻烦，有了type-safe就可以省去很多麻烦。 Both APIs make it easy to express the transformation using lambda functions. with Datasets you also have access to all the power of a full</description>
     </item>
     

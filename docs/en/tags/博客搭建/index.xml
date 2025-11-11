@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>博客搭建 on Chester&#39;s Blog</title>
-    <link>https://chesterwang.github.io/chester-blog/en/tags/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/</link>
+    <link>http://localhost:1313/chester-blog/en/tags/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/</link>
     <description>Recent content in 博客搭建 on Chester&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Wed, 06 Jul 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://chesterwang.github.io/chester-blog/en/tags/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 06 Jul 2022 00:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/chester-blog/en/tags/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>【置顶】Hello, hugo!</title>
-      <link>https://chesterwang.github.io/chester-blog/en/posts/blog/hello-hugo/</link>
+      <link>http://localhost:1313/chester-blog/en/posts/blog/hello-hugo/</link>
       <pubDate>Wed, 06 Jul 2022 00:00:00 +0000</pubDate>
       
-      <guid>https://chesterwang.github.io/chester-blog/en/posts/blog/hello-hugo/</guid>
+      <guid>http://localhost:1313/chester-blog/en/posts/blog/hello-hugo/</guid>
       <description>记录 wordpress 迁移至 hugo&#43;papermod 的过程, 包含环境搭建、博客美化、功能实现、速度优化等……</description>
     </item>
     
