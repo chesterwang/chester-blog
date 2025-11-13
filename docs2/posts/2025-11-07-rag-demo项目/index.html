@@ -1,0 +1,2210 @@
+<!DOCTYPE html>
+<html lang="zh" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>个人RAG项目开发记录 | Chester&#39;s Blog</title>
+<meta name="keywords" content="LLM, RAG">
+<meta name="description" content="个人RAG项目的开发记录和笔记">
+<meta name="author" content="作者:Chester">
+<link rel="canonical" href="https://chesterwang.github.io/chester-blog/posts/2025-11-07-rag-demo%E9%A1%B9%E7%9B%AE/">
+<link crossorigin="anonymous" href="/chester-blog/assets/css/stylesheet.3d787722632b03b0bffe0d67e8f4333c75f6538432f31f18a83dfd05a3aeae4b.css" integrity="sha256-PXh3ImMrA7C//g1n6PQzPHX2U4Qy8x8YqD39BaOurks=" rel="preload stylesheet" as="style">
+<script defer crossorigin="anonymous" src="/chester-blog/assets/js/highlight.f413e19d0714851f6474e7ee9632408e58ac146fbdbe62747134bea2fa3415e0.js" integrity="sha256-9BPhnQcUhR9kdOfuljJAjlisFG&#43;9vmJ0cTS&#43;ovo0FeA="
+    onload="hljs.initHighlightingOnLoad();"></script>
+<link rel="icon" href="https://image.lvbibir.cn/blog/avatar.webp">
+<link rel="icon" type="image/png" sizes="16x16" href="https://image.lvbibir.cn/blog/avatar.webp">
+<link rel="icon" type="image/png" sizes="32x32" href="https://image.lvbibir.cn/blog/avatar.webp">
+<link rel="apple-touch-icon" href="https://image.lvbibir.cn/blog/avatar.webp">
+<link rel="mask-icon" href="https://image.lvbibir.cn/blog/avatar.webp">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="zh" href="https://chesterwang.github.io/chester-blog/posts/2025-11-07-rag-demo%E9%A1%B9%E7%9B%AE/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --hljs-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript>
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = ""; 
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+
+ 
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.25/dist/katex.min.css" integrity="sha384-WcoG4HRXMzYzfCgiyfrySxx90XSl2rxY5mnVY5TwtWE6KLrArNKn0T/mOgNL0Mmi" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.25/dist/katex.min.js" integrity="sha384-J+9dG2KMoiR9hqcFao0IBLwxt6zpcyN68IgwzsCSkbreXUjmNVRhPFTssqdSGjwQ" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.25/dist/contrib/auto-render.min.js" integrity="sha384-hCXGrW6PitJEwbkoStFjeJxv+fSOOQKOPbJxSfM6G5sWZjAyWhXiTIIAmQqnlLlh" crossorigin="anonymous"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        renderMathInElement(document.body, {
+          
+          
+          delimiters: [
+              {left: '$$', right: '$$', display: true},
+              {left: '$', right: '$', display: false},
+              {left: '\\(', right: '\\)', display: false},
+              {left: '\\[', right: '\\]', display: true}
+          ],
+          
+          throwOnError : false
+        });
+    });
+</script>
+<meta property="og:title" content="个人RAG项目开发记录" />
+<meta property="og:description" content="个人RAG项目的开发记录和笔记" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://chesterwang.github.io/chester-blog/posts/2025-11-07-rag-demo%E9%A1%B9%E7%9B%AE/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2025-11-07T00:00:00+00:00" />
+<meta property="article:modified_time" content="2025-11-11T00:00:00+00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="个人RAG项目开发记录"/>
+<meta name="twitter:description" content="个人RAG项目的开发记录和笔记"/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "📚 文章",
+      "item": "https://chesterwang.github.io/chester-blog/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "个人RAG项目开发记录",
+      "item": "https://chesterwang.github.io/chester-blog/posts/2025-11-07-rag-demo%E9%A1%B9%E7%9B%AE/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "个人RAG项目开发记录",
+  "name": "个人RAG项目开发记录",
+  "description": "个人RAG项目的开发记录和笔记",
+  "keywords": [
+    "LLM", "RAG"
+  ],
+  "articleBody": "项目环境搭建 如何将requirements.txt中的依赖转移到 uv环境中 uv add -r requirements.txt 如果太慢则加 url uv add -r requirements.txt --index-url https://pypi.tuna.tsinghua.edu.cn/simple ollama搭建 报错 ollama修改模型下载目录之后报错 error: pull model manifest: 503: no healthy upstream 重启服务即可 sudo systemctl stop ollama sudo systemctl start ollama 修改模型目录 sudo ln -s /home/chester/ollama/models /usr/share/ollama/.ollama/ sudo chown ollama /usr/share/ollama/.ollama/models sudo chgrp ollama /usr/share/ollama/.ollama/models 后两条是保证目录的权限问题，不然ollma运行会报错 资料来源 Does anyone know how to change where your models are saved on linux? : r/ollama Ollama(model=“qwen3:0.6b”) 这段代码前提是 系统中 后台启动了ollama服务（linux安装之后会自动加入系统服务，无需手动启动该服务），但并不需要 命令行执行 ollama run model。应该是后台会自动吊起对应的模型进行计算并传回python。 本地运行ollama真的太慢了。 embedding HuggingFaceBgeEmbeddings 在pycharm中运行的时候，要给jupyter server 添加参数，配上http_proxy的代理。在pycharm软件层面设置http_proxy是没用的。 huggingface会下载模型建立本地服务进行计算。 HuggingFaceInferenceAPIEmbeddings 是通过api进行embedding计算，而不是本地进行计算。 httpcore 一直报错没有安装 最后发现是httpcore没有安装好，对应的python包只有元数据没有真实代码，将对应目录删除后重刷uv环境即可。 P01-RAG-Projects P01 chatbot 问题：load_dotenv的机制 load_dotenv 定义如下 默认加载 .env文件，如果当前目录不存在，就不断提升目录层次来查找。 interpolate 用于是否解析字符串中的变量，比如 PATH=${PATH}:/usr/share/bin ，就会把PATH变量进行解析替换。 其中 dotenv.main.resolve_variables 对于interpolate 功能的实现很有意思，使用了正则方法来匹配并分别进行替换。 def load_dotenv( dotenv_path: Optional[StrPath] = None, stream: Optional[IO[str]] = None, verbose: bool = False, override: bool = False, interpolate: bool = True, encoding: Optional[str] = \"utf-8\", ) -\u003e bool: \"\"\"Parse a .env file and then load all the variables found as environment variables. Parameters: dotenv_path: Absolute or relative path to .env file. stream: Text stream (such as `io.StringIO`) with .env content, used if `dotenv_path` is `None`. verbose: Whether to output a warning the .env file is missing. override: Whether to override the system environment variables with the variables from the `.env` file. encoding: Encoding to be used to read the file. Returns: Bool: True if at least one environment variable is set else False If both `dotenv_path` and `stream` are `None`, `find_dotenv()` is used to find the .env file with it's default parameters. If you need to change the default parameters of `find_dotenv()`, you can explicitly call `find_dotenv()` and pass the result to this function as `dotenv_path`. If the environment variable `PYTHON_DOTENV_DISABLED` is set to a truthy value, .env loading is disabled. \"\"\" P02 APIs ChatMessagePromptTemplate 和 ChatPromptTemplate 是两个不同的类，主要区别如下： ChatMessagePromptTemplate 用于表示单个聊天消息的模板 对应单条消息，包含消息的角色（如系统、用户、助手）和内容模板 是构成聊天模板的基本单元 ChatPromptTemplate 用于表示整个聊天对话的模板 可以包含多个 ChatMessagePromptTemplate 实例 用于构建完整的对话历史模板，支持多轮对话场景 简而言之，ChatMessagePromptTemplate 是单条消息模板，而 ChatPromptTemplate 是整个对话模板，后者可以包含多个前者来构建完整的对话上下文。 ChatPromptTemplate from_messages 从若干message中构造模板 from_template 从单个 message 的 template 来构造 HumanMessage，并组装为一个Chat。 FewShotChatMessagePromptTemplate langchain_core.prompts中的各种prompt。 ChatOpenAI的使用方法 langchain_openai.chat_models.base.ChatOpenAI — 🦜🔗 LangChain 0.2.17 StrOutputParser 如何解析chain之前部分的内容 langchain_core.outputs.chat_generation.ChatGeneration.set_text 中指明了从message中的content属性来获取内容。 P04 Retriever and Chain create_stuff_documents_chain RunnablePassthrough 即 identity function，恒等函数，输入什么就输出什么。 RunnablePassthrough.assign ： Merge the Dict input with the output produced by the mapping argument. chain的调用过程 输入：输入数据为dict，有input这个key。 retrieval_docs ：先对 数据进行检索，即从x中获取 input这一项，然后送入检索器。检索器本质上是调用了 __ror__方法，进一步调用了 VectorStoreRetriever的 _get_relevant_documents 方法，进一步调用了 self.vectorstore.similarity_search方法。检索完之后，将相似文档组装为一个item放入到 context这个key下。 数据变为 {input:XXX, context:[docs]}。 format_docs ：检索出相似文档之后，送入format_inputs过程，即将数据中的context项格式为字符串，并用 双换行符进行分隔连接。数据变为 {input:XXX, context:doc_str} prompt： 送入prompt，prompt的invoke方法中本质就是对 template字符串和 上一步计算出的数据进行格式化。 llm：模型给出响应 _output_parser 本质就是对 输出的response消息进行格式化，本质就是提取消息中的key为\"text\"对应的属性。 response=retriever.invoke(input=\"\"\"image processing with an introduction to techniques for image pattern classification\"\"\") #langchain_classic/chains/retrieval.py:64 if not isinstance(retriever, BaseRetriever): retrieval_docs: Runnable[dict, RetrieverOutput] = retriever else: retrieval_docs = (lambda x: x[\"input\"]) | retriever return ( RunnablePassthrough.assign( context=retrieval_docs.with_config(run_name=\"retrieve_documents\"), ).assign(answer=combine_docs_chain) ).with_config(run_name=\"retrieval_chain\") def format_docs(inputs: dict) -\u003e str: return document_separator.join( format_document(doc, _document_prompt) for doc in inputs[document_variable_name] ) return ( RunnablePassthrough.assign(**{document_variable_name: format_docs}).with_config( run_name=\"format_inputs\", ) | prompt | llm | _output_parser ).with_config(run_name=\"stuff_documents_chain\") P05 Advanced RAG Q\u0026A Project create_retriever_tool 本质就是 将检索、格式化、拼接工作组装为一个整体功能然后，实例化为一个tool。 Scratchpad 含义 直译为草稿纸 在 LangChain 或类似框架中，scratchpad 通常指代理(Agent)的临时工作空间，用于： 存储中间思考过程 记录当前任务状态 保存临时计算结果 进行推理和决策的缓冲区 这是一个通用的计算机科学概念，表示任何用于临时存储和处理的内存区域。 最终tools是在 ollama._types.ChatRequest 进行解析，具体见下面代码。 这里的llm走的是chat类型的llm，所以底层是走 /api/chat 接口，该接口的参数列表中含有tools。相当于该接口已经把tools的描述如何格式化都已经在内部解决掉，不需要调用方将tools的描述格式化到 prompt里面。 AgentExecutor里最重视依赖 iter方法来不断迭代，底层是依赖_iter_next_step来进行 thought、action步骤的。 即chat_model的接口都是支持在请求中加入tools参数的。 #Runnable的方法 def bind(self, **kwargs: Any) -\u003e Runnable[Input, Output]: \"\"\"Bind arguments to a `Runnable`, returning a new `Runnable`. Useful when a `Runnable` in a chain requires an argument that is not in the output of the previous `Runnable` or included in the user input. \"\"\" #langchain_ollama.chat_models.ChatOllama._create_chat_stream # ollama/_client.py:351 # ollama._client.Client.chat return self._request( ChatResponse, 'POST', '/api/chat', json=ChatRequest( model=model, messages=list(_copy_messages(messages)), tools=list(_copy_tools(tools)), stream=stream, think=think, format=format, options=options, keep_alive=keep_alive, ).model_dump(exclude_none=True), stream=stream, ) #langchain_classic.agents.agent.AgentExecutor._iter_next_step def _iter_next_step( self, name_to_tool_map: dict[str, BaseTool], color_mapping: dict[str, str], inputs: dict[str, str], intermediate_steps: list[tuple[AgentAction, str]], run_manager: CallbackManagerForChainRun | None = None, ) -\u003e Iterator[AgentFinish | AgentAction | AgentStep]: \"\"\"Take a single step in the thought-action-observation loop. Override this to take control of how the agent makes and acts on choices. \"\"\" try: intermediate_steps = self._prepare_intermediate_steps(intermediate_steps) # Call the LLM to see what to do. output = self._action_agent.plan( intermediate_steps, callbacks=run_manager.get_child() if run_manager else None, **inputs, ) except OutputParserException as e: ...... # If the tool chosen is the finishing tool, then we end and return. if isinstance(output, AgentFinish): yield output return actions: list[AgentAction] actions = [output] if isinstance(output, AgentAction) else output for agent_action in actions: yield agent_action for agent_action in actions: yield self._perform_agent_action( name_to_tool_map, color_mapping, agent_action, run_manager, ) ... P06 Advanced RAG Q\u0026A Project 本地服务和远程服务的代理设置，如下面代码 HTTP_PROXY 和 HTTPS_PROXY用于设置通过http服务的代理 NO_PROXY 用于本地服务绕过上面设置的代理，如本地的Ollama服务。 vectorstore.as_retriever 可以直接转换为检索器 方法参数search_kwargs 中也可以设置返回的文档数目k、MMR多样性算法、元数据过滤器函数等。 import os # 设置http的代理和不代理的地址 os.environ['HTTP_PROXY'] = \"http://127.0.0.1:7890\" os.environ['HTTPS_PROXY'] = \"http://127.0.0.1:7890\" os.environ['NO_PROXY'] = \"http://127.0.0.1:11434\" #ollama的本地服务地址 P07 HuggingFaceEndpoint 接口问题 bug https://github.com/langchain-ai/langchain/issues/31434#issuecomment-2936308959 因为官方服务不再提供 text-generation的模型服务。 可以使用 ChatHuggingFace来绕过这个问题。 P08 OllamaEmbeddings 在本地的笔记本上对于4篇论文的计算非常慢。 使用了HuggingFaceEmbeddings加一个小emb模型计算时间变少了很多。 P09 langchain-ObjectBox 版本太老，没法安装。该数据库 ObjectBox 维护似乎不是很多。 P11 model_scope 兼容接口 API推理介绍 · 文档中心 streamlit debug 选择module streamlit 参数填写 run app.py working directory 填写app.py的目录 使用modelscope服务来代替openai的图像生成接口。 文生图模型 支持API调用的模型列表，可以通过AIGC模型页面进行搜索。 上述页面中列出很多模型都微调的很差。 调整了 gpu_memory_utilization 从0.9 到0.95 报错 ValueError: To serve at least one request with the models's max seq len (40960), (5.62 GiB KV cache is needed, which is larger than the available KV cache memory (4.81 GiB). 差一点内存，所以增加了gpu的利用率。 从这点看，大模型一次推理非常消耗显存。 一条数据的最大显存消耗 显存消耗=2(key+value) * seq_len(40960) * model_layer * hidden_size * head_dim * 2(byte FP16) P02 demo_simple_rag_py 展示RAG原理的极简代码。\n关联博文 Code a simple RAG from scratch 项目代码 demo.py · ngxson/demo_simple_rag_py at main 很好的展示RAG原理性的小demo，不需要安装向量数据库。 bartowski/Llama-3.2-1B-Instruct-GGUF 这个模型中的instruct的意思 instruct意思就是指模型是经过 在base model上经过指令微调（或者叫监督微调）过程之后产生的模型，可以直接用于聊天、助手类应用 GGUF 文件包含了tokenizer的数据。 ollama 拉取hf.co 网站的模型失败 Ollama pull 进度已经100%， 但为什么会报如下错误 Error: max retries exceeded: Get \"https://huggingface.co/v2/bartowski/Llama-3.2-1B-Instruct-GGUF/blobs/sha256:948af2743fc78a328dcb3b0f5a31b3d75f415840fdb699e8b1235978392ecf85?__sign=eyJhbGciOiJFZERTQSJ9.eyJyZWFkIjp0cnVlLCJwZXJtaXNzaW9ucyI6eyJyZXBvLmNvbnRlbnQucmVhZCI6dHJ1ZX0sImlhdCI6MTc2Mjc1MzA3Niwic3ViIjoiL2JhcnRvd3NraS9MbGFtYS0zLjItMUItSW5zdHJ1Y3QtR0dVRiIsImV4cCI6MTc2Mjc1MzY3NiwiaXNzIjoiaHR0cHM6Ly9odWdnaW5nZmFjZS5jbyJ9.wVhqKCuc0vtHoS8DUStd86RoS1dhE0e-IqqMIpLZ_mEbfz6ahWeaoQiuTpWuaJCels7Q7uIIwEky9DhHsynYCg\": dial tcp 54.89.135.129:443: connect: connection refused 检查网络是可以连接 hf.co网站的。 找不到原因。 手动下载gguf模型文件，然后本地进行ollama手动构建。 手动下载 https://huggingface.co/bartowski/Llama-3.2-1B-Instruct-GGUF/tree/main 中的 Llama-3.2-1B-Instruct-Q4_K_M.gguf文件。 然后根据文档Importing a Model - Ollama来导入到本地ollama的缓存目录。 创建一个临时空目录 创建 ModelFile文件，内容为 FROM ./Llama-3.2-1B-Instruct-Q4_K_M.gguf 执行命令ollama create bartowski/Llama-3.2-1B-Instruct-GGUF 模型就可以被构建缓并复制到 ollama的缓存目录中。 并同样构建 bge-base-en-v1.5-q4_k_m.gguf 模型 ollama.embed(model=\"CompendiumLabs/bge-base-en-v1.5-gguf\") 这里的模型名按照/来分割，即说明是本地文件的模型。 如果是正常的:分割的模型名，则ollama会自动从缓存目录中的 library子目录中查找。 在ChatModel的stream模式下，返回是一个词一个词的进行返回的。 在该demo示例中，检索到的文档是全被塞到一个system message下，然后后续的对话但就是根据此来进行交互。 ollama 也可以在本地对模型进行量化。 quantizing-a-model - Ollama ollama对仓库模型的选择 ollama run model_repo_id，如果repo中有多版本模型，那么ollama会选择Q4版本的。更好的方法是显式指定具体版本 ollama run hf.co/{username}/{repository}:{quantization} 比如 ollama run hf.co/bartowski/Llama-3.2-3B-Instruct-GGUF:Llama-3.2-3B-Instruct-IQ3_M.gguf 参考资料 Use Ollama with any GGUF Model on Hugging Face Hub P03 RAG-Optimization-Practices kanhaoning/RAG-Optimization-Practices 阿里云服务器 uv 下载经常超时的解决方案，非常好用。 export UV_HTTP_TIMEOUT=240 export UV_CONCURRENT_DOWNLOADS=2 如何加快安装uv环境、缓存 在一台便宜的机器上使用uv来构建一个dummy项目，uv的缓存就会留下。 rsync uv缓存目录到 目标服务器的uv缓存目录下。同一个vpc下两个服务器的rsync速度非常快，300M/s。并且rsync会保持文件的软链接。 这样整体花钱少，并且构建速度快。 Qwen-reranker和bert一样是双向注意力计算方式。 对于一个batch内的数据，有很多条数据有共同的前缀，那么vLLM中有针对这种情况的优化推理策略 阿里云ossfs的代码存档。 安装ossfs wget https://github.com/aliyun/ossfs/releases/download/v1.91.8/ossfs_1.91.8_ubuntu24.04_amd64.deb sudo apt install ./ossfs_1.91.8_ubuntu24.04_amd64.deb (rag-optimization-practices) root@dsw-1457330-7974bd5bbf-47smb:/mnt/workspace/RAG-Optimization-Practices/Reranker-Distillation# bash evaluate.sh 正在从 ../data/test.jsonl 加载数据集... 加载完成！共 2992 条样本。 --- 正在加载并评估模型: /mnt/workspace/modelscope/BAAI/bge-reranker-v2-m3 --- --- 正在加载并评估模型: ../data/reranker_output/checkpoint-1218 --- ✅ 最终评估结果汇总 【蒸馏前】模型性能: - MAP: 0.472061 - MRR@10: 0.478234 - NDCG@10: 0.547284 【蒸馏后】模型性能: - MAP: 0.562973 - MRR@10: 0.571423 - NDCG@10: 0.636993 ================================================== 🚀 性能变化分析 (蒸馏后 vs. 蒸馏前) ================================================== 指标 [MAP]: - 绝对提升: +0.090913 - 相对提升: +19.26% ↑ 指标 [MRR@10]: - 绝对提升: +0.093189 - 相对提升: +19.49% ↑ 指标 [NDCG@10]: - 绝对提升: +0.089709 - 相对提升: +16.39% ↑ 评估完成！✨ modelscope:1.31.0-pytorch2.3.1tensorflow2.16.1-gpu-py311-cu121-ubuntu22.04 modelscope:1.31.0-pytorch2.3.1tensorflow2.16.1-gpu-py311-cu121-ubuntu22.04\n问题：对于一个batch内的数据，有很多条数据有共同的前缀，那么vLLM中有针对这种情况的优化推理策略 是的！vLLM 确实针对「batch 内多条请求具有共同前缀（shared prefix）」的场景提供了专门的优化策略，这项技术称为：\n✅ Prefix Caching（前缀缓存） 或 Prompt Sharing 这是 vLLM 的核心优化之一，能显著节省显存、提升吞吐、降低延迟，尤其适用于以下场景：\nRAG（检索增强生成）：多个文档共享相同的 prompt 模板 多轮对话系统：历史上下文相同，仅用户最新输入不同 批量推理：如 “总结以下文本：”，其中 不同但指令相同 🔍 工作原理\n1. KV Cache 共享\nLLM 推理中，Prefill 阶段会为 prompt 生成 KV Cache（Key/Value 缓存） 如果多个请求的 prompt 前缀完全相同，它们的 KV Cache 前缀部分也完全相同 vLLM 会： 只计算一次该公共前缀的 KV Cache 多个请求共享这份缓存 后续各自不同的部分独立计算 📌 本质：避免重复计算和存储相同的上下文\n2. 与 PagedAttention 协同\nvLLM 使用 PagedAttention 管理 KV Cache（类似操作系统的虚拟内存分页） 公共前缀的 KV Cache 被存储在共享物理页中 每个请求的逻辑块（logical blocks）指向这些共享页 + 自有页 Request 1: [Shared Prefix] + [Suffix A] Request 2: [Shared Prefix] + [Suffix B] Request 3: [Shared Prefix] + [Suffix C] → KV Cache: Shared Pages: [K/V of \"Shared Prefix\"] Private Pages: [K/V of \"Suffix A\"], [Suffix B], [Suffix C] 🚀 性能收益\n指标 优化效果 显存占用 ↓ 显著减少（公共部分只存一份） Prefill 计算量 ↓ 减少（公共前缀只计算一次） 吞吐（throughput） ↑ 提升 2–5 倍（实测常见） 支持 batch size ↑ 可容纳更多请求 💡 实测案例（RAG 场景）：\n10 个请求，共享 2K token 的 prompt 模板 显存节省 \u003e60%，吞吐提升 3.2 倍 🛠 如何启用？（vLLM 中默认开启！）\n无需额外配置：vLLM 默认自动检测并启用 Prefix Caching 条件： 多个请求的 prompt 前缀必须字节级完全相同 使用相同的模型和参数（temperature 等不影响） 示例（Python client）：\nfrom vllm import LLM, SamplingParams llm = LLM(model=\"Qwen/Qwen-7B-Chat\") **共享前缀：\"你是一个 helpful AI。请回答：\"** prompts = [ \"你是一个 helpful AI。请回答：巴黎是哪个国家的首都？\", \"你是一个 helpful AI。请回答：量子力学是谁提出的？\", \"你是一个 helpful AI。请回答：Python 如何读取文件？\" ] outputs = llm.generate(prompts, SamplingParams(temperature=0.7)) **→ vLLM 自动共享前缀的 KV Cache！** ⚠️ 注意事项\n问题 说明 前缀必须完全一致 包括空格、标点、换行符。\"你好\" ≠ \"你好 \" 不支持动态插入 如果前缀在运行时拼接（如加时间戳），则无法共享 与 LoRA 兼容性 若使用不同 LoRA adapter，即使 prompt 相同也无法共享 仅限 Prefill 阶段 Decode 阶段因输出不同，无法共享 🔧 高级用法：手动控制（vLLM ≥ 0.4.0） 可通过 enable_prefix_caching=True 显式启用（默认已开）：\nllm = LLM( model=\"meta-llama/Llama-3-8b\", enable_prefix_caching=True # 默认 True ) 也可通过环境变量：\nVLLM_ENABLE_PREFIX_CACHING=1 🆚 与其他系统的对比\n系统 是否支持前缀共享 vLLM ✅ 是（基于 PagedAttention） HuggingFace TGI ❌ 否（每个请求独立 KV Cache） TensorRT-LLM ✅ 是（需手动构建 shared context） SGLang ✅ 是（RadixAttention 机制） 💡 vLLM 的实现是自动、透明、高效的代表。\n✅ 总结\nvLLM 支持 Prefix Caching，自动优化共享前缀的 batch 请求 无需代码修改，只要 prompt 前缀相同即可生效 显著节省显存 + 提升吞吐，特别适合 RAG、批量指令等场景 确保你的 prompt 模板严格一致（避免尾部空格/换行差异） 如果你正在做 RAG 或批量推理，Prefix Caching 是 vLLM 给你的一份免费性能大礼包！🎉\n问题：但是一个batch内的数据是一起进行并行推理的呀，那么这个时候 cache还没产生吧？ 这是一个非常关键且深刻的问题！你的直觉是对的：如果整个 batch 是“同时”进行 prefill（即并行处理所有 prompt），那似乎还没生成 KV Cache，怎么共享？ 但实际情况是：vLLM 的 Prefix Caching 并不是在“batch 内部并行时”动态发现共享的，而是在调度阶段通过“前缀树（Radix Tree / Trie）”预先组织请求，使得相同前缀的请求在逻辑上被识别并复用已缓存的 KV 块。 下面我们一步步澄清这个看似矛盾的问题：\n✅ 核心答案\nPrefix Caching 的“cache”并不是来自当前 batch 内部的其他请求，而是来自：\n之前已完成的请求（跨 batch 共享），或 在当前 batch 内部，vLLM 调度器会先处理公共前缀一次，再广播给其他请求（逻辑上串行化前缀计算） 但在 纯首次 batch（没有任何历史 cache）且所有请求首次出现 的情况下，同一个 batch 内的请求确实无法彼此共享 KV Cache —— 除非 vLLM 显式地将公共前缀提取出来单独计算一次。 而 vLLM 正是这么做的！ 🔍 深入机制：vLLM 如何在单个 batch 内实现前缀共享？\n关键技术：Radix Tree（基数树） + Block-wise KV Cache Management vLLM 在调度一个 batch 前，会做以下事情：\n步骤 1：构建 Radix Tree\n将 batch 中所有 prompt 插入一棵 前缀树（Trie） 自动识别最长公共前缀（LCP） Prompts: \"你是AI。Q: 巴黎?\" \"你是AI。Q: 量子?\" \"你是AI。Q: Python?\" → Radix Tree: root └── \"你是AI。Q: \" ├── \"巴黎?\" ├── \"量子?\" └── \"Python?\" 步骤 2：分层 Prefill（Hierarchical Prefill）\n先对公共前缀 \"你是AI。Q: \" 执行一次 prefill 生成其对应的 KV Cache blocks 再对每个后缀（“巴黎?” 等）分别执行 prefill 每个后缀的 attention 计算会 拼接公共前缀的 KV blocks + 自身后缀的 KV blocks 🎯 这相当于 把一个长 prompt 拆成 “shared part + unique part”，并在计算时组合。\n步骤 3：PagedAttention 支持非连续 KV 块\n每个请求的完整 KV Cache = [shared_block_ids] + [unique_block_ids] Attention 计算时，PagedAttention 自动从多个物理页读取，对模型透明 📌 重要澄清\n误解 事实 “batch 内所有 prompt 同时并行计算” ❌ 实际是：公共前缀先算一次，后缀再并行（逻辑上分阶段） “cache 必须来自历史请求” ❌ 即使全是新请求，vLLM 也能在 batch 内部构造共享 “Prefill 是完全独立的” ❌ vLLM 的调度器会主动重组计算图以启用共享 🧪 实验验证（思想实验） 假设 batch 有 3 个全新请求，无任何历史 cache：\nprompts = [ \"Hello world A\", \"Hello world B\", \"Hello world C\" ] vLLM 的执行流程：\n调度器发现公共前缀 \"Hello world \" 创建一个虚拟“共享请求”，prefill \"Hello world \" → 得到 KV blocks S 对每个后缀 \"A\", \"B\", \"C\"： 构造输入：\"Hello world X\" 但 KV Cache = S + prefill(“X”) 的结果 最终每个请求的输出正确，且 S 只计算了一次 💡 这本质上是一种 计算图融合优化，由 vLLM 的 scheduler 自动完成。\n📚 官方依据\nvLLM 论文（vLLM: Easy, Fast, and Cheap LLM Serving）提到： “PagedAttention enables sharing of memory blocks across requests with common prefixes.”\n源码中 RadixAttention（后续演进）和 PrefixCacher 组件明确支持 intra-batch prefix sharing 🔗 参考：vLLM Prefix Caching Design Doc\n✅ 总结\n问题 回答 同一个 batch 内的请求能共享前缀吗？ ✅ 能！即使全是新请求 cache 是哪里来的？ 来自 当前 batch 内部对公共前缀的首次计算（调度器主动提取） 是否需要历史请求？ ❌ 不需要（跨 batch 共享是额外 bonus） 是否破坏并行性？ ⚠️ 公共前缀计算是串行的，但后缀仍可并行，整体吞吐仍大幅提升 💡 所以你的观察很敏锐，但 vLLM 通过 智能调度 + Radix Tree + PagedAttention 解决了这个“鸡生蛋”问题。 这正是 vLLM 相比传统推理引擎（如 HF Transformers）的先进之处！\nP04 rag-best-practices 参考项目 chaoql/rag-best-practices: 大模型检索增强生成技术最佳实践。\nConfiguring the Response Mode llama-index 有 embedding 模型微调的功能包，底层用的是sentence_transformer包的微调功能。 pickle方式不安全是因为 __reduce__方法中可以定义一个 指令字节流，在反序列化的时候可以触发对应指令的执行。 FlagEmbeddingReranker “Flag” in FlagEmbeddingReranker = BAAI（智源研究院）的开源模型品牌标识，意为“旗舰级嵌入/重排模型”，无特殊技术含义，主要是项目命名的一部分。 Qdrant 高级过滤能力： 支持结合向量相似性搜索和任意 Payload 结构化数据过滤（称为 Hybrid Search）。 node_parser llama_index.core.node_parser.text.sentence_window.SentenceWindowNodeParser 按照句子进行切割，多个句子作为一个索引文档。 Node Parser Modules | LlamaIndex Python Documentation HyDE Hypothetical Document Embeddings（HyDE） 是一种提升检索质量的高级嵌入技术，由 Gao et al. 在 2022 年提出（论文：Precise Zero-Shot Dense Retrieval without Relevance Labels）。它的核心思想是： 不直接用用户查询（query）去检索，而是先让大语言模型（LLM）生成一个“假设性答案”（hypothetical document），再用这个假设答案的嵌入向量去检索真实文档。 这个项目中的hybrid 模式的意思是，query生成一个稀疏向量、一个稠密向量，两种同时请求数据库，而稀疏向量可能是按照传统倒排索引来进行索引构建的，即最终既有 倒排索引搜索 又有向量搜索。 当然Qrant 本身也允许请求带 filter，即关键词检索、类别检索等。 微调过程 对于输入数据文件中的每一条数据，通过chatglm模型，构造prompt（其中包含一条文档），要求模型返回一些和上下文相关的问题，即形成了Answer-Question 对。 然后反转A-Q对（映射关系为n-to-1），构造出微调数据。 总体来说，就是依赖一个超大的chat大模型和一个文档数据集，构造出Q-A相似对，进而将chat大模型的对该文档的相关知识（对文档数据集领域的知识理解更透彻、更精细） 微调到一个emb小模型内。 模型下载源和接口使用 服务器 阿里云服务器可以使用 modelscope 来进行下载，然后然后模型加载都使用绝对路径来加载。 本地开发 可以使用 huggingface 来进行下载和管理。 ollama 问题：pytorch_model.bin 和 model.safetensors 分别是什么 pytorch_model.bin 和 model.safetensors 是两种常见的用于存储深度学习模型权重（参数）的文件格式，广泛用于 Hugging Face Transformers 等生态中。它们的核心目的相同：保存神经网络的可训练参数，但在设计哲学、安全性、性能和兼容性方面有显著区别。\n1. pytorch_model.bin\n是什么？\n这是 PyTorch 原生的模型权重保存格式。 本质上是一个通过 torch.save() 保存的 Python pickle 文件，通常包含一个字典，键为参数名（如 \"transformer.h.0.attn.c_attn.weight\"），值为对应的 torch.Tensor。 特点：\n方面 说明 格式 基于 Python 的 pickle 序列化 兼容性 只能在 PyTorch 环境中加载（需匹配版本） 安全性 ❗ 不安全：pickle 可执行任意代码，加载不受信任的 .bin 文件可能导致远程代码执行（RCE）漏洞 速度 加载/保存较快，但依赖 Python 反序列化 跨语言 不支持（强依赖 Python 和 PyTorch） 典型用途 Hugging Face 模型仓库中的默认权重格式（尤其旧模型） 示例加载方式：\nimport torch state_dict = torch.load(\"pytorch_model.bin\", map_location=\"cpu\") model.load_state_dict(state_dict) ⚠️ 警告：永远不要加载来自不可信来源的 pytorch_model.bin！\n2. model.safetensors\n是什么？\n由 Hugging Face 和 CarperAI 联合开发的一种安全、快速、框架无关的模型权重存储格式。 不使用 pickle，而是将张量数据以原始二进制形式存储，并附带 JSON 元数据描述张量结构。 特点：\n方面 说明 格式 自定义二进制格式 + JSON header（无代码执行） 安全性 ✅ 安全：仅包含数值数据，无法执行任意代码 速度 加载通常比 .bin 更快（尤其大模型），支持内存映射（mmap） 跨框架 支持 PyTorch、TensorFlow、Flax、JAX 等（只要能读取 NumPy-like 张量） 文件大小 与 .bin 几乎相同（未压缩，但可选 gzip） 典型用途 Hugging Face 新模型推荐格式，尤其在公开分享或 Web 服务中 文件结构简述：\n[JSON metadata header (UTF-8, padded to 8-byte align)] { \"weight1\": {\"dtype\": \"F32\", \"shape\": [1024, 1024], \"data_offsets\": [0, 4194304]}, \"weight2\": {\"dtype\": \"F16\", \"shape\": [512], \"data_offsets\": [4194304, 4195328]} } [Raw binary tensor data (concatenated)] 示例加载方式（PyTorch）：\nfrom safetensors.torch import load_file state_dict = load_file(\"model.safetensors\", device=\"cpu\") model.load_state_dict(state_dict) 对比总结\n特性 pytorch_model.bin model.safetensors 底层机制 Python pickle 自定义二进制 + JSON 安全性 ❌ 危险（可执行代码） ✅ 安全（纯数据） 加载速度 快 通常更快（支持 mmap） 跨平台/语言 否（PyTorch + Python） 是（多框架支持） Hugging Face 推荐 旧模型默认 新模型首选 文件扩展名 .bin .safetensors 实际建议\n✅ 优先使用 .safetensors：尤其当你从网上下载模型、部署到生产环境或提供 API 服务时。 🔒 避免加载未知来源的 .bin 文件：除非你完全信任提供者。 🔄 很多模型仓库同时提供两种格式（如 Llama 3、Mistral），你可以自由选择。 🛠️ 可用工具转换： # 使用 Hugging Face transformers 自动转换 from transformers import AutoModel model = AutoModel.from_pretrained(\"your-model\", use_safetensors=True) # 自动优先加载 .safetensors 如果你正在开发一个需要加载外部模型的应用（如 Web UI、推理服务），强烈建议只支持 .safetensors 格式以规避安全风险。\n问题：Sparse text embeddings 和 dense text embeddings 的区别 Sparse text embeddings 和 dense text embeddings 是两种不同的文本表示方法，它们在结构、生成方式、应用场景和性能特点上有显著区别。以下是详细对比：\n一、核心定义\n类型 定义 Dense Embeddings（稠密嵌入） 将文本映射为一个低维（通常几百到几千维）、连续、稠密的实数向量，几乎所有维度都有非零值。 Sparse Embeddings（稀疏嵌入） 将文本表示为一个高维（可能数万到百万维）、离散、稀疏的向量，绝大多数维度为 0，只有少数维度有非零值（通常是正权重）。 二、典型代表\n类型 模型/方法示例 Dense - BERT, RoBERTa - Sentence-BERT (SBERT) - BGE (BAAI General Embedding) - OpenAI Embeddings - Cohere Embeddings Sparse - BM25（传统，非学习型） - SPLADE - uniCOIL - DeepImpact - ColBERT（部分稀疏，带后期交互） 💡 注意：BM25 虽然常被归为“稀疏检索”，但它不是“embedding 模型”（无神经网络），而 SPLADE 等是基于深度学习的稀疏 embedding 模型。\n三、结构对比（举例） 假设词汇表大小为 30,000：\nSparse embedding（如 SPLADE）： [0, 0, 0, ..., 2.1, 0, 0, ..., 0.8, ..., 0] # 长度=30,000，仅几十个非零值 → 每个非零位置对应一个词（如 “apple” 在索引 12345），值表示重要性。 Dense embedding（如 BGE）： [0.23, -0.41, 0.88, ..., 0.05] # 长度=1024，几乎每个值都非零 → 向量维度与词汇表无关，语义信息分布在整个向量中。 四、关键区别总结\n维度 Sparse Embeddings Dense Embeddings 维度 高维（≈词汇表大小，如 30k–1M） 低维（通常 384–4096） 非零元素 极少（\u003c 100 个） 几乎全部非零 可解释性 ✅ 高（每个非零维对应一个词） ❌ 低（语义分布在隐空间） 存储效率 ✅ 高（可用倒排索引压缩存储） ⚠️ 中等（需存储完整浮点数组） 检索方式 倒排索引（Inverted Index） + TF-IDF/BM25 风格打分 向量相似度（如余弦、内积）+ ANN（如 FAISS, HNSW） 训练目标 优化词级重要性（如通过 KL 散度对齐 BM25） 优化句子/段落级语义相似度（如对比学习） 多语言支持 依赖词汇表，跨语言较难 更容易通过共享语义空间实现 硬件加速 CPU 友好，适合大规模文档库 GPU/ANN 加速效果更好 五、应用场景\n✅ Sparse 更适合：\n大规模文档检索（如搜索引擎）：==利用成熟的倒排索引技术==，高效过滤海量文档。 关键词敏感任务：需要精确匹配术语（如法律、医疗检索）。 资源受限环境：无需 GPU，纯 CPU 即可高效运行。 ✅ Dense 更适合：\n语义相似度任务：理解同义、 paraphrase、上下文含义（如 “car” ≈ “automobile”）。 小样本或 zero-shot 场景：泛化能力强。 RAG 系统中的精排：与 LLM 结合效果好。 六、混合方法（Hybrid Retrieval） 现代系统常结合两者优势：\nQuery → [Sparse Retriever (BM25/SPLADE)] → Top K candidates + [Dense Retriever (BGE)] → Top K candidates → 合并去重 → Reranker (e.g., BGE-reranker) ColBERT：虽输出稠密 token 向量，但通过 MaxSim 实现类似稀疏的细粒度匹配。 BGE-M3（BAAI 最新模型）：同时输出 dense、sparse 和 multi-vector 表示，支持统一检索。 七、可视化比喻\nSparse：像一本索引目录——只列出关键词及其页码（位置+权重）。 Dense：像一幅抽象画——整体表达语义，无法拆解单个元素含义。 总结一句话：\nSparse embeddings = 关键词加权（可解释、高效）；Dense embeddings = 语义压缩（泛化强、需向量检索）。 根据你的任务需求（精度 vs 效率、关键词匹配 vs 语义理解），可以选择合适类型，或直接使用 hybrid 方案获得最佳效果。\n问题：Sparse Embeddings的模型如何做到 输出稀疏向量的 这是一个非常好的问题！Sparse Embeddings 模型（如 SPLADE、uniCOIL、DeepImpact 等）之所以能输出“稀疏但有信息量”的向量，关键在于它们通过神经网络学习每个词项（term）的重要性权重，并强制绝大多数权重为零或接近零。下面从原理、技术手段和训练目标三个方面详细解释：\n一、核心思想：将文本映射到“词汇表维度”的稀疏向量 与 dense embedding 输出一个固定低维向量不同，sparse embedding 模型的输出维度 = 词汇表大小（V）（例如 V = 30,000）。\n对于输入文本，模型会为词汇表中的每个词 $w_i$ 预测一个 非负重要性分数 $s_i \\geq 0$，最终输出向量为： $$ \\mathbf{e} = [s_1, s_2, …, s_V] $$ 其中 绝大多数 $s_i = 0$，只有少数关键词的 $s_i \u003e 0$，形成稀疏表示。\n✅ 这个向量可以直接用于 倒排索引（Inverted Index）检索，就像 BM25 一样高效。\n二、如何实现“稀疏性”？关键技术手段\n1. 使用带稀疏诱导的激活函数 最常用的是 ReLU + 对数变换 + FLOPS 正则化（以 SPLADE 为代表）：\n（1）基于 BERT 的 token-level logits\n输入文本 → BERT 编码器 → 得到每个 token 的上下文表示。 通过一个线性层（或 MLM head）预测 整个词汇表上每个词的 logits（类似掩码语言建模）。 （2）应用 $\\text{ReLU}(\\log(1 + \\exp(x)))$ 或直接 $\\text{F}(x) = \\max(0, x)$\n将 logits 经过 非负激活，确保输出 ≥ 0。 实际中常用：\n$$s_i = \\text{ReLU}\\left( \\text{MLM logits}_i \\right)$$ 或更平滑的： $$ s_i = \\log\\left(1 + \\exp(\\text{MLM logits}_i)\\right) \\quad \\text{(softplus)} $$ 📌 注意：即使 logits 是稠密的，后续会通过正则化让大多数 $s_i \\to 0$。\n2. 引入稀疏性正则化（Sparsity Regularization） 这是实现“真正稀疏”的关键！模型在训练时会惩罚非零元素的数量或大小。\n常见正则项（加在 loss 中）：\nL1 正则化：$\\lambda \\sum_i |s_i|$\n→ 鼓励权重趋近于 0。 FLOPS 正则化（SPLADE 提出）：\n$$ \\mathcal{L}_{\\text{flops}} = \\left( \\frac{1}{V} \\sum_i \\mathbb{E}[s_i] \\right)^2 $$ → 惩罚平均激活强度，促使模型只激活极少数词。 Group Lasso / Top-k 约束：强制只保留 top-k 个最大权重。 💡 训练完成后，推理时可设置阈值（如 $s_i \u003c 1e-4$ 则置 0），进一步提升稀疏度。\n3. 利用预训练语言模型的 MLM Head\nSPLADE 等模型直接复用 BERT 的 Masked Language Model (MLM) 头。 MLM 头本来就能预测“哪些词可能出现在上下文中”，天然具有词级语义感知能力。 通过微调 MLM 头，使其输出的 logits 不再用于预测被遮盖词，而是作为全文的词重要性分布。 ✅ 这样既利用了预训练知识，又实现了端到端的稀疏表示学习。\n三、训练目标：对齐相关性信号 为了让稀疏向量“有信息量”（即能有效排序相关文档），模型通常采用以下监督信号：\n方法 训练目标 SPLADE 最大化查询-正样本文档的相似度（内积），最小化查询-负样本的相似度 + 稀疏正则 DeepImpact / uniCOIL 回归到伪标签（如 BM25 分数、教师模型打分） 无监督 SPLADE 使用对比学习或自监督（如文档-标题对） 相似度计算方式： $$ \\text{score}(q, d) = \\sum_{i=1}^V \\text{ReLU}(q_i) \\cdot \\text{ReLU}(d_i) $$ → 本质是 加权词重叠（Weighted Term Matching），但权重由神经网络学习得到，比 TF-IDF/BM25 更智能。 四、举个具体例子：SPLADE 如何工作？\n输入查询 \"How to bake a cake?\" 经过 BERT + MLM head → 输出 30,000 维 logits 应用 $\\text{ReLU}(\\cdot)$ → 得到非负分数 加入 FLOPS 正则 → 模型学会只给 \"bake\", \"cake\", \"recipe\" 等词高分，其余为 0 最终输出稀疏向量：仅几十个非零值，每个对应一个关键词及其语义重要性 🔍 检索时： 文档也用同样方式编码成稀疏向量 通过倒排索引快速计算内积得分（只计算非零维度交集） 五、为什么叫“响亮”（informative）？\n虽然稀疏，但非零维度是模型精心挑选的关键词，且权重反映其在当前上下文中的语义重要性。 相比 BM25 的静态 TF-IDF，sparse embedding 能： 理解同义词（“car” → 激活 “automobile”） 抑制停用词（“the”, “how” 权重≈0） 根据上下文动态调整（“apple” 在科技 vs 水果语境下激活不同词） 总结\n关键点 说明 输出维度 = 词汇表大小（高维） 稀疏性来源 ReLU/Softplus 激活 + L1/FLOPS 正则化 信息量来源 基于预训练 MLM 头 + 相关性监督学习 检索兼容性 完全兼容传统倒排索引系统（如 Lucene, Elasticsearch） 代表模型 SPLADE（最经典）、uniCOIL、DeepImpact、BGE-M3（支持 sparse 输出） ✅ 所以，“稀疏但响亮” = 只保留最关键的几个词，但每个词的权重都经过深度语义理解优化。 如果你正在构建检索系统，sparse embeddings 能让你在不牺牲太多语义能力的前提下，享受传统搜索引擎的高效与可扩展性。\n问题 问题：langchain中的竖线运算符是由哪些方法来实现的 在 langchain 中，竖线运算符（|）的实现主要依赖于以下方法：\n核心实现方法\n__or__ 方法 这是 Python 中实现竖线运算符的核心魔术方法 当使用 a | b 语法时，Python 会调用 a.__or__(b) __ror__ 方法 右侧对象的反向或运算方法 当左侧对象没有实现 __or__ 时调用 在 Langchain 中的应用 在你的代码中 prompt|llm|output_parser 这个链条中：\nprompt（ChatPromptTemplate 对象）实现了 __or__ 方法 llm（ChatOpenAI 对象）也实现了 __or__ 方法 output_parser（StrOutputParser 对象）同样支持链式操作 实现机制\n**伪代码示例** class BaseComponent: def __or__(self, other): return Chain(self, other) 这种设计模式允许不同的 langchain 组件（如 prompt、llm、output_parser）通过竖线运算符组合成一个完整的处理链 chain。\n问题：langchain中的StrOutputParser 是如何自动对 chatbot的结果进行渲染的 作为一名资深技术导师，我来详细解释 LangChain 中的 StrOutputParser 不是如何“自动渲染”结果的，而是它在 LangChain 表达式语言 (LCEL) 管道中扮演的关键角色。\n核心观点：StrOutputParser 并非渲染器，而是转换器 StrOutputParser 的作用不是对结果进行复杂的“渲染”（如格式化为 Markdown 或 HTML），而是执行一个非常简单但至关重要的类型转换： 它确保管道（Chain）的最终输出是标准的 Python 字符串（str）类型。 在 LangChain 管道中，“渲染”这个词通常意味着将输出从一个复杂对象转换为用户或下一个组件可以使用的格式。\n1. 为什么需要 StrOutputParser？ LLM 模型的原始输出通常是一个复杂的对象，而不是一个简单的字符串：\n原始输出类型 解释 BaseMessage 对于 Chat 模型 (ChatOpenAI, ChatGroq 等)，它们的 invoke() 或 stream() 方法返回的是一个 BaseMessage 对象（通常是 AIMessage 或 HumanMessage 的子类）。 Generation 对于 Completion 模型 (OpenAI 等)，它们的 invoke() 返回的是一个 Generation 对象的列表（包装在 LLMResult 中）。 StrOutputParser 的工作就是从这些复杂的对象中，安全地提取出人类可读的字符串内容。 2. StrOutputParser 的工作机制 StrOutputParser 在 LCEL 管道中实现了 BaseOutputParser 接口，它的核心逻辑非常简单：\nA. 处理 Chat 模型输出 (BaseMessage 对象) 当它接收到 AIMessage 或其他 BaseMessage 对象时，它会调用该对象的 .content 属性。\n输入示例： 输出结果： '你好！我是一个AI。' B. 处理 Completion 模型输出 (LLMResult / Generation 对象) 如果它接收到的是 Completion 模型返回的结构，它会提取第一个 Generation 对象的文本内容。\nC. 处理流式输出 (Streaming) 在流式传输中，StrOutputParser 会持续接收到片段（Chunks）的 BaseMessage 对象或字符串。它的作用是：\n提取内容： 从每个传入的 Chunk 中提取 .content 属性。 拼接内容： 将这些内容片段安全地拼接起来，形成最终的完整字符串。这确保了前端或用户接收到的流是连续且正确的文本。 3. 如何“自动渲染”的误解 用户之所以觉得它是“自动渲染”的，是因为它将一个不透明的 LangChain 内部对象（如 AIMessage）转换成了应用程序前端可以直接显示的 Python str 类型。 在 LCEL 管道中，StrOutputParser 通常位于管道的末端，因为它确保了管道的输出能够被后续的系统（如 Flask API 响应、Streamlit 界面或简单的 print() 语句）轻松消费。\n总结 StrOutputParser 是 LangChain 管道中一个类型转换组件，它的作用是：\n从 LLM 返回的复杂对象（如 AIMessage）中提取纯文本内容。 确保 Chain 的输出类型始终是标准的 str，以便于后续处理和展示。 在流式传输中，负责将接收到的内容片段安全拼接。 问题：那么streamlit的write方法是如何将markdown格式文本自动渲染为有格式的html的 代码 streamlit.elements.write.WriteMixin.write 中有讲解这部分内容。\n这是一个非常好的问题，它触及了 Streamlit 的核心机制和前端交互原理。 streamlit.write() 方法自身不会执行 Markdown 渲染，它是一个“万能”命令，会根据传入的数据类型进行分派（Dispatch）。当它接收到字符串时，它会将渲染工作委托给专门的函数。 下面是 st.write() 如何将 Markdown 文本自动转换为 HTML 格式化显示的详细过程。\n1. st.write() 的分派机制 (The Swiss Army Knife) st.write() 被称为 Streamlit 的“瑞士军刀”，它会检查传入的参数类型：\n传入参数类型 st.write() 实际调用 str (字符串) 委托给 st.markdown() pd.DataFrame 委托给 st.dataframe() dict 或 list 委托给 st.json() Altair/Plotly Chart 委托给相应的图表函数 Exception 委托给 st.exception() 因此，当你传入一个包含 Markdown 格式的字符串时，实际执行渲染的是 st.markdown() 函数。 2. st.markdown() 的核心渲染过程 st.markdown() 是专门负责将 Markdown 文本转换为 HTML 的函数。这个转换过程在 Streamlit 内部是这样运作的：\nA. 后端（Python）处理：使用 Markdown 解析库\n解析器使用： Streamlit 的 Python 后端不会自己编写 Markdown 转换逻辑。它会依赖一个或多个成熟的、高性能的 Python Markdown 解析库（例如，早期版本可能依赖 markdown-it-py 或类似的库）。 生成 HTML/抽象结构： 当你调用 st.markdown(body) 时，body 字符串会被这个内部的 Markdown 解析器处理，并转换成对应的 HTML 结构（或一个包含渲染指令的中间数据结构）。 例如，**bold** 被转换为 bold。 序列化与传输： Streamlit 将这个 HTML 结构或渲染指令序列化（通常为 JSON 格式）。 WebSocket 传输： 序列化后的数据通过 WebSocket 连接，从 Python 后端发送到 Streamlit 的前端（浏览器）。 B. 前端（浏览器）渲染：React + CSS\n前端接收： Streamlit 的前端（使用 React 框架构建）接收到通过 WebSocket 发送过来的指令/数据。 DOM 操作： React 组件根据收到的 HTML 结构或指令，将其安全地插入到 Web 页面的 DOM (Document Object Model) 中。 浏览器渲染： 浏览器识别这些 HTML 标签（如 , , ）并应用默认或 Streamlit 自定义的 CSS 样式。 样式应用： Streamlit 具有内置的样式表，确保所有的 Markdown 元素（标题、列表、代码块等）都遵循应用的主题和外观，看起来美观且一致。 3. 为什么是自动的？ 对于开发者来说，整个过程是自动且无感的，因为：\n封装： st.write() 和 st.markdown() 封装了从 Markdown 字符串到 HTML 渲染的所有步骤。 实时同步： Streamlit 的架构本身就是为了在 Python 后端代码与浏览器前端之间提供实时同步。当你调用一个 Streamlit 命令时，Python 框架会立即处理数据并告诉前端如何更新。 问题：Pydantic 中 BaseModel 的核心作用：数据模型和数据校验 在 Python 的 pydantic 库中，BaseModel 是构建数据模型的基石。它的主要作用是定义数据的结构、类型，并自动进行验证。 简单来说，BaseModel 将松散的 Python 字典数据提升为具有明确结构、类型和内置验证的强大数据对象。\n🚀 BaseModel 的主要功能\n1. 定义清晰的数据结构 (Schema Definition) BaseModel 允许你使用标准的 Python 类型注解来定义你的数据对象应该长什么样，包括哪些字段、每个字段的类型。\n示例: Python from pydantic import BaseModel from datetime import datetime class User(BaseModel): id: int name: str = \"John Doe\" # 带有默认值 signup_ts: datetime | None = None # 联合类型 is_active: bool 这个类清楚地定义了一个用户对象必须包含 id（整数）、name（字符串）、signup_ts（日期时间或 None）和 is_active（布尔值）。 2. 自动数据校验 (Data Validation) 这是 BaseModel 最核心的功能。当你尝试创建一个 BaseModel 实例时，Pydantic 会自动检查传入的数据是否符合你定义的类型和结构。\n如果数据类型正确： 它会将输入数据（比如 JSON 字符串、字典）转换为正确的 Python 类型（例如将 JSON 字符串 “1” 转换为整数 1）。 如果数据校验失败： 它会抛出一个清晰的 ValidationError，告诉你哪个字段出了问题，以及为什么。这极大地减少了运行时错误和调试时间。 3. 自动数据转换 (Data Coercion) BaseModel 不仅进行校验，还尝试进行合理的类型转换：\n字符串到数字： 字符串 \"123\" 会被自动转换为整数 123。 字符串到日期/时间： 遵循 ISO 格式的日期字符串会被自动转换为 datetime 对象。 4. 强大的序列化和反序列化 BaseModel 实例内置了将数据对象转换为其他格式的方法：\n序列化 (Serialization): user_instance.model_dump(): 将模型实例转换为标准的 Python 字典 (dict)。 user_instance.model_dump_json(): 将模型实例转换为 JSON 字符串，方便网络传输。 反序列化 (Deserialization): User(**data_dict): 从字典创建模型实例。 User.model_validate(data_dict): 从字典或 JSON 数据中验证并创建模型实例。 5. 与 FastAPI 等框架集成 在 FastAPI 中，BaseModel 是定义请求体 (Request Body) 和 响应体 (Response Body) 的标准方式。\n当用作请求体时，FastAPI 自动使用 BaseModel 来校验客户端发送的 JSON 数据。 当用作响应体时，FastAPI 自动使用 BaseModel 来序列化你的 Python 对象为 JSON 响应。 总结: BaseModel 的作用就是将 Python 应用程序中的数据处理从松散、易错的字典操作，升级为结构化、类型安全且自带验证的强大对象模型。 问题：llama2并非是专属的embedding模型，也可以用OllamaEmbeddings来加载么？ 这是一个非常专业和关键的问题，它涉及到大模型的多功能性和 Ollama 平台的灵活性。 答案是：是的，您可以将 Llama 2 (或 Llama 3 等聊天/生成模型) 用作 OllamaEmbeddings 的模型，但它并非最佳实践。 以下是详细的解释和建议：\n1. 为什么 Llama 2 可以用于嵌入？（技术可行性） Ollama 平台提供了一个通用的 /api/embeddings REST API 端点。 当您在 OllamaEmbeddings 中指定一个非专用的聊天模型（如 llama2）时，Ollama 守护进程会执行以下操作：\n提取隐藏状态 (Hidden State): Ollama 会运行 Llama 2 模型，但不执行最终的**语言模型头（LM Head）**层（该层负责预测下一个词元）。 池化 (Pooling): 它会从模型的倒数第二层（或根据配置的特定层）提取词元隐藏状态（Token Hidden States）。然后，它通常会应用一个池化策略（如平均池化）将这些词元向量聚合为一个单一的句子向量，作为最终的嵌入（Embedding）。 LangChain 的 OllamaEmbeddings 通过调用这个通用的 Ollama API，实现了对 Llama 2 的嵌入功能调用。 2. 为什么 Llama 2 不推荐用于嵌入？（效果考量） 尽管技术上可行，但 Llama 2 或其他聊天模型（如 Mistral）在没有经过特定微调的情况下，作为嵌入模型的效果通常远不如专用嵌入模型。\n嵌入模型类型 Llama 2 (生成模型) 专用嵌入模型 (如 Nomic Embed, mxbai-embed-large) 训练目标 生成文本（预测下一个词元）。 语义相似性（训练目标是让语义相近的句子在向量空间中距离更近）。 效果/精度 较差。 向量空间没有针对相似性搜索进行优化，检索精度低。 优秀。 在 MTEB 等基准测试中表现优异，RAG 效果好。 资源消耗 高。 Llama 2 尺寸较大（如 7B），推理慢，内存占用高。 低。 专用模型通常更小（如 300M），速度快，资源消耗低。 简而言之： Llama 2 生成的向量可能无法准确捕捉不同句子之间的语义相似性，这会严重损害您的 RAG 检索质量。 3. 架构师建议 作为一名资深架构师，我的建议是：\n对于 RAG 或语义搜索： 始终优先使用专用的嵌入模型。 您已经看到了，Ollama 支持许多高性能、小巧且专门为嵌入任务优化的模型（如 mxbai-embed-large 或 embeddinggemma）。这能提供更好的精度和更快的速度。 实验和自定义： 如果您只是进行实验，或者您的 Llama 2 是经过专门的 对比学习（Contrastive Learning）微调版本（例如，AnglE-LLaMA 等），那么使用 Llama 2 是有意义的。在这种情况下，你需要确保你的 Llama 2 模型文件在 Ollama 中已经包含了必要的嵌入配置。 结论：使用 OllamaEmbeddings(model=\"llama2\") 是可行的，但为了您的应用性能和准确性，请使用一个专用的 Ollama 嵌入模型。 ",
+  "wordCount" : "15983",
+  "inLanguage": "zh",
+  "datePublished": "2025-11-07T00:00:00Z",
+  "dateModified": "2025-11-11T00:00:00Z",
+  "author":{
+    "@type": "Person",
+    "name": "Chester"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://chesterwang.github.io/chester-blog/posts/2025-11-07-rag-demo%E9%A1%B9%E7%9B%AE/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Chester's Blog",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://image.lvbibir.cn/blog/avatar.webp"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://chesterwang.github.io/chester-blog/" accesskey="h" title="Chester&#39;s Blog (Alt + H)">
+                <img src="https://image.lvbibir.cn/blog/avatar.webp" alt="" aria-label="logo"
+                    height="35">Chester&#39;s Blog</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+                <ul class="lang-switch"><li>|</li>
+                </ul>
+            </div>
+        </div>
+        <ul id="menu">
+            <li class="menu-item">
+                <a href="https://chesterwang.github.io/chester-blog/categories" title="🤙🏿 分类">
+                    <span>🤙🏿 分类</span>
+                    
+                </a>
+            
+            </li>
+            <li class="menu-item">
+                <a href="https://chesterwang.github.io/chester-blog/tags" title="🏷️ 标签">
+                    <span>🏷️ 标签</span>
+                    
+                </a>
+            
+            </li>
+            <li class="menu-item">
+                <a href="https://chesterwang.github.io/chester-blog/archives" title="📈 归档">
+                    <span>📈 归档</span>
+                    
+                </a>
+            
+            </li>
+            <li class="menu-item">
+                <a href="https://chesterwang.github.io/chester-blog/talk" title="💬 说说">
+                    <span>💬 说说</span>
+                    
+                </a>
+            
+            </li>
+            <li class="menu-item">
+                <a href="https://chesterwang.github.io/chester-blog/search" title="🔍 搜索 (Alt &#43; /)" accesskey=/>
+                    <span>🔍 搜索</span>
+                    
+                </a>
+            
+            </li>
+            <li class="menu-item">
+                <a href="https://chesterwang.github.io/chester-blog/about" title="🙋🏻‍♂️ 关于">
+                    <span>🙋🏻‍♂️ 关于</span>
+                    
+                </a>
+            
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main page">
+<article class="post-single">
+    <div id="single-content">
+        <header class="post-header">
+            <div class="breadcrumbs"><a href="https://chesterwang.github.io/chester-blog/">主页</a>&nbsp;»&nbsp;<a href="https://chesterwang.github.io/chester-blog/posts/">📚 文章</a></div>
+            <h1 class="post-title">
+                个人RAG项目开发记录
+            </h1>
+            <div class="post-description">
+                个人RAG项目的开发记录和笔记
+            </div>
+            <div class="post-meta">创建: 2025-11-07 | 更新: 2025-11-11 | 字数: 15983字 | 作者:Chester
+
+
+                |&nbsp;标签:&nbsp;
+                <ul class="post-tags-meta">
+                    <a href="https://chesterwang.github.io/chester-blog/tags/llm/">LLM</a>
+                </ul>
+
+                
+                <span id="busuanzi_container_page_pv">
+                    &nbsp;|&nbsp;访问:&nbsp;<span id="busuanzi_value_page_pv"></span>
+                </span>
+
+</div>
+        </header> <aside id="toc-container" class="toc-container wide">
+    <div class="toc">
+        <details  open>
+        <summary accesskey="c" title="(Alt + C)">
+            <span class="details">目录</span>
+        </summary>
+
+        <div class="inner"><ul>
+                <li>
+                    <a href="#%e9%a1%b9%e7%9b%ae%e7%8e%af%e5%a2%83%e6%90%ad%e5%bb%ba" aria-label="项目环境搭建">项目环境搭建</a></li>
+                <li>
+                    <a href="#p01-rag-projects" aria-label="P01-RAG-Projects">P01-RAG-Projects</a><ul>
+                        <ul>
+                        
+                <li>
+                    <a href="#p01-chatbot" aria-label="P01 chatbot">P01 chatbot</a></li>
+                <li>
+                    <a href="#%e9%97%ae%e9%a2%98load_dotenv%e7%9a%84%e6%9c%ba%e5%88%b6" aria-label="问题：load_dotenv的机制">问题：load_dotenv的机制</a></li>
+                <li>
+                    <a href="#p02-apis" aria-label="P02 APIs">P02 APIs</a></li>
+                <li>
+                    <a href="#p04-retriever-and-chain" aria-label="P04 Retriever and Chain">P04 Retriever and Chain</a></li>
+                <li>
+                    <a href="#p05-advanced-rag-qa-project" aria-label="P05 Advanced RAG Q&amp;amp;A Project">P05 Advanced RAG Q&amp;A Project</a></li>
+                <li>
+                    <a href="#p06-advanced-rag-qa-project" aria-label="P06 Advanced RAG Q&amp;amp;A Project">P06 Advanced RAG Q&amp;A Project</a></li>
+                <li>
+                    <a href="#p07" aria-label="P07">P07</a></li>
+                <li>
+                    <a href="#p08" aria-label="P08">P08</a></li>
+                <li>
+                    <a href="#p09" aria-label="P09">P09</a></li>
+                <li>
+                    <a href="#p11" aria-label="P11">P11</a></li></ul>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#p02-demo_simple_rag_py" aria-label="P02 demo_simple_rag_py">P02 demo_simple_rag_py</a></li>
+                <li>
+                    <a href="#p03-rag-optimization-practices" aria-label="P03 RAG-Optimization-Practices">P03 RAG-Optimization-Practices</a><ul>
+                        <ul>
+                        
+                <li>
+                    <a href="#%e9%97%ae%e9%a2%98%e5%af%b9%e4%ba%8e%e4%b8%80%e4%b8%aabatch%e5%86%85%e7%9a%84%e6%95%b0%e6%8d%ae%e6%9c%89%e5%be%88%e5%a4%9a%e6%9d%a1%e6%95%b0%e6%8d%ae%e6%9c%89%e5%85%b1%e5%90%8c%e7%9a%84%e5%89%8d%e7%bc%80%e9%82%a3%e4%b9%88vllm%e4%b8%ad%e6%9c%89%e9%92%88%e5%af%b9%e8%bf%99%e7%a7%8d%e6%83%85%e5%86%b5%e7%9a%84%e4%bc%98%e5%8c%96%e6%8e%a8%e7%90%86%e7%ad%96%e7%95%a5" aria-label="问题：对于一个batch内的数据，有很多条数据有共同的前缀，那么vLLM中有针对这种情况的优化推理策略">问题：对于一个batch内的数据，有很多条数据有共同的前缀，那么vLLM中有针对这种情况的优化推理策略</a></li>
+                <li>
+                    <a href="#%e9%97%ae%e9%a2%98%e4%bd%86%e6%98%af%e4%b8%80%e4%b8%aabatch%e5%86%85%e7%9a%84%e6%95%b0%e6%8d%ae%e6%98%af%e4%b8%80%e8%b5%b7%e8%bf%9b%e8%a1%8c%e5%b9%b6%e8%a1%8c%e6%8e%a8%e7%90%86%e7%9a%84%e5%91%80%e9%82%a3%e4%b9%88%e8%bf%99%e4%b8%aa%e6%97%b6%e5%80%99-cache%e8%bf%98%e6%b2%a1%e4%ba%a7%e7%94%9f%e5%90%a7" aria-label="问题：但是一个batch内的数据是一起进行并行推理的呀，那么这个时候 cache还没产生吧？">问题：但是一个batch内的数据是一起进行并行推理的呀，那么这个时候 cache还没产生吧？</a></li></ul>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#p04-rag-best-practices" aria-label="P04 rag-best-practices">P04 rag-best-practices</a><ul>
+                        <ul>
+                        
+                <li>
+                    <a href="#%e9%97%ae%e9%a2%98pytorch_modelbin-%e5%92%8c-modelsafetensors-%e5%88%86%e5%88%ab%e6%98%af%e4%bb%80%e4%b9%88" aria-label="问题：pytorch_model.bin 和 model.safetensors 分别是什么">问题：pytorch_model.bin 和 model.safetensors 分别是什么</a></li>
+                <li>
+                    <a href="#%e9%97%ae%e9%a2%98sparse-text-embeddings-%e5%92%8c-dense-text-embeddings-%e7%9a%84%e5%8c%ba%e5%88%ab" aria-label="问题：Sparse text embeddings 和 dense text embeddings 的区别">问题：Sparse text embeddings 和 dense text embeddings 的区别</a></li>
+                <li>
+                    <a href="#%e9%97%ae%e9%a2%98sparse-embeddings%e7%9a%84%e6%a8%a1%e5%9e%8b%e5%a6%82%e4%bd%95%e5%81%9a%e5%88%b0-%e8%be%93%e5%87%ba%e7%a8%80%e7%96%8f%e5%90%91%e9%87%8f%e7%9a%84" aria-label="问题：Sparse Embeddings的模型如何做到 输出稀疏向量的">问题：Sparse Embeddings的模型如何做到 输出稀疏向量的</a></li></ul>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#%e9%97%ae%e9%a2%98" aria-label="问题">问题</a><ul>
+                        <ul>
+                        
+                <li>
+                    <a href="#%e9%97%ae%e9%a2%98langchain%e4%b8%ad%e7%9a%84%e7%ab%96%e7%ba%bf%e8%bf%90%e7%ae%97%e7%ac%a6%e6%98%af%e7%94%b1%e5%93%aa%e4%ba%9b%e6%96%b9%e6%b3%95%e6%9d%a5%e5%ae%9e%e7%8e%b0%e7%9a%84" aria-label="问题：langchain中的竖线运算符是由哪些方法来实现的">问题：langchain中的竖线运算符是由哪些方法来实现的</a></li>
+                <li>
+                    <a href="#%e9%97%ae%e9%a2%98langchain%e4%b8%ad%e7%9a%84stroutputparser-%e6%98%af%e5%a6%82%e4%bd%95%e8%87%aa%e5%8a%a8%e5%af%b9-chatbot%e7%9a%84%e7%bb%93%e6%9e%9c%e8%bf%9b%e8%a1%8c%e6%b8%b2%e6%9f%93%e7%9a%84" aria-label="问题：langchain中的StrOutputParser 是如何自动对 chatbot的结果进行渲染的">问题：langchain中的StrOutputParser 是如何自动对 chatbot的结果进行渲染的</a></li>
+                <li>
+                    <a href="#%e9%97%ae%e9%a2%98%e9%82%a3%e4%b9%88streamlit%e7%9a%84write%e6%96%b9%e6%b3%95%e6%98%af%e5%a6%82%e4%bd%95%e5%b0%86markdown%e6%a0%bc%e5%bc%8f%e6%96%87%e6%9c%ac%e8%87%aa%e5%8a%a8%e6%b8%b2%e6%9f%93%e4%b8%ba%e6%9c%89%e6%a0%bc%e5%bc%8f%e7%9a%84html%e7%9a%84" aria-label="问题：那么streamlit的write方法是如何将markdown格式文本自动渲染为有格式的html的">问题：那么streamlit的write方法是如何将markdown格式文本自动渲染为有格式的html的</a></li>
+                <li>
+                    <a href="#%e9%97%ae%e9%a2%98pydantic-%e4%b8%ad-basemodel-%e7%9a%84%e6%a0%b8%e5%bf%83%e4%bd%9c%e7%94%a8%e6%95%b0%e6%8d%ae%e6%a8%a1%e5%9e%8b%e5%92%8c%e6%95%b0%e6%8d%ae%e6%a0%a1%e9%aa%8c" aria-label="问题：Pydantic 中 BaseModel 的核心作用：数据模型和数据校验">问题：Pydantic 中 <code>BaseModel</code> 的核心作用：数据模型和数据校验</a></li>
+                <li>
+                    <a href="#%e9%97%ae%e9%a2%98llama2%e5%b9%b6%e9%9d%9e%e6%98%af%e4%b8%93%e5%b1%9e%e7%9a%84embedding%e6%a8%a1%e5%9e%8b%e4%b9%9f%e5%8f%af%e4%bb%a5%e7%94%a8ollamaembeddings%e6%9d%a5%e5%8a%a0%e8%bd%bd%e4%b9%88" aria-label="问题：llama2并非是专属的embedding模型，也可以用OllamaEmbeddings来加载么？">问题：llama2并非是专属的embedding模型，也可以用OllamaEmbeddings来加载么？</a>
+                </li>
+            </ul>
+            </ul>
+            </li>
+            </ul>
+        </div>
+        </details>
+    </div>
+</aside>
+<script>
+    let activeElement;
+    let elements;
+    window.addEventListener('DOMContentLoaded', function (event) {
+        checkTocPosition();
+
+        elements = document.querySelectorAll('h1[id],h2[id],h3[id],h4[id],h5[id],h6[id]');
+        
+        activeElement = elements[0];
+        const id = encodeURI(activeElement.getAttribute('id')).toLowerCase();
+        document.querySelector(`.inner ul li a[href="#${id}"]`).classList.add('active');
+    }, false);
+
+    window.addEventListener('resize', function(event) {
+        checkTocPosition();
+    }, false);
+
+    window.addEventListener('scroll', () => {
+        
+        activeElement = Array.from(elements).find((element) => {
+            if ((getOffsetTop(element) - window.pageYOffset) > 0 &&
+                (getOffsetTop(element) - window.pageYOffset) < window.innerHeight/2) {
+                return element;
+            }
+        }) || activeElement
+
+        elements.forEach(element => {
+            const id = encodeURI(element.getAttribute('id')).toLowerCase();
+            if (element === activeElement){
+                document.querySelector(`.inner ul li a[href="#${id}"]`).classList.add('active');
+            } else {
+                document.querySelector(`.inner ul li a[href="#${id}"]`).classList.remove('active');
+            }
+        })
+    }, false);
+
+    const main = parseInt(getComputedStyle(document.body).getPropertyValue('--article-width'), 10);
+    const toc = parseInt(getComputedStyle(document.body).getPropertyValue('--toc-width'), 10);
+    const gap = parseInt(getComputedStyle(document.body).getPropertyValue('--gap'), 10);
+
+    function checkTocPosition() {
+        const width = document.body.scrollWidth;
+        if (width - main - (toc * 2) - (gap * 4) > 0) {
+            document.getElementById("toc-container").classList.add("wide");
+        } else {
+            document.getElementById("toc-container").classList.remove("wide");
+        }
+    }
+
+    function getOffsetTop(element) {
+        if (!element.getClientRects().length) {
+            return 0;
+        }
+        let rect = element.getBoundingClientRect();
+        let win = element.ownerDocument.defaultView;
+        return rect.top + win.pageYOffset;
+    }
+</script>
+        <div class="post-content"><h2 id="项目环境搭建">项目环境搭建<a hidden class="anchor" aria-hidden="true" href="#项目环境搭建">#</a></h2>
+<ol>
+<li>如何将requirements.txt中的依赖转移到 uv环境中
+<ol>
+<li><code>uv add -r requirements.txt</code>
+<ol>
+<li>如果太慢则加 url  <code>uv add -r requirements.txt --index-url https://pypi.tuna.tsinghua.edu.cn/simple</code></li>
+</ol>
+</li>
+</ol>
+</li>
+<li>ollama搭建
+<ol>
+<li>报错
+<ol>
+<li>ollama修改模型下载目录之后报错</li>
+<li>error: pull model manifest: 503: no healthy upstream</li>
+<li>重启服务即可
+<ol>
+<li>sudo systemctl stop ollama</li>
+<li>sudo systemctl start ollama</li>
+</ol>
+</li>
+</ol>
+</li>
+<li>修改模型目录
+<ol>
+<li>sudo ln -s  /home/chester/ollama/models /usr/share/ollama/.ollama/</li>
+<li>sudo chown ollama /usr/share/ollama/.ollama/models</li>
+<li>sudo chgrp ollama /usr/share/ollama/.ollama/models</li>
+<li>后两条是保证目录的权限问题，不然ollma运行会报错</li>
+<li>资料来源 <a href="https://www.reddit.com/r/ollama/comments/1c4zg15/does_anyone_know_how_to_change_where_your_models/" target="_blank" rel="noopener" style="color:#42b983";>Does anyone know how to change where your models are saved on linux? : r/ollama</a></li>
+</ol>
+</li>
+<li>Ollama(model=&ldquo;qwen3:0.6b&rdquo;)
+<ol>
+<li>这段代码前提是 系统中 后台启动了ollama服务（linux安装之后会自动加入系统服务，无需手动启动该服务），但并不需要 命令行执行 ollama run model。应该是后台会自动吊起对应的模型进行计算并传回python。</li>
+</ol>
+</li>
+<li>本地运行ollama真的太慢了。</li>
+</ol>
+</li>
+<li>embedding
+<ol>
+<li>HuggingFaceBgeEmbeddings
+<ol>
+<li>在pycharm中运行的时候，要给jupyter server 添加参数，配上http_proxy的代理。在pycharm软件层面设置http_proxy是没用的。</li>
+<li>huggingface会下载模型建立本地服务进行计算。</li>
+</ol>
+</li>
+<li>HuggingFaceInferenceAPIEmbeddings
+<ol>
+<li>是通过api进行embedding计算，而不是本地进行计算。</li>
+</ol>
+</li>
+</ol>
+</li>
+<li>httpcore 一直报错没有安装
+<ol>
+<li>最后发现是httpcore没有安装好，对应的python包只有元数据没有真实代码，将对应目录删除后重刷uv环境即可。</li>
+</ol>
+</li>
+</ol>
+<h2 id="p01-rag-projects">P01-RAG-Projects<a hidden class="anchor" aria-hidden="true" href="#p01-rag-projects">#</a></h2>
+<h4 id="p01-chatbot">P01 chatbot<a hidden class="anchor" aria-hidden="true" href="#p01-chatbot">#</a></h4>
+<h4 id="问题load_dotenv的机制">问题：load_dotenv的机制<a hidden class="anchor" aria-hidden="true" href="#问题load_dotenv的机制">#</a></h4>
+<ol>
+<li>load_dotenv 定义如下
+<ol>
+<li>默认加载 .env文件，如果当前目录不存在，就不断提升目录层次来查找。</li>
+<li>interpolate 用于是否解析字符串中的变量，比如 <code>PATH=${PATH}:/usr/share/bin</code> ，就会把PATH变量进行解析替换。</li>
+</ol>
+</li>
+<li>其中 <code>dotenv.main.resolve_variables</code> 对于interpolate 功能的实现很有意思，使用了正则方法来匹配并分别进行替换。</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Python" data-lang="Python"><span style="display:flex;"><span><span style="color:#815ba4">def</span> <span style="color:#06b6ef">load_dotenv</span>(
+</span></span><span style="display:flex;"><span>    dotenv_path: Optional[StrPath] <span style="color:#5bc4bf">=</span> <span style="color:#815ba4">None</span>,
+</span></span><span style="display:flex;"><span>    stream: Optional[IO[str]] <span style="color:#5bc4bf">=</span> <span style="color:#815ba4">None</span>,
+</span></span><span style="display:flex;"><span>    verbose: bool <span style="color:#5bc4bf">=</span> <span style="color:#815ba4">False</span>,
+</span></span><span style="display:flex;"><span>    override: bool <span style="color:#5bc4bf">=</span> <span style="color:#815ba4">False</span>,
+</span></span><span style="display:flex;"><span>    interpolate: bool <span style="color:#5bc4bf">=</span> <span style="color:#815ba4">True</span>,
+</span></span><span style="display:flex;"><span>    encoding: Optional[str] <span style="color:#5bc4bf">=</span> <span style="color:#48b685">&#34;utf-8&#34;</span>,
+</span></span><span style="display:flex;"><span>) <span style="color:#5bc4bf">-&gt;</span> bool:
+</span></span><span style="display:flex;"><span>    <span style="color:#48b685">&#34;&#34;&#34;Parse a .env file and then load all the variables found as environment variables.
+</span></span></span><span style="display:flex;"><span><span style="color:#48b685">
+</span></span></span><span style="display:flex;"><span><span style="color:#48b685">    Parameters:
+</span></span></span><span style="display:flex;"><span><span style="color:#48b685">        dotenv_path: Absolute or relative path to .env file.
+</span></span></span><span style="display:flex;"><span><span style="color:#48b685">        stream: Text stream (such as `io.StringIO`) with .env content, used if
+</span></span></span><span style="display:flex;"><span><span style="color:#48b685">            `dotenv_path` is `None`.
+</span></span></span><span style="display:flex;"><span><span style="color:#48b685">        verbose: Whether to output a warning the .env file is missing.
+</span></span></span><span style="display:flex;"><span><span style="color:#48b685">        override: Whether to override the system environment variables with the variables
+</span></span></span><span style="display:flex;"><span><span style="color:#48b685">            from the `.env` file.
+</span></span></span><span style="display:flex;"><span><span style="color:#48b685">        encoding: Encoding to be used to read the file.
+</span></span></span><span style="display:flex;"><span><span style="color:#48b685">    Returns:
+</span></span></span><span style="display:flex;"><span><span style="color:#48b685">        Bool: True if at least one environment variable is set else False
+</span></span></span><span style="display:flex;"><span><span style="color:#48b685">
+</span></span></span><span style="display:flex;"><span><span style="color:#48b685">    If both `dotenv_path` and `stream` are `None`, `find_dotenv()` is used to find the
+</span></span></span><span style="display:flex;"><span><span style="color:#48b685">    .env file with it&#39;s default parameters. If you need to change the default parameters
+</span></span></span><span style="display:flex;"><span><span style="color:#48b685">    of `find_dotenv()`, you can explicitly call `find_dotenv()` and pass the result
+</span></span></span><span style="display:flex;"><span><span style="color:#48b685">    to this function as `dotenv_path`.
+</span></span></span><span style="display:flex;"><span><span style="color:#48b685">
+</span></span></span><span style="display:flex;"><span><span style="color:#48b685">    If the environment variable `PYTHON_DOTENV_DISABLED` is set to a truthy value,
+</span></span></span><span style="display:flex;"><span><span style="color:#48b685">    .env loading is disabled.
+</span></span></span><span style="display:flex;"><span><span style="color:#48b685">    &#34;&#34;&#34;</span>
+</span></span></code></pre></div><h4 id="p02-apis">P02 APIs<a hidden class="anchor" aria-hidden="true" href="#p02-apis">#</a></h4>
+<ol>
+<li><code>ChatMessagePromptTemplate</code> 和 <code>ChatPromptTemplate</code> 是两个不同的类，主要区别如下：
+<ol>
+<li><strong>ChatMessagePromptTemplate</strong>
+<ul>
+<li>用于表示单个聊天消息的模板</li>
+<li>对应单条消息，包含消息的角色（如系统、用户、助手）和内容模板</li>
+<li>是构成聊天模板的基本单元</li>
+</ul>
+</li>
+<li><strong>ChatPromptTemplate</strong>
+<ul>
+<li>用于表示整个聊天对话的模板</li>
+<li>可以包含多个 <code>ChatMessagePromptTemplate</code> 实例</li>
+<li>用于构建完整的对话历史模板，支持多轮对话场景</li>
+</ul>
+</li>
+</ol>
+<ul>
+<li>简而言之，<code>ChatMessagePromptTemplate</code> 是单条消息模板，而 <code>ChatPromptTemplate</code> 是整个对话模板，后者可以包含多个前者来构建完整的对话上下文。</li>
+</ul>
+</li>
+<li><code>ChatPromptTemplate</code>
+<ol>
+<li>from_messages 从若干message中构造模板</li>
+<li>from_template 从单个 message 的 template 来构造 HumanMessage，并组装为一个Chat。</li>
+</ol>
+</li>
+<li>FewShotChatMessagePromptTemplate</li>
+<li>langchain_core.prompts中的各种prompt。</li>
+<li>ChatOpenAI的使用方法
+<ol>
+<li><a href="https://api.python.langchain.com/en/latest/chat_models/langchain_openai.chat_models.base.ChatOpenAI.html#langchain_openai.chat_models.base.ChatOpenAI" target="_blank" rel="noopener" style="color:#42b983";>langchain_openai.chat_models.base.ChatOpenAI — 🦜🔗 LangChain 0.2.17</a></li>
+</ol>
+</li>
+<li>StrOutputParser 如何解析chain之前部分的内容
+<ol>
+<li>langchain_core.outputs.chat_generation.ChatGeneration.set_text 中指明了从message中的content属性来获取内容。</li>
+</ol>
+</li>
+</ol>
+<h4 id="p04-retriever-and-chain">P04 Retriever and Chain<a hidden class="anchor" aria-hidden="true" href="#p04-retriever-and-chain">#</a></h4>
+<ol>
+<li>create_stuff_documents_chain
+<ol>
+<li>RunnablePassthrough 即 identity function，恒等函数，输入什么就输出什么。</li>
+<li>RunnablePassthrough.assign  ： Merge the Dict input with the output produced by the mapping argument.</li>
+</ol>
+</li>
+<li><strong>chain的调用过程</strong>
+<ol>
+<li>输入：输入数据为dict，有input这个key。</li>
+<li><code>retrieval_docs</code> ：先对 数据进行检索，即从x中获取 input这一项，然后送入检索器。检索器本质上是调用了 <code>__ror__</code>方法，进一步调用了 <code>VectorStoreRetriever</code>的 <code>_get_relevant_documents</code> 方法，进一步调用了 <code>self.vectorstore.similarity_search</code>方法。检索完之后，将相似文档组装为一个item放入到 context这个key下。 数据变为 <code>{input:XXX, context:[docs]}</code>。</li>
+<li><code>format_docs</code> ：检索出相似文档之后，送入format_inputs过程，即将数据中的context项格式为字符串，并用 双换行符进行分隔连接。数据变为 <code>{input:XXX, context:doc_str}</code></li>
+<li><code>prompt</code>： 送入prompt，prompt的invoke方法中本质就是对 template字符串和 上一步计算出的数据进行格式化。</li>
+<li><code>llm</code>：模型给出响应</li>
+<li><code>_output_parser</code> 本质就是对 输出的response消息进行格式化，本质就是提取消息中的key为&quot;text&quot;对应的属性。</li>
+</ol>
+</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Python" data-lang="Python"><span style="display:flex;"><span>response<span style="color:#5bc4bf">=</span>retriever<span style="color:#5bc4bf">.</span>invoke(input<span style="color:#5bc4bf">=</span><span style="color:#48b685">&#34;&#34;&#34;image processing with an introduction to techniques for image pattern classification&#34;&#34;&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#776e71">#langchain_classic/chains/retrieval.py:64</span>
+</span></span><span style="display:flex;"><span><span style="color:#815ba4">if</span> <span style="color:#5bc4bf">not</span> isinstance(retriever, BaseRetriever):  
+</span></span><span style="display:flex;"><span>    retrieval_docs: Runnable[dict, RetrieverOutput] <span style="color:#5bc4bf">=</span> retriever  
+</span></span><span style="display:flex;"><span><span style="color:#815ba4">else</span>:  
+</span></span><span style="display:flex;"><span>    retrieval_docs <span style="color:#5bc4bf">=</span> (<span style="color:#815ba4">lambda</span> x: x[<span style="color:#48b685">&#34;input&#34;</span>]) <span style="color:#5bc4bf">|</span> retriever
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span><span style="color:#815ba4">return</span> (  
+</span></span><span style="display:flex;"><span>    RunnablePassthrough<span style="color:#5bc4bf">.</span>assign(  
+</span></span><span style="display:flex;"><span>        context<span style="color:#5bc4bf">=</span>retrieval_docs<span style="color:#5bc4bf">.</span>with_config(run_name<span style="color:#5bc4bf">=</span><span style="color:#48b685">&#34;retrieve_documents&#34;</span>),  
+</span></span><span style="display:flex;"><span>    )<span style="color:#5bc4bf">.</span>assign(answer<span style="color:#5bc4bf">=</span>combine_docs_chain)  
+</span></span><span style="display:flex;"><span>)<span style="color:#5bc4bf">.</span>with_config(run_name<span style="color:#5bc4bf">=</span><span style="color:#48b685">&#34;retrieval_chain&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#815ba4">def</span> <span style="color:#06b6ef">format_docs</span>(inputs: dict) <span style="color:#5bc4bf">-&gt;</span> str:  
+</span></span><span style="display:flex;"><span>    <span style="color:#815ba4">return</span> document_separator<span style="color:#5bc4bf">.</span>join(  
+</span></span><span style="display:flex;"><span>        format_document(doc, _document_prompt)  
+</span></span><span style="display:flex;"><span>        <span style="color:#815ba4">for</span> doc <span style="color:#5bc4bf">in</span> inputs[document_variable_name]  
+</span></span><span style="display:flex;"><span>    )
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span><span style="color:#815ba4">return</span> (  
+</span></span><span style="display:flex;"><span>    RunnablePassthrough<span style="color:#5bc4bf">.</span>assign(<span style="color:#5bc4bf">**</span>{document_variable_name: format_docs})<span style="color:#5bc4bf">.</span>with_config(  
+</span></span><span style="display:flex;"><span>        run_name<span style="color:#5bc4bf">=</span><span style="color:#48b685">&#34;format_inputs&#34;</span>,  
+</span></span><span style="display:flex;"><span>    )  
+</span></span><span style="display:flex;"><span>    <span style="color:#5bc4bf">|</span> prompt  
+</span></span><span style="display:flex;"><span>    <span style="color:#5bc4bf">|</span> llm  
+</span></span><span style="display:flex;"><span>    <span style="color:#5bc4bf">|</span> _output_parser  
+</span></span><span style="display:flex;"><span>)<span style="color:#5bc4bf">.</span>with_config(run_name<span style="color:#5bc4bf">=</span><span style="color:#48b685">&#34;stuff_documents_chain&#34;</span>)
+</span></span></code></pre></div><h4 id="p05-advanced-rag-qa-project">P05 Advanced RAG Q&amp;A Project<a hidden class="anchor" aria-hidden="true" href="#p05-advanced-rag-qa-project">#</a></h4>
+<ol>
+<li>create_retriever_tool
+<ol>
+<li>本质就是 将检索、格式化、拼接工作组装为一个整体功能然后，实例化为一个tool。</li>
+</ol>
+</li>
+<li><strong>Scratchpad 含义</strong>
+<ul>
+<li>直译为草稿纸</li>
+<li>在 LangChain 或类似框架中，<code>scratchpad</code> 通常指代理(Agent)的临时工作空间，用于：
+<ul>
+<li>存储中间思考过程</li>
+<li>记录当前任务状态</li>
+<li>保存临时计算结果</li>
+<li>进行推理和决策的缓冲区</li>
+</ul>
+</li>
+<li>这是一个通用的计算机科学概念，表示任何用于临时存储和处理的内存区域。</li>
+</ul>
+</li>
+<li>最终tools是在 <code>ollama._types.ChatRequest</code> 进行解析，具体见下面代码。</li>
+<li>这里的llm走的是chat类型的llm，所以底层是走 <code>/api/chat</code> 接口，该接口的参数列表中含有tools。相当于该接口已经把tools的描述如何格式化都已经在内部解决掉，不需要调用方将tools的描述格式化到 prompt里面。</li>
+<li>AgentExecutor里最重视依赖 <code>iter</code>方法来不断迭代，底层是依赖<code>_iter_next_step</code>来进行 thought、action步骤的。</li>
+<li>即chat_model的接口都是支持在请求中加入tools参数的。</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Python" data-lang="Python"><span style="display:flex;"><span><span style="color:#776e71">#Runnable的方法</span>
+</span></span><span style="display:flex;"><span><span style="color:#815ba4">def</span> <span style="color:#06b6ef">bind</span>(self, <span style="color:#5bc4bf">**</span>kwargs: Any) <span style="color:#5bc4bf">-&gt;</span> Runnable[Input, Output]:  
+</span></span><span style="display:flex;"><span>    <span style="color:#48b685">&#34;&#34;&#34;Bind arguments to a `Runnable`, returning a new `Runnable`.  
+</span></span></span><span style="display:flex;"><span><span style="color:#48b685">  
+</span></span></span><span style="display:flex;"><span><span style="color:#48b685">    Useful when a `Runnable` in a chain requires an argument that is not    in the output of the previous `Runnable` or included in the user input.
+</span></span></span><span style="display:flex;"><span><span style="color:#48b685">&#34;&#34;&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#776e71">#langchain_ollama.chat_models.ChatOllama._create_chat_stream</span>
+</span></span><span style="display:flex;"><span><span style="color:#776e71"># ollama/_client.py:351</span>
+</span></span><span style="display:flex;"><span><span style="color:#776e71"># ollama._client.Client.chat</span>
+</span></span><span style="display:flex;"><span><span style="color:#815ba4">return</span> self<span style="color:#5bc4bf">.</span>_request(  
+</span></span><span style="display:flex;"><span>  ChatResponse,  
+</span></span><span style="display:flex;"><span>  <span style="color:#48b685">&#39;POST&#39;</span>,  
+</span></span><span style="display:flex;"><span>  <span style="color:#48b685">&#39;/api/chat&#39;</span>,  
+</span></span><span style="display:flex;"><span>  json<span style="color:#5bc4bf">=</span>ChatRequest(  
+</span></span><span style="display:flex;"><span>    model<span style="color:#5bc4bf">=</span>model,  
+</span></span><span style="display:flex;"><span>    messages<span style="color:#5bc4bf">=</span>list(_copy_messages(messages)),  
+</span></span><span style="display:flex;"><span>    tools<span style="color:#5bc4bf">=</span>list(_copy_tools(tools)),  
+</span></span><span style="display:flex;"><span>    stream<span style="color:#5bc4bf">=</span>stream,  
+</span></span><span style="display:flex;"><span>    think<span style="color:#5bc4bf">=</span>think,  
+</span></span><span style="display:flex;"><span>    format<span style="color:#5bc4bf">=</span>format,  
+</span></span><span style="display:flex;"><span>    options<span style="color:#5bc4bf">=</span>options,  
+</span></span><span style="display:flex;"><span>    keep_alive<span style="color:#5bc4bf">=</span>keep_alive,  
+</span></span><span style="display:flex;"><span>  )<span style="color:#5bc4bf">.</span>model_dump(exclude_none<span style="color:#5bc4bf">=</span><span style="color:#815ba4">True</span>),  
+</span></span><span style="display:flex;"><span>  stream<span style="color:#5bc4bf">=</span>stream,  
+</span></span><span style="display:flex;"><span>)
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Python" data-lang="Python"><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#776e71">#langchain_classic.agents.agent.AgentExecutor._iter_next_step</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#815ba4">def</span> <span style="color:#06b6ef">_iter_next_step</span>(
+</span></span><span style="display:flex;"><span>        self,
+</span></span><span style="display:flex;"><span>        name_to_tool_map: dict[str, BaseTool],
+</span></span><span style="display:flex;"><span>        color_mapping: dict[str, str],
+</span></span><span style="display:flex;"><span>        inputs: dict[str, str],
+</span></span><span style="display:flex;"><span>        intermediate_steps: list[tuple[AgentAction, str]],
+</span></span><span style="display:flex;"><span>        run_manager: CallbackManagerForChainRun <span style="color:#5bc4bf">|</span> <span style="color:#815ba4">None</span> <span style="color:#5bc4bf">=</span> <span style="color:#815ba4">None</span>,
+</span></span><span style="display:flex;"><span>    ) <span style="color:#5bc4bf">-&gt;</span> Iterator[AgentFinish <span style="color:#5bc4bf">|</span> AgentAction <span style="color:#5bc4bf">|</span> AgentStep]:
+</span></span><span style="display:flex;"><span>        <span style="color:#48b685">&#34;&#34;&#34;Take a single step in the thought-action-observation loop.
+</span></span></span><span style="display:flex;"><span><span style="color:#48b685">
+</span></span></span><span style="display:flex;"><span><span style="color:#48b685">        Override this to take control of how the agent makes and acts on choices.
+</span></span></span><span style="display:flex;"><span><span style="color:#48b685">        &#34;&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#815ba4">try</span>:
+</span></span><span style="display:flex;"><span>            intermediate_steps <span style="color:#5bc4bf">=</span> self<span style="color:#5bc4bf">.</span>_prepare_intermediate_steps(intermediate_steps)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>            <span style="color:#776e71"># Call the LLM to see what to do.</span>
+</span></span><span style="display:flex;"><span>            output <span style="color:#5bc4bf">=</span> self<span style="color:#5bc4bf">.</span>_action_agent<span style="color:#5bc4bf">.</span>plan(
+</span></span><span style="display:flex;"><span>                intermediate_steps,
+</span></span><span style="display:flex;"><span>                callbacks<span style="color:#5bc4bf">=</span>run_manager<span style="color:#5bc4bf">.</span>get_child() <span style="color:#815ba4">if</span> run_manager <span style="color:#815ba4">else</span> <span style="color:#815ba4">None</span>,
+</span></span><span style="display:flex;"><span>                <span style="color:#5bc4bf">**</span>inputs,
+</span></span><span style="display:flex;"><span>            )
+</span></span><span style="display:flex;"><span>        <span style="color:#815ba4">except</span> OutputParserException <span style="color:#815ba4">as</span> e:
+</span></span><span style="display:flex;"><span>            <span style="color:#5bc4bf">......</span>
+</span></span><span style="display:flex;"><span>            
+</span></span><span style="display:flex;"><span>        <span style="color:#776e71"># If the tool chosen is the finishing tool, then we end and return.</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#815ba4">if</span> isinstance(output, AgentFinish):
+</span></span><span style="display:flex;"><span>            <span style="color:#815ba4">yield</span> output
+</span></span><span style="display:flex;"><span>            <span style="color:#815ba4">return</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        actions: list[AgentAction]
+</span></span><span style="display:flex;"><span>        actions <span style="color:#5bc4bf">=</span> [output] <span style="color:#815ba4">if</span> isinstance(output, AgentAction) <span style="color:#815ba4">else</span> output
+</span></span><span style="display:flex;"><span>        <span style="color:#815ba4">for</span> agent_action <span style="color:#5bc4bf">in</span> actions:
+</span></span><span style="display:flex;"><span>            <span style="color:#815ba4">yield</span> agent_action
+</span></span><span style="display:flex;"><span>        <span style="color:#815ba4">for</span> agent_action <span style="color:#5bc4bf">in</span> actions:
+</span></span><span style="display:flex;"><span>            <span style="color:#815ba4">yield</span> self<span style="color:#5bc4bf">.</span>_perform_agent_action(
+</span></span><span style="display:flex;"><span>                name_to_tool_map,
+</span></span><span style="display:flex;"><span>                color_mapping,
+</span></span><span style="display:flex;"><span>                agent_action,
+</span></span><span style="display:flex;"><span>                run_manager,
+</span></span><span style="display:flex;"><span>            )
+</span></span><span style="display:flex;"><span>        <span style="color:#5bc4bf">...</span>
+</span></span></code></pre></div><h4 id="p06-advanced-rag-qa-project">P06 Advanced RAG Q&amp;A Project<a hidden class="anchor" aria-hidden="true" href="#p06-advanced-rag-qa-project">#</a></h4>
+<ol>
+<li>本地服务和远程服务的代理设置，如下面代码
+<ol>
+<li>HTTP_PROXY 和 HTTPS_PROXY用于设置通过http服务的代理</li>
+<li>NO_PROXY 用于本地服务绕过上面设置的代理，如本地的Ollama服务。</li>
+</ol>
+</li>
+<li><code>vectorstore.as_retriever</code> 可以直接转换为检索器
+<ol>
+<li>方法参数<code>search_kwargs</code> 中也可以设置返回的文档数目k、MMR多样性算法、元数据过滤器函数等。</li>
+</ol>
+</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Python" data-lang="Python"><span style="display:flex;"><span><span style="color:#5bc4bf">import</span> <span style="color:#fec418">os</span>  
+</span></span><span style="display:flex;"><span><span style="color:#776e71"># 设置http的代理和不代理的地址  </span>
+</span></span><span style="display:flex;"><span>os<span style="color:#5bc4bf">.</span>environ[<span style="color:#48b685">&#39;HTTP_PROXY&#39;</span>] <span style="color:#5bc4bf">=</span> <span style="color:#48b685">&#34;http://127.0.0.1:7890&#34;</span>  
+</span></span><span style="display:flex;"><span>os<span style="color:#5bc4bf">.</span>environ[<span style="color:#48b685">&#39;HTTPS_PROXY&#39;</span>] <span style="color:#5bc4bf">=</span> <span style="color:#48b685">&#34;http://127.0.0.1:7890&#34;</span>  
+</span></span><span style="display:flex;"><span>os<span style="color:#5bc4bf">.</span>environ[<span style="color:#48b685">&#39;NO_PROXY&#39;</span>] <span style="color:#5bc4bf">=</span> <span style="color:#48b685">&#34;http://127.0.0.1:11434&#34;</span> <span style="color:#776e71">#ollama的本地服务地址</span>
+</span></span></code></pre></div><h4 id="p07">P07<a hidden class="anchor" aria-hidden="true" href="#p07">#</a></h4>
+<ol>
+<li>HuggingFaceEndpoint 接口问题
+<ol>
+<li>bug  <a href="https://github.com/langchain-ai/langchain/issues/31434#issuecomment-2936308959" target="_blank" rel="noopener" style="color:#42b983";>https://github.com/langchain-ai/langchain/issues/31434#issuecomment-2936308959</a></li>
+<li>因为官方服务不再提供 text-generation的模型服务。</li>
+<li>可以使用 ChatHuggingFace来绕过这个问题。</li>
+</ol>
+</li>
+</ol>
+<h4 id="p08">P08<a hidden class="anchor" aria-hidden="true" href="#p08">#</a></h4>
+<ol>
+<li>OllamaEmbeddings 在本地的笔记本上对于4篇论文的计算非常慢。
+<ol>
+<li>使用了HuggingFaceEmbeddings加一个小emb模型计算时间变少了很多。</li>
+</ol>
+</li>
+</ol>
+<h4 id="p09">P09<a hidden class="anchor" aria-hidden="true" href="#p09">#</a></h4>
+<ol>
+<li>langchain-ObjectBox 版本太老，没法安装。该数据库 ObjectBox 维护似乎不是很多。</li>
+</ol>
+<h4 id="p11">P11<a hidden class="anchor" aria-hidden="true" href="#p11">#</a></h4>
+<ol>
+<li>model_scope 兼容接口
+<ol>
+<li><a href="https://modelscope.cn/docs/model-service/API-Inference/intro" target="_blank" rel="noopener" style="color:#42b983";>API推理介绍 · 文档中心</a></li>
+</ol>
+</li>
+<li>streamlit debug
+<ol>
+<li>选择module streamlit</li>
+<li>参数填写 run app.py</li>
+<li>working directory 填写app.py的目录</li>
+</ol>
+</li>
+<li>使用modelscope服务来代替openai的图像生成接口。
+<ol>
+<li>文生图模型 支持API调用的模型列表，可以通过<a href="https://www.modelscope.cn/aigc/models" target="_blank" rel="noopener" style="color:#42b983";>AIGC模型</a>页面进行搜索。</li>
+<li>上述页面中列出很多模型都微调的很差。</li>
+</ol>
+</li>
+<li>调整了 gpu_memory_utilization 从0.9 到0.95
+<ol>
+<li>报错
+<ol>
+<li><code>ValueError: To serve at least one request with the models's max seq len (40960), (5.62 GiB KV cache is needed, which is larger than the available KV cache memory (4.81 GiB).</code></li>
+</ol>
+</li>
+<li>差一点内存，所以增加了gpu的利用率。</li>
+<li>从这点看，大模型一次推理非常消耗显存。</li>
+<li>一条数据的最大显存消耗
+<ol>
+<li><code>显存消耗=2(key+value) * seq_len(40960) * model_layer * hidden_size * head_dim * 2(byte FP16)</code></li>
+</ol>
+</li>
+<li></li>
+</ol>
+</li>
+</ol>
+<h2 id="p02-demo_simple_rag_py">P02 demo_simple_rag_py<a hidden class="anchor" aria-hidden="true" href="#p02-demo_simple_rag_py">#</a></h2>
+<p>展示RAG原理的极简代码。</p>
+<ol>
+<li>关联博文 <a href="https://huggingface.co/blog/ngxson/make-your-own-rag" target="_blank" rel="noopener" style="color:#42b983";>Code a simple RAG from scratch</a></li>
+<li>项目代码 <a href="https://huggingface.co/ngxson/demo_simple_rag_py/blob/main/demo.py" target="_blank" rel="noopener" style="color:#42b983";>demo.py · ngxson/demo_simple_rag_py at main</a>
+<ol>
+<li>很好的展示RAG原理性的小demo，不需要安装向量数据库。</li>
+</ol>
+</li>
+<li>bartowski/Llama-3.2-1B-Instruct-GGUF 这个模型中的instruct的意思
+<ol>
+<li>instruct意思就是指模型是经过 在base model上经过指令微调（或者叫监督微调）过程之后产生的模型，可以直接用于聊天、助手类应用</li>
+</ol>
+</li>
+<li>GGUF 文件包含了tokenizer的数据。</li>
+<li>ollama 拉取hf.co 网站的模型失败
+<ol>
+<li><code>Ollama pull 进度已经100%， 但为什么会报如下错误</code>
+<ol>
+<li><code>Error: max retries exceeded: Get &quot;https://huggingface.co/v2/bartowski/Llama-3.2-1B-Instruct-GGUF/blobs/sha256:948af2743fc78a328dcb3b0f5a31b3d75f415840fdb699e8b1235978392ecf85?__sign=eyJhbGciOiJFZERTQSJ9.eyJyZWFkIjp0cnVlLCJwZXJtaXNzaW9ucyI6eyJyZXBvLmNvbnRlbnQucmVhZCI6dHJ1ZX0sImlhdCI6MTc2Mjc1MzA3Niwic3ViIjoiL2JhcnRvd3NraS9MbGFtYS0zLjItMUItSW5zdHJ1Y3QtR0dVRiIsImV4cCI6MTc2Mjc1MzY3NiwiaXNzIjoiaHR0cHM6Ly9odWdnaW5nZmFjZS5jbyJ9.wVhqKCuc0vtHoS8DUStd86RoS1dhE0e-IqqMIpLZ_mEbfz6ahWeaoQiuTpWuaJCels7Q7uIIwEky9DhHsynYCg&quot;: dial tcp 54.89.135.129:443: connect: connection refused</code></li>
+</ol>
+</li>
+<li>检查网络是可以连接 hf.co网站的。</li>
+<li>找不到原因。</li>
+</ol>
+</li>
+<li>手动下载gguf模型文件，然后本地进行ollama手动构建。
+<ol>
+<li>手动下载 <a href="https://huggingface.co/bartowski/Llama-3.2-1B-Instruct-GGUF/tree/main" target="_blank" rel="noopener" style="color:#42b983";>https://huggingface.co/bartowski/Llama-3.2-1B-Instruct-GGUF/tree/main</a> 中的 Llama-3.2-1B-Instruct-Q4_K_M.gguf文件。</li>
+<li>然后根据文档<a href="https://docs.ollama.com/import#importing-a-gguf-based-model-or-adapter" target="_blank" rel="noopener" style="color:#42b983";>Importing a Model - Ollama</a>来导入到本地ollama的缓存目录。</li>
+<li>创建一个临时空目录</li>
+<li>创建 ModelFile文件，内容为 <code>FROM ./Llama-3.2-1B-Instruct-Q4_K_M.gguf</code></li>
+<li>执行命令<code>ollama create bartowski/Llama-3.2-1B-Instruct-GGUF</code></li>
+<li>模型就可以被构建缓并复制到 ollama的缓存目录中。</li>
+<li>并同样构建 bge-base-en-v1.5-q4_k_m.gguf 模型</li>
+<li><code>ollama.embed(model=&quot;CompendiumLabs/bge-base-en-v1.5-gguf&quot;)</code>
+<ol>
+<li>这里的模型名按照/来分割，即说明是本地文件的模型。</li>
+<li>如果是正常的:分割的模型名，则ollama会自动从缓存目录中的 library子目录中查找。</li>
+</ol>
+</li>
+</ol>
+</li>
+<li>在ChatModel的stream模式下，返回是一个词一个词的进行返回的。</li>
+<li>在该demo示例中，检索到的文档是全被塞到一个system message下，然后后续的对话但就是根据此来进行交互。</li>
+<li>ollama 也可以在本地对模型进行量化。 <a href="https://docs.ollama.com/import#quantizing-a-model" target="_blank" rel="noopener" style="color:#42b983";>quantizing-a-model - Ollama</a></li>
+<li>ollama对仓库模型的选择
+<ol>
+<li>ollama run model_repo_id，如果repo中有多版本模型，那么ollama会选择Q4版本的。更好的方法是显式指定具体版本 <code>ollama run hf.co/{username}/{repository}:{quantization}</code>
+<ol>
+<li>比如 <code>ollama run hf.co/bartowski/Llama-3.2-3B-Instruct-GGUF:Llama-3.2-3B-Instruct-IQ3_M.gguf</code></li>
+</ol>
+</li>
+<li>参考资料 <a href="https://huggingface.co/docs/hub/en/ollama" target="_blank" rel="noopener" style="color:#42b983";>Use Ollama with any GGUF Model on Hugging Face Hub</a></li>
+</ol>
+</li>
+</ol>
+<h2 id="p03-rag-optimization-practices">P03 RAG-Optimization-Practices<a hidden class="anchor" aria-hidden="true" href="#p03-rag-optimization-practices">#</a></h2>
+<ol>
+<li><a href="https://github.com/kanhaoning/RAG-Optimization-Practices" target="_blank" rel="noopener" style="color:#42b983";>kanhaoning/RAG-Optimization-Practices</a></li>
+<li>阿里云服务器
+<ol>
+<li>uv 下载经常超时的解决方案，非常好用。
+<ol>
+<li><code>export UV_HTTP_TIMEOUT=240</code></li>
+<li><code>export UV_CONCURRENT_DOWNLOADS=2</code></li>
+</ol>
+</li>
+<li>如何加快安装uv环境、缓存
+<ol>
+<li>在一台便宜的机器上使用uv来构建一个dummy项目，uv的缓存就会留下。</li>
+<li>rsync uv缓存目录到 目标服务器的uv缓存目录下。同一个vpc下两个服务器的rsync速度非常快，300M/s。并且rsync会保持文件的软链接。</li>
+<li>这样整体花钱少，并且构建速度快。</li>
+</ol>
+</li>
+</ol>
+</li>
+<li>Qwen-reranker和bert一样是双向注意力计算方式。</li>
+<li>对于一个batch内的数据，有很多条数据有共同的前缀，那么vLLM中有针对这种情况的优化推理策略</li>
+<li>阿里云ossfs的代码存档。
+<ol>
+<li>安装ossfs
+<ol>
+<li><code>wget https://github.com/aliyun/ossfs/releases/download/v1.91.8/ossfs_1.91.8_ubuntu24.04_amd64.deb</code></li>
+<li><code>sudo apt install ./ossfs_1.91.8_ubuntu24.04_amd64.deb</code></li>
+<li></li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#5bc4bf">(</span>rag-optimization-practices<span style="color:#5bc4bf">)</span> root@dsw-1457330-7974bd5bbf-47smb:/mnt/workspace/RAG-Optimization-Practices/Reranker-Distillation# bash evaluate.sh 
+</span></span><span style="display:flex;"><span>正在从 ../data/test.jsonl 加载数据集...
+</span></span><span style="display:flex;"><span>加载完成！共 <span style="color:#f99b15">2992</span> 条样本。
+</span></span><span style="display:flex;"><span>--- 正在加载并评估模型: /mnt/workspace/modelscope/BAAI/bge-reranker-v2-m3 ---
+</span></span><span style="display:flex;"><span>--- 正在加载并评估模型: ../data/reranker_output/checkpoint-1218 ---
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>✅ 最终评估结果汇总
+</span></span><span style="display:flex;"><span>【蒸馏前】模型性能:
+</span></span><span style="display:flex;"><span>  - MAP: 0.472061
+</span></span><span style="display:flex;"><span>  - MRR@10: 0.478234
+</span></span><span style="display:flex;"><span>  - NDCG@10: 0.547284
+</span></span><span style="display:flex;"><span>【蒸馏后】模型性能:
+</span></span><span style="display:flex;"><span>  - MAP: 0.562973
+</span></span><span style="display:flex;"><span>  - MRR@10: 0.571423
+</span></span><span style="display:flex;"><span>  - NDCG@10: 0.636993
+</span></span><span style="display:flex;"><span><span style="color:#5bc4bf">==================================================</span>
+</span></span><span style="display:flex;"><span>🚀 性能变化分析 <span style="color:#5bc4bf">(</span>蒸馏后 vs. 蒸馏前<span style="color:#5bc4bf">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#5bc4bf">==================================================</span>
+</span></span><span style="display:flex;"><span>指标 <span style="color:#5bc4bf">[</span>MAP<span style="color:#5bc4bf">]</span>:
+</span></span><span style="display:flex;"><span>  - 绝对提升: +0.090913
+</span></span><span style="display:flex;"><span>  - 相对提升: +19.26% ↑
+</span></span><span style="display:flex;"><span>指标 <span style="color:#5bc4bf">[</span>MRR@10<span style="color:#5bc4bf">]</span>:
+</span></span><span style="display:flex;"><span>  - 绝对提升: +0.093189
+</span></span><span style="display:flex;"><span>  - 相对提升: +19.49% ↑
+</span></span><span style="display:flex;"><span>指标 <span style="color:#5bc4bf">[</span>NDCG@10<span style="color:#5bc4bf">]</span>:
+</span></span><span style="display:flex;"><span>  - 绝对提升: +0.089709
+</span></span><span style="display:flex;"><span>  - 相对提升: +16.39% ↑
+</span></span><span style="display:flex;"><span>评估完成！✨
+</span></span></code></pre></div><p>modelscope:1.31.0-pytorch2.3.1tensorflow2.16.1-gpu-py311-cu121-ubuntu22.04
+modelscope:1.31.0-pytorch2.3.1tensorflow2.16.1-gpu-py311-cu121-ubuntu22.04</p>
+<h4 id="问题对于一个batch内的数据有很多条数据有共同的前缀那么vllm中有针对这种情况的优化推理策略">问题：对于一个batch内的数据，有很多条数据有共同的前缀，那么vLLM中有针对这种情况的优化推理策略<a hidden class="anchor" aria-hidden="true" href="#问题对于一个batch内的数据有很多条数据有共同的前缀那么vllm中有针对这种情况的优化推理策略">#</a></h4>
+<p>是的！<strong>vLLM 确实针对「batch 内多条请求具有共同前缀（shared prefix）」的场景提供了专门的优化策略</strong>，这项技术称为：</p>
+<p><strong>✅ Prefix Caching（前缀缓存）</strong> 或 <strong>Prompt Sharing</strong>
+这是 vLLM 的核心优化之一，能<strong>显著节省显存、提升吞吐、降低延迟</strong>，尤其适用于以下场景：</p>
+<ul>
+<li>RAG（检索增强生成）：多个文档共享相同的 prompt 模板</li>
+<li>多轮对话系统：历史上下文相同，仅用户最新输入不同</li>
+<li>批量推理：如 <code>“总结以下文本：&lt;text&gt;”</code>，其中 <code>&lt;text&gt;</code> 不同但指令相同</li>
+</ul>
+<p><strong>🔍 工作原理</strong></p>
+<p><strong>1. KV Cache 共享</strong></p>
+<ul>
+<li>LLM 推理中，<strong>Prefill 阶段会为 prompt 生成 KV Cache（Key/Value 缓存）</strong></li>
+<li>如果多个请求的 <strong>prompt 前缀完全相同</strong>，它们的 <strong>KV Cache 前缀部分也完全相同</strong></li>
+<li>vLLM 会：
+<ul>
+<li><strong>只计算一次该公共前缀的 KV Cache</strong></li>
+<li><strong>多个请求共享这份缓存</strong></li>
+<li>后续各自不同的部分独立计算</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>📌 本质：<strong>避免重复计算和存储相同的上下文</strong></p>
+</blockquote>
+<p><strong>2. 与 PagedAttention 协同</strong></p>
+<ul>
+<li>vLLM 使用 <strong>PagedAttention</strong> 管理 KV Cache（类似操作系统的虚拟内存分页）</li>
+<li>公共前缀的 KV Cache 被存储在<strong>共享物理页</strong>中</li>
+<li>每个请求的逻辑块（logical blocks）指向这些共享页 + 自有页</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>Request 1: [Shared Prefix] + [Suffix A]
+</span></span><span style="display:flex;"><span>Request 2: [Shared Prefix] + [Suffix B]
+</span></span><span style="display:flex;"><span>Request 3: [Shared Prefix] + [Suffix C]
+</span></span><span style="display:flex;"><span>→ KV Cache:
+</span></span><span style="display:flex;"><span>   Shared Pages: [K/V of &#34;Shared Prefix&#34;]
+</span></span><span style="display:flex;"><span>   Private Pages: [K/V of &#34;Suffix A&#34;], [Suffix B], [Suffix C]
+</span></span></code></pre></div><p><strong>🚀 性能收益</strong></p>
+<table>
+<thead>
+<tr>
+<th>指标</th>
+<th>优化效果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>显存占用</strong></td>
+<td>↓ 显著减少（公共部分只存一份）</td>
+</tr>
+<tr>
+<td><strong>Prefill 计算量</strong></td>
+<td>↓ 减少（公共前缀只计算一次）</td>
+</tr>
+<tr>
+<td><strong>吞吐（throughput）</strong></td>
+<td>↑ 提升 2–5 倍（实测常见）</td>
+</tr>
+<tr>
+<td><strong>支持 batch size</strong></td>
+<td>↑ 可容纳更多请求</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>💡 实测案例（RAG 场景）：</p>
+<ul>
+<li>10 个请求，共享 2K token 的 prompt 模板</li>
+<li><strong>显存节省 &gt;60%</strong>，吞吐提升 <strong>3.2 倍</strong></li>
+</ul>
+</blockquote>
+<p><strong>🛠 如何启用？（vLLM 中默认开启！）</strong></p>
+<ul>
+<li><strong>无需额外配置</strong>：vLLM <strong>默认自动检测并启用 Prefix Caching</strong></li>
+<li>条件：
+<ul>
+<li>多个请求的 <strong>prompt 前缀必须字节级完全相同</strong></li>
+<li>使用相同的模型和参数（temperature 等不影响）</li>
+</ul>
+</li>
+</ul>
+<p><strong>示例（Python client）：</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#5bc4bf">from</span> <span style="color:#fec418">vllm</span> <span style="color:#5bc4bf">import</span> LLM, SamplingParams
+</span></span><span style="display:flex;"><span>llm <span style="color:#5bc4bf">=</span> LLM(model<span style="color:#5bc4bf">=</span><span style="color:#48b685">&#34;Qwen/Qwen-7B-Chat&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#5bc4bf">**</span>共享前缀<span style="color:#ef6155">：</span><span style="color:#48b685">&#34;你是一个 helpful AI。请回答：&#34;</span><span style="color:#5bc4bf">**</span>
+</span></span><span style="display:flex;"><span>prompts <span style="color:#5bc4bf">=</span> [
+</span></span><span style="display:flex;"><span>    <span style="color:#48b685">&#34;你是一个 helpful AI。请回答：巴黎是哪个国家的首都？&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#48b685">&#34;你是一个 helpful AI。请回答：量子力学是谁提出的？&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#48b685">&#34;你是一个 helpful AI。请回答：Python 如何读取文件？&#34;</span>
+</span></span><span style="display:flex;"><span>]
+</span></span><span style="display:flex;"><span>outputs <span style="color:#5bc4bf">=</span> llm<span style="color:#5bc4bf">.</span>generate(prompts, SamplingParams(temperature<span style="color:#5bc4bf">=</span><span style="color:#f99b15">0.7</span>))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#5bc4bf">**</span><span style="color:#ef6155">→</span> vLLM 自动共享前缀的 KV Cache<span style="color:#ef6155">！</span><span style="color:#5bc4bf">**</span>
+</span></span></code></pre></div><p><strong>⚠️ 注意事项</strong></p>
+<table>
+<thead>
+<tr>
+<th>问题</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>前缀必须完全一致</strong></td>
+<td>包括空格、标点、换行符。<code>&quot;你好&quot;</code> ≠ <code>&quot;你好 &quot;</code></td>
+</tr>
+<tr>
+<td><strong>不支持动态插入</strong></td>
+<td>如果前缀在运行时拼接（如加时间戳），则无法共享</td>
+</tr>
+<tr>
+<td><strong>与 LoRA 兼容性</strong></td>
+<td>若使用不同 LoRA adapter，即使 prompt 相同也无法共享</td>
+</tr>
+<tr>
+<td><strong>仅限 Prefill 阶段</strong></td>
+<td>Decode 阶段因输出不同，无法共享</td>
+</tr>
+</tbody>
+</table>
+<p><strong>🔧 高级用法：手动控制（vLLM ≥ 0.4.0）</strong>
+可通过 <code>enable_prefix_caching=True</code> 显式启用（默认已开）：</p>
+<div class="highlight"><pre tabindex="0" style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>llm <span style="color:#5bc4bf">=</span> LLM(
+</span></span><span style="display:flex;"><span>    model<span style="color:#5bc4bf">=</span><span style="color:#48b685">&#34;meta-llama/Llama-3-8b&#34;</span>,
+</span></span><span style="display:flex;"><span>    enable_prefix_caching<span style="color:#5bc4bf">=</span><span style="color:#815ba4">True</span>  <span style="color:#776e71"># 默认 True</span>
+</span></span><span style="display:flex;"><span>)
+</span></span></code></pre></div><p>也可通过环境变量：</p>
+<div class="highlight"><pre tabindex="0" style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#ef6155">VLLM_ENABLE_PREFIX_CACHING</span><span style="color:#5bc4bf">=</span><span style="color:#f99b15">1</span>
+</span></span></code></pre></div><p><strong>🆚 与其他系统的对比</strong></p>
+<table>
+<thead>
+<tr>
+<th>系统</th>
+<th>是否支持前缀共享</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>vLLM</strong></td>
+<td>✅ 是（基于 PagedAttention）</td>
+</tr>
+<tr>
+<td><strong>HuggingFace TGI</strong></td>
+<td>❌ 否（每个请求独立 KV Cache）</td>
+</tr>
+<tr>
+<td><strong>TensorRT-LLM</strong></td>
+<td>✅ 是（需手动构建 shared context）</td>
+</tr>
+<tr>
+<td><strong>SGLang</strong></td>
+<td>✅ 是（RadixAttention 机制）</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>💡 vLLM 的实现是<strong>自动、透明、高效</strong>的代表。</p>
+</blockquote>
+<p><strong>✅ 总结</strong></p>
+<ul>
+<li><strong>vLLM 支持 Prefix Caching</strong>，自动优化共享前缀的 batch 请求</li>
+<li><strong>无需代码修改</strong>，只要 prompt 前缀相同即可生效</li>
+<li><strong>显著节省显存 + 提升吞吐</strong>，特别适合 RAG、批量指令等场景</li>
+<li>确保你的 prompt 模板<strong>严格一致</strong>（避免尾部空格/换行差异）</li>
+</ul>
+<blockquote>
+<p>如果你正在做 RAG 或批量推理，<strong>Prefix Caching 是 vLLM 给你的一份免费性能大礼包</strong>！🎉</p>
+</blockquote>
+<h4 id="问题但是一个batch内的数据是一起进行并行推理的呀那么这个时候-cache还没产生吧">问题：但是一个batch内的数据是一起进行并行推理的呀，那么这个时候 cache还没产生吧？<a hidden class="anchor" aria-hidden="true" href="#问题但是一个batch内的数据是一起进行并行推理的呀那么这个时候-cache还没产生吧">#</a></h4>
+<p>这是一个<strong>非常关键且深刻的问题</strong>！你的直觉是对的：<strong>如果整个 batch 是“同时”进行 prefill（即并行处理所有 prompt），那似乎还没生成 KV Cache，怎么共享？</strong>
+但实际情况是：<strong>vLLM 的 Prefix Caching 并不是在“batch 内部并行时”动态发现共享的，而是在调度阶段通过“前缀树（Radix Tree / Trie）”预先组织请求，使得相同前缀的请求在逻辑上被识别并复用已缓存的 KV 块。</strong>
+下面我们一步步澄清这个看似矛盾的问题：</p>
+<p><strong>✅ 核心答案</strong></p>
+<blockquote>
+<p><strong>Prefix Caching 的“cache”并不是来自当前 batch 内部的其他请求，而是来自：</strong></p>
+<ol>
+<li><strong>之前已完成的请求（跨 batch 共享）</strong>，或</li>
+<li><strong>在当前 batch 内部，vLLM 调度器会先处理公共前缀一次，再广播给其他请求（逻辑上串行化前缀计算）</strong>
+但在 <strong>纯首次 batch（没有任何历史 cache）且所有请求首次出现</strong> 的情况下，<strong>同一个 batch 内的请求确实无法彼此共享 KV Cache</strong> —— <strong>除非 vLLM 显式地将公共前缀提取出来单独计算一次</strong>。
+而 <strong>vLLM 正是这么做的！</strong></li>
+</ol>
+</blockquote>
+<p><strong>🔍 深入机制：vLLM 如何在单个 batch 内实现前缀共享？</strong></p>
+<p><strong>关键技术：<strong>Radix Tree（基数树） + Block-wise KV Cache Management</strong></strong>
+vLLM 在调度一个 batch 前，会做以下事情：</p>
+<p><strong>步骤 1：构建 Radix Tree</strong></p>
+<ul>
+<li>将 batch 中所有 prompt 插入一棵 <strong>前缀树（Trie）</strong></li>
+<li>自动识别最长公共前缀（LCP）</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>Prompts:
+</span></span><span style="display:flex;"><span>  &#34;你是AI。Q: 巴黎?&#34;
+</span></span><span style="display:flex;"><span>  &#34;你是AI。Q: 量子?&#34;
+</span></span><span style="display:flex;"><span>  &#34;你是AI。Q: Python?&#34;
+</span></span><span style="display:flex;"><span>→ Radix Tree:
+</span></span><span style="display:flex;"><span>  root
+</span></span><span style="display:flex;"><span>   └── &#34;你是AI。Q: &#34;
+</span></span><span style="display:flex;"><span>        ├── &#34;巴黎?&#34;
+</span></span><span style="display:flex;"><span>        ├── &#34;量子?&#34;
+</span></span><span style="display:flex;"><span>        └── &#34;Python?&#34;
+</span></span></code></pre></div><p><strong>步骤 2：分层 Prefill（Hierarchical Prefill）</strong></p>
+<ul>
+<li><strong>先对公共前缀 <code>&quot;你是AI。Q: &quot;</code> 执行一次 prefill</strong>
+<ul>
+<li>生成其对应的 KV Cache blocks</li>
+</ul>
+</li>
+<li><strong>再对每个后缀（&ldquo;巴黎?&rdquo; 等）分别执行 prefill</strong>
+<ul>
+<li>每个后缀的 attention 计算会 <strong>拼接公共前缀的 KV blocks + 自身后缀的 KV blocks</strong></li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>🎯 这相当于 <strong>把一个长 prompt 拆成 “shared part + unique part”</strong>，并在计算时组合。</p>
+</blockquote>
+<p><strong>步骤 3：PagedAttention 支持非连续 KV 块</strong></p>
+<ul>
+<li>每个请求的完整 KV Cache = [shared_block_ids] + [unique_block_ids]</li>
+<li>Attention 计算时，PagedAttention 自动从多个物理页读取，对模型透明</li>
+</ul>
+<p><strong>📌 重要澄清</strong></p>
+<table>
+<thead>
+<tr>
+<th>误解</th>
+<th>事实</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>“batch 内所有 prompt 同时并行计算”</td>
+<td>❌ 实际是：<strong>公共前缀先算一次，后缀再并行</strong>（逻辑上分阶段）</td>
+</tr>
+<tr>
+<td>“cache 必须来自历史请求”</td>
+<td>❌ <strong>即使全是新请求，vLLM 也能在 batch 内部构造共享</strong></td>
+</tr>
+<tr>
+<td>“Prefill 是完全独立的”</td>
+<td>❌ vLLM 的调度器会<strong>主动重组计算图以启用共享</strong></td>
+</tr>
+</tbody>
+</table>
+<p><strong>🧪 实验验证（思想实验）</strong>
+假设 batch 有 3 个全新请求，无任何历史 cache：</p>
+<div class="highlight"><pre tabindex="0" style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>prompts <span style="color:#5bc4bf">=</span> [
+</span></span><span style="display:flex;"><span>    <span style="color:#48b685">&#34;Hello world A&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#48b685">&#34;Hello world B&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#48b685">&#34;Hello world C&#34;</span>
+</span></span><span style="display:flex;"><span>]
+</span></span></code></pre></div><p>vLLM 的执行流程：</p>
+<ol>
+<li>调度器发现公共前缀 <code>&quot;Hello world &quot;</code></li>
+<li><strong>创建一个虚拟“共享请求”</strong>，prefill <code>&quot;Hello world &quot;</code> → 得到 KV blocks S</li>
+<li>对每个后缀 <code>&quot;A&quot;</code>, <code>&quot;B&quot;</code>, <code>&quot;C&quot;</code>：
+<ul>
+<li>构造输入：<code>&quot;Hello world X&quot;</code></li>
+<li>但 KV Cache = S + prefill(&ldquo;X&rdquo;) 的结果</li>
+</ul>
+</li>
+<li>最终每个请求的输出正确，且 <strong>S 只计算了一次</strong></li>
+</ol>
+<blockquote>
+<p>💡 这本质上是一种 <strong>计算图融合优化</strong>，由 vLLM 的 scheduler 自动完成。</p>
+</blockquote>
+<p><strong>📚 官方依据</strong></p>
+<ul>
+<li>vLLM 论文（<a href="https://arxiv.org/abs/2309.06180" target="_blank" rel="noopener" style="color:#42b983";>vLLM: Easy, Fast, and Cheap LLM Serving</a>）提到：
+<blockquote>
+<p><em>&ldquo;PagedAttention enables sharing of memory blocks across requests with common prefixes.&rdquo;</em></p>
+</blockquote>
+</li>
+<li>源码中 <code>RadixAttention</code>（后续演进）和 <code>PrefixCacher</code> 组件明确支持 <strong>intra-batch prefix sharing</strong></li>
+</ul>
+<blockquote>
+<p>🔗 参考：<a href="https://docs.vllm.ai/en/latest/design/prefix_caching.html" target="_blank" rel="noopener" style="color:#42b983";>vLLM Prefix Caching Design Doc</a></p>
+</blockquote>
+<p><strong>✅ 总结</strong></p>
+<table>
+<thead>
+<tr>
+<th>问题</th>
+<th>回答</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>同一个 batch 内的请求能共享前缀吗？</strong></td>
+<td>✅ <strong>能！即使全是新请求</strong></td>
+</tr>
+<tr>
+<td><strong>cache 是哪里来的？</strong></td>
+<td>来自 <strong>当前 batch 内部对公共前缀的首次计算</strong>（调度器主动提取）</td>
+</tr>
+<tr>
+<td><strong>是否需要历史请求？</strong></td>
+<td>❌ 不需要（跨 batch 共享是额外 bonus）</td>
+</tr>
+<tr>
+<td><strong>是否破坏并行性？</strong></td>
+<td>⚠️ 公共前缀计算是串行的，但后缀仍可并行，<strong>整体吞吐仍大幅提升</strong></td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>💡 所以你的观察很敏锐，但 vLLM 通过 <strong>智能调度 + Radix Tree + PagedAttention</strong> 解决了这个“鸡生蛋”问题。
+这正是 vLLM 相比传统推理引擎（如 HF Transformers）的先进之处！</p>
+</blockquote>
+<h2 id="p04-rag-best-practices">P04 rag-best-practices<a hidden class="anchor" aria-hidden="true" href="#p04-rag-best-practices">#</a></h2>
+<p>参考项目 <a href="https://github.com/chaoql/rag-best-practices" target="_blank" rel="noopener" style="color:#42b983";>chaoql/rag-best-practices: 大模型检索增强生成技术最佳实践。</a></p>
+<ol>
+<li><a href="https://developers.llamaindex.ai/python/framework/module_guides/querying/response_synthesizers/#configuring-the-response-mode" target="_blank" rel="noopener" style="color:#42b983";>Configuring the Response Mode</a></li>
+<li>llama-index 有 embedding 模型微调的功能包，底层用的是sentence_transformer包的微调功能。</li>
+<li>pickle方式不安全是因为 <code>__reduce__</code>方法中可以定义一个 指令字节流，在反序列化的时候可以触发对应指令的执行。</li>
+<li>FlagEmbeddingReranker
+<ol>
+<li>“Flag” in FlagEmbeddingReranker = BAAI（智源研究院）的开源模型品牌标识，意为“旗舰级嵌入/重排模型”，无特殊技术含义，主要是项目命名的一部分。</li>
+</ol>
+</li>
+<li>Qdrant
+<ol>
+<li><strong>高级过滤能力：</strong> 支持结合向量相似性搜索和任意 Payload 结构化数据过滤（称为 <strong>Hybrid Search</strong>）。</li>
+</ol>
+</li>
+<li>node_parser
+<ol>
+<li>llama_index.core.node_parser.text.sentence_window.SentenceWindowNodeParser 按照句子进行切割，多个句子作为一个索引文档。</li>
+<li><a href="https://developers.llamaindex.ai/python/framework/module_guides/loading/node_parsers/modules/" target="_blank" rel="noopener" style="color:#42b983";>Node Parser Modules | LlamaIndex Python Documentation</a></li>
+</ol>
+</li>
+<li>HyDE
+<ol>
+<li><strong>Hypothetical Document Embeddings（HyDE）</strong> 是一种<strong>提升检索质量的高级嵌入技术</strong>，由 Gao et al. 在 2022 年提出（论文：Precise Zero-Shot Dense Retrieval without Relevance Labels）。它的核心思想是：
+<ol>
+<li><strong>不直接用用户查询（query）去检索，而是先让大语言模型（LLM）生成一个“假设性答案”（hypothetical document），再用这个假设答案的嵌入向量去检索真实文档。</strong></li>
+</ol>
+</li>
+</ol>
+</li>
+<li>这个项目中的hybrid 模式的意思是，query生成一个稀疏向量、一个稠密向量，两种同时请求数据库，而稀疏向量可能是按照传统倒排索引来进行索引构建的，即最终既有 倒排索引搜索 又有向量搜索。
+<ol>
+<li>当然Qrant 本身也允许请求带 filter，即关键词检索、类别检索等。</li>
+</ol>
+</li>
+<li>微调过程
+<ol>
+<li>对于输入数据文件中的每一条数据，通过chatglm模型，构造prompt（其中包含一条文档），要求模型返回一些和上下文相关的问题，即形成了Answer-Question 对。</li>
+<li>然后反转A-Q对（映射关系为n-to-1），构造出微调数据。</li>
+<li>总体来说，就是依赖一个超大的chat大模型和一个文档数据集，构造出Q-A相似对，进而将chat大模型的对该文档的相关知识（对文档数据集领域的知识理解更透彻、更精细） 微调到一个emb小模型内。</li>
+</ol>
+</li>
+<li>模型下载源和接口使用
+<ol>
+<li>服务器
+<ol>
+<li>阿里云服务器可以使用 modelscope 来进行下载，然后然后模型加载都使用绝对路径来加载。</li>
+</ol>
+</li>
+<li>本地开发
+<ol>
+<li>可以使用 huggingface 来进行下载和管理。</li>
+<li>ollama</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+<h4 id="问题pytorch_modelbin-和-modelsafetensors-分别是什么">问题：pytorch_model.bin 和 model.safetensors 分别是什么<a hidden class="anchor" aria-hidden="true" href="#问题pytorch_modelbin-和-modelsafetensors-分别是什么">#</a></h4>
+<p><code>pytorch_model.bin</code> 和 <code>model.safetensors</code> 是两种常见的用于存储深度学习模型权重（参数）的文件格式，广泛用于 Hugging Face Transformers 等生态中。它们的核心目的相同：<strong>保存神经网络的可训练参数</strong>，但在设计哲学、安全性、性能和兼容性方面有显著区别。</p>
+<p><strong>1. <code>pytorch_model.bin</code></strong></p>
+<p><strong>是什么？</strong></p>
+<ul>
+<li>这是 <strong>PyTorch 原生的模型权重保存格式</strong>。</li>
+<li>本质上是一个通过 <code>torch.save()</code> 保存的 <strong>Python pickle 文件</strong>，通常包含一个字典，键为参数名（如 <code>&quot;transformer.h.0.attn.c_attn.weight&quot;</code>），值为对应的 <code>torch.Tensor</code>。</li>
+</ul>
+<p><strong>特点：</strong></p>
+<table>
+<thead>
+<tr>
+<th>方面</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>格式</strong></td>
+<td>基于 Python 的 <code>pickle</code> 序列化</td>
+</tr>
+<tr>
+<td><strong>兼容性</strong></td>
+<td>只能在 PyTorch 环境中加载（需匹配版本）</td>
+</tr>
+<tr>
+<td><strong>安全性</strong> ❗</td>
+<td><strong>不安全</strong>：<code>pickle</code> 可执行任意代码，加载不受信任的 <code>.bin</code> 文件可能导致<strong>远程代码执行（RCE）漏洞</strong></td>
+</tr>
+<tr>
+<td><strong>速度</strong></td>
+<td>加载/保存较快，但依赖 Python 反序列化</td>
+</tr>
+<tr>
+<td><strong>跨语言</strong></td>
+<td>不支持（强依赖 Python 和 PyTorch）</td>
+</tr>
+<tr>
+<td><strong>典型用途</strong></td>
+<td>Hugging Face 模型仓库中的默认权重格式（尤其旧模型）</td>
+</tr>
+</tbody>
+</table>
+<p><strong>示例加载方式：</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#5bc4bf">import</span> <span style="color:#fec418">torch</span>
+</span></span><span style="display:flex;"><span>state_dict <span style="color:#5bc4bf">=</span> torch<span style="color:#5bc4bf">.</span>load(<span style="color:#48b685">&#34;pytorch_model.bin&#34;</span>, map_location<span style="color:#5bc4bf">=</span><span style="color:#48b685">&#34;cpu&#34;</span>)
+</span></span><span style="display:flex;"><span>model<span style="color:#5bc4bf">.</span>load_state_dict(state_dict)
+</span></span></code></pre></div><blockquote>
+<p>⚠️ 警告：永远不要加载来自不可信来源的 <code>pytorch_model.bin</code>！</p>
+</blockquote>
+<p><strong>2. <code>model.safetensors</code></strong></p>
+<p><strong>是什么？</strong></p>
+<ul>
+<li>由 <strong>Hugging Face 和 CarperAI 联合开发</strong>的一种<strong>安全、快速、框架无关</strong>的模型权重存储格式。</li>
+<li><strong>不使用 <code>pickle</code></strong>，而是将张量数据以原始二进制形式存储，并附带 JSON 元数据描述张量结构。</li>
+</ul>
+<p><strong>特点：</strong></p>
+<table>
+<thead>
+<tr>
+<th>方面</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>格式</strong></td>
+<td>自定义二进制格式 + JSON header（无代码执行）</td>
+</tr>
+<tr>
+<td><strong>安全性</strong> ✅</td>
+<td><strong>安全</strong>：仅包含数值数据，无法执行任意代码</td>
+</tr>
+<tr>
+<td><strong>速度</strong></td>
+<td>加载通常比 <code>.bin</code> 更快（尤其大模型），支持内存映射（<code>mmap</code>）</td>
+</tr>
+<tr>
+<td><strong>跨框架</strong></td>
+<td>支持 PyTorch、TensorFlow、Flax、JAX 等（只要能读取 NumPy-like 张量）</td>
+</tr>
+<tr>
+<td><strong>文件大小</strong></td>
+<td>与 <code>.bin</code> 几乎相同（未压缩，但可选 gzip）</td>
+</tr>
+<tr>
+<td><strong>典型用途</strong></td>
+<td>Hugging Face 新模型推荐格式，尤其在公开分享或 Web 服务中</td>
+</tr>
+</tbody>
+</table>
+<p><strong>文件结构简述：</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>[JSON metadata header (UTF-8, padded to 8-byte align)]
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  &#34;weight1&#34;: {&#34;dtype&#34;: &#34;F32&#34;, &#34;shape&#34;: [1024, 1024], &#34;data_offsets&#34;: [0, 4194304]},
+</span></span><span style="display:flex;"><span>  &#34;weight2&#34;: {&#34;dtype&#34;: &#34;F16&#34;, &#34;shape&#34;: [512], &#34;data_offsets&#34;: [4194304, 4195328]}
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>[Raw binary tensor data (concatenated)]
+</span></span></code></pre></div><p><strong>示例加载方式（PyTorch）：</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#5bc4bf">from</span> <span style="color:#fec418">safetensors.torch</span> <span style="color:#5bc4bf">import</span> load_file
+</span></span><span style="display:flex;"><span>state_dict <span style="color:#5bc4bf">=</span> load_file(<span style="color:#48b685">&#34;model.safetensors&#34;</span>, device<span style="color:#5bc4bf">=</span><span style="color:#48b685">&#34;cpu&#34;</span>)
+</span></span><span style="display:flex;"><span>model<span style="color:#5bc4bf">.</span>load_state_dict(state_dict)
+</span></span></code></pre></div><p><strong>对比总结</strong></p>
+<table>
+<thead>
+<tr>
+<th>特性</th>
+<th><code>pytorch_model.bin</code></th>
+<th><code>model.safetensors</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>底层机制</strong></td>
+<td>Python <code>pickle</code></td>
+<td>自定义二进制 + JSON</td>
+</tr>
+<tr>
+<td><strong>安全性</strong></td>
+<td>❌ 危险（可执行代码）</td>
+<td>✅ 安全（纯数据）</td>
+</tr>
+<tr>
+<td><strong>加载速度</strong></td>
+<td>快</td>
+<td>通常更快（支持 mmap）</td>
+</tr>
+<tr>
+<td><strong>跨平台/语言</strong></td>
+<td>否（PyTorch + Python）</td>
+<td>是（多框架支持）</td>
+</tr>
+<tr>
+<td><strong>Hugging Face 推荐</strong></td>
+<td>旧模型默认</td>
+<td>新模型首选</td>
+</tr>
+<tr>
+<td><strong>文件扩展名</strong></td>
+<td><code>.bin</code></td>
+<td><code>.safetensors</code></td>
+</tr>
+</tbody>
+</table>
+<p><strong>实际建议</strong></p>
+<ul>
+<li>✅ <strong>优先使用 <code>.safetensors</code></strong>：尤其当你从网上下载模型、部署到生产环境或提供 API 服务时。</li>
+<li>🔒 <strong>避免加载未知来源的 <code>.bin</code> 文件</strong>：除非你完全信任提供者。</li>
+<li>🔄 很多模型仓库同时提供两种格式（如 Llama 3、Mistral），你可以自由选择。</li>
+<li>🛠️ 可用工具转换：
+<div class="highlight"><pre tabindex="0" style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#776e71"># 使用 Hugging Face transformers 自动转换</span>
+</span></span><span style="display:flex;"><span>from transformers import AutoModel
+</span></span><span style="display:flex;"><span><span style="color:#ef6155">model</span> <span style="color:#5bc4bf">=</span> AutoModel.from_pretrained<span style="color:#5bc4bf">(</span><span style="color:#48b685">&#34;your-model&#34;</span>, <span style="color:#ef6155">use_safetensors</span><span style="color:#5bc4bf">=</span>True<span style="color:#5bc4bf">)</span>  <span style="color:#776e71"># 自动优先加载 .safetensors</span>
+</span></span></code></pre></div></li>
+</ul>
+<p>如果你正在开发一个需要加载外部模型的应用（如 Web UI、推理服务），<strong>强烈建议只支持 <code>.safetensors</code> 格式</strong>以规避安全风险。</p>
+<h4 id="问题sparse-text-embeddings-和-dense-text-embeddings-的区别">问题：Sparse text embeddings 和 dense text embeddings 的区别<a hidden class="anchor" aria-hidden="true" href="#问题sparse-text-embeddings-和-dense-text-embeddings-的区别">#</a></h4>
+<p><strong>Sparse text embeddings</strong> 和 <strong>dense text embeddings</strong> 是两种不同的文本表示方法，它们在结构、生成方式、应用场景和性能特点上有显著区别。以下是详细对比：</p>
+<p><strong>一、核心定义</strong></p>
+<table>
+<thead>
+<tr>
+<th>类型</th>
+<th>定义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Dense Embeddings（稠密嵌入）</strong></td>
+<td>将文本映射为一个<strong>低维（通常几百到几千维）、连续、稠密</strong>的实数向量，几乎所有维度都有非零值。</td>
+</tr>
+<tr>
+<td><strong>Sparse Embeddings（稀疏嵌入）</strong></td>
+<td>将文本表示为一个<strong>高维（可能数万到百万维）、离散、稀疏</strong>的向量，绝大多数维度为 0，只有少数维度有非零值（通常是正权重）。</td>
+</tr>
+</tbody>
+</table>
+<p><strong>二、典型代表</strong></p>
+<table>
+<thead>
+<tr>
+<th>类型</th>
+<th>模型/方法示例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Dense</strong></td>
+<td>- BERT, RoBERTa  <br>- Sentence-BERT (SBERT)  <br>- BGE (BAAI General Embedding)  <br>- OpenAI Embeddings  <br>- Cohere Embeddings</td>
+</tr>
+<tr>
+<td><strong>Sparse</strong></td>
+<td>- BM25（传统，非学习型）  <br>- SPLADE  <br>- uniCOIL  <br>- DeepImpact  <br>- ColBERT（部分稀疏，带后期交互）</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>💡 注意：BM25 虽然常被归为“稀疏检索”，但它不是“embedding 模型”（无神经网络），而 SPLADE 等是<strong>基于深度学习的稀疏 embedding 模型</strong>。</p>
+</blockquote>
+<p><strong>三、结构对比（举例）</strong>
+假设词汇表大小为 30,000：</p>
+<ul>
+<li><strong>Sparse embedding</strong>（如 SPLADE）：
+<div class="highlight"><pre tabindex="0" style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>[<span style="color:#f99b15">0</span>, <span style="color:#f99b15">0</span>, <span style="color:#f99b15">0</span>, <span style="color:#5bc4bf">...</span>, <span style="color:#f99b15">2.1</span>, <span style="color:#f99b15">0</span>, <span style="color:#f99b15">0</span>, <span style="color:#5bc4bf">...</span>, <span style="color:#f99b15">0.8</span>, <span style="color:#5bc4bf">...</span>, <span style="color:#f99b15">0</span>]  <span style="color:#776e71"># 长度=30,000，仅几十个非零值</span>
+</span></span></code></pre></div>→ 每个非零位置对应一个词（如 &ldquo;apple&rdquo; 在索引 12345），值表示重要性。</li>
+<li><strong>Dense embedding</strong>（如 BGE）：
+<div class="highlight"><pre tabindex="0" style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>[<span style="color:#f99b15">0.23</span>, <span style="color:#5bc4bf">-</span><span style="color:#f99b15">0.41</span>, <span style="color:#f99b15">0.88</span>, <span style="color:#5bc4bf">...</span>, <span style="color:#f99b15">0.05</span>]  <span style="color:#776e71"># 长度=1024，几乎每个值都非零</span>
+</span></span></code></pre></div>→ 向量维度与词汇表无关，语义信息分布在整个向量中。</li>
+</ul>
+<p><strong>四、关键区别总结</strong></p>
+<table>
+<thead>
+<tr>
+<th>维度</th>
+<th>Sparse Embeddings</th>
+<th>Dense Embeddings</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>维度</strong></td>
+<td>高维（≈词汇表大小，如 30k–1M）</td>
+<td>低维（通常 384–4096）</td>
+</tr>
+<tr>
+<td><strong>非零元素</strong></td>
+<td>极少（&lt; 100 个）</td>
+<td>几乎全部非零</td>
+</tr>
+<tr>
+<td><strong>可解释性</strong></td>
+<td>✅ 高（每个非零维对应一个词）</td>
+<td>❌ 低（语义分布在隐空间）</td>
+</tr>
+<tr>
+<td><strong>存储效率</strong></td>
+<td>✅ 高（可用倒排索引压缩存储）</td>
+<td>⚠️ 中等（需存储完整浮点数组）</td>
+</tr>
+<tr>
+<td><strong>检索方式</strong></td>
+<td>倒排索引（Inverted Index） + TF-IDF/BM25 风格打分</td>
+<td>向量相似度（如余弦、内积）+ ANN（如 FAISS, HNSW）</td>
+</tr>
+<tr>
+<td><strong>训练目标</strong></td>
+<td>优化词级重要性（如通过 KL 散度对齐 BM25）</td>
+<td>优化句子/段落级语义相似度（如对比学习）</td>
+</tr>
+<tr>
+<td><strong>多语言支持</strong></td>
+<td>依赖词汇表，跨语言较难</td>
+<td>更容易通过共享语义空间实现</td>
+</tr>
+<tr>
+<td><strong>硬件加速</strong></td>
+<td>CPU 友好，适合大规模文档库</td>
+<td>GPU/ANN 加速效果更好</td>
+</tr>
+</tbody>
+</table>
+<p><strong>五、应用场景</strong></p>
+<p><strong>✅ Sparse 更适合：</strong></p>
+<ul>
+<li><strong>大规模文档检索</strong>（如搜索引擎）：==利用成熟的倒排索引技术==，高效过滤海量文档。</li>
+<li><strong>关键词敏感任务</strong>：需要精确匹配术语（如法律、医疗检索）。</li>
+<li><strong>资源受限环境</strong>：无需 GPU，纯 CPU 即可高效运行。</li>
+</ul>
+<p><strong>✅ Dense 更适合：</strong></p>
+<ul>
+<li><strong>语义相似度任务</strong>：理解同义、 paraphrase、上下文含义（如 “car” ≈ “automobile”）。</li>
+<li><strong>小样本或 zero-shot 场景</strong>：泛化能力强。</li>
+<li><strong>RAG 系统中的精排</strong>：与 LLM 结合效果好。</li>
+</ul>
+<p><strong>六、混合方法（Hybrid Retrieval）</strong>
+现代系统常<strong>结合两者优势</strong>：</p>
+<div class="highlight"><pre tabindex="0" style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>Query → [Sparse Retriever (BM25/SPLADE)] → Top K candidates
+</span></span><span style="display:flex;"><span>       + [Dense Retriever (BGE)]          → Top K candidates
+</span></span><span style="display:flex;"><span>       → 合并去重 → Reranker (e.g., BGE-reranker)
+</span></span></code></pre></div><ul>
+<li><strong>ColBERT</strong>：虽输出稠密 token 向量，但通过 MaxSim 实现类似稀疏的细粒度匹配。</li>
+<li><strong>BGE-M3</strong>（BAAI 最新模型）：同时输出 dense、sparse 和 multi-vector 表示，支持统一检索。</li>
+</ul>
+<p><strong>七、可视化比喻</strong></p>
+<ul>
+<li><strong>Sparse</strong>：像一本<strong>索引目录</strong>——只列出关键词及其页码（位置+权重）。</li>
+<li><strong>Dense</strong>：像一幅<strong>抽象画</strong>——整体表达语义，无法拆解单个元素含义。</li>
+</ul>
+<p><strong>总结一句话：</strong></p>
+<blockquote>
+<p><strong>Sparse embeddings = 关键词加权（可解释、高效）；Dense embeddings = 语义压缩（泛化强、需向量检索）</strong>。
+根据你的任务需求（精度 vs 效率、关键词匹配 vs 语义理解），可以选择合适类型，或直接使用 <strong>hybrid 方案</strong>获得最佳效果。</p>
+</blockquote>
+<h4 id="问题sparse-embeddings的模型如何做到-输出稀疏向量的">问题：Sparse Embeddings的模型如何做到 输出稀疏向量的<a hidden class="anchor" aria-hidden="true" href="#问题sparse-embeddings的模型如何做到-输出稀疏向量的">#</a></h4>
+<p>这是一个非常好的问题！<strong>Sparse Embeddings 模型（如 SPLADE、uniCOIL、DeepImpact 等）之所以能输出“稀疏但有信息量”的向量，关键在于它们通过神经网络学习每个词项（term）的重要性权重，并强制绝大多数权重为零或接近零</strong>。下面从原理、技术手段和训练目标三个方面详细解释：</p>
+<p><strong>一、核心思想：将文本映射到“词汇表维度”的稀疏向量</strong>
+与 dense embedding 输出一个固定低维向量不同，<strong>sparse embedding 模型的输出维度 = 词汇表大小（V）</strong>（例如 V = 30,000）。<br>
+对于输入文本，模型会为词汇表中的每个词 $w_i$ 预测一个 <strong>非负重要性分数 $s_i \geq 0$</strong>，最终输出向量为：
+$$ \mathbf{e} = [s_1, s_2, &hellip;, s_V] $$
+其中 <strong>绝大多数 $s_i = 0$</strong>，只有少数关键词的 $s_i &gt; 0$，形成稀疏表示。</p>
+<blockquote>
+<p>✅ 这个向量可以直接用于 <strong>倒排索引（Inverted Index）检索</strong>，就像 BM25 一样高效。</p>
+</blockquote>
+<p><strong>二、如何实现“稀疏性”？关键技术手段</strong></p>
+<p><strong>1. <strong>使用带稀疏诱导的激活函数</strong></strong>
+最常用的是 <strong>ReLU + 对数变换 + FLOPS 正则化</strong>（以 SPLADE 为代表）：</p>
+<p><strong>（1）基于 BERT 的 token-level logits</strong></p>
+<ul>
+<li>输入文本 → BERT 编码器 → 得到每个 token 的上下文表示。</li>
+<li>通过一个线性层（或 MLM head）预测 <strong>整个词汇表上每个词的 logits</strong>（类似掩码语言建模）。</li>
+</ul>
+<p><strong>（2）应用 <strong>$\text{ReLU}(\log(1 + \exp(x)))$</strong> 或直接 <strong>$\text{F}(x) = \max(0, x)$</strong></strong></p>
+<ul>
+<li>将 logits 经过 <strong>非负激活</strong>，确保输出 ≥ 0。</li>
+<li>实际中常用：<br>
+$$s_i = \text{ReLU}\left( \text{MLM logits}_i \right)$$ 或更平滑的： $$ s_i = \log\left(1 + \exp(\text{MLM logits}_i)\right) \quad \text{(softplus)} $$</li>
+</ul>
+<blockquote>
+<p>📌 注意：即使 logits 是稠密的，后续会通过正则化让大多数 $s_i \to 0$。</p>
+</blockquote>
+<p><strong>2. <strong>引入稀疏性正则化（Sparsity Regularization）</strong></strong>
+这是实现“真正稀疏”的关键！模型在训练时会<strong>惩罚非零元素的数量或大小</strong>。</p>
+<p><strong>常见正则项（加在 loss 中）：</strong></p>
+<ul>
+<li><strong>L1 正则化</strong>：$\lambda \sum_i |s_i|$<br>
+→ 鼓励权重趋近于 0。</li>
+<li><strong>FLOPS 正则化（SPLADE 提出）</strong>：<br>
+$$ \mathcal{L}_{\text{flops}} = \left( \frac{1}{V} \sum_i \mathbb{E}[s_i] \right)^2 $$ → 惩罚<strong>平均激活强度</strong>，促使模型只激活极少数词。</li>
+<li><strong>Group Lasso / Top-k 约束</strong>：强制只保留 top-k 个最大权重。</li>
+</ul>
+<blockquote>
+<p>💡 训练完成后，推理时可设置阈值（如 $s_i &lt; 1e-4$ 则置 0），进一步提升稀疏度。</p>
+</blockquote>
+<p><strong>3. <strong>利用预训练语言模型的 MLM Head</strong></strong></p>
+<ul>
+<li>SPLADE 等模型直接复用 <strong>BERT 的 Masked Language Model (MLM) 头</strong>。</li>
+<li>MLM 头本来就能预测“哪些词可能出现在上下文中”，天然具有<strong>词级语义感知能力</strong>。</li>
+<li>通过微调 MLM 头，使其输出的 logits 不再用于预测被遮盖词，而是作为<strong>全文的词重要性分布</strong>。</li>
+</ul>
+<blockquote>
+<p>✅ 这样既利用了预训练知识，又实现了端到端的稀疏表示学习。</p>
+</blockquote>
+<p><strong>三、训练目标：对齐相关性信号</strong>
+为了让稀疏向量“有信息量”（即能有效排序相关文档），模型通常采用以下监督信号：</p>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>训练目标</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>SPLADE</strong></td>
+<td>最大化查询-正样本文档的相似度（内积），最小化查询-负样本的相似度 + 稀疏正则</td>
+</tr>
+<tr>
+<td><strong>DeepImpact / uniCOIL</strong></td>
+<td>回归到伪标签（如 BM25 分数、教师模型打分）</td>
+</tr>
+<tr>
+<td><strong>无监督 SPLADE</strong></td>
+<td>使用对比学习或自监督（如文档-标题对）</td>
+</tr>
+<tr>
+<td>相似度计算方式： $$ \text{score}(q, d) = \sum_{i=1}^V \text{ReLU}(q_i) \cdot \text{ReLU}(d_i) $$ → 本质是 <strong>加权词重叠（Weighted Term Matching）</strong>，但权重由神经网络学习得到，比 TF-IDF/BM25 更智能。</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><strong>四、举个具体例子：SPLADE 如何工作？</strong></p>
+<ol>
+<li>输入查询 <code>&quot;How to bake a cake?&quot;</code></li>
+<li>经过 BERT + MLM head → 输出 30,000 维 logits</li>
+<li>应用 $\text{ReLU}(\cdot)$ → 得到非负分数</li>
+<li>加入 FLOPS 正则 → 模型学会只给 <code>&quot;bake&quot;</code>, <code>&quot;cake&quot;</code>, <code>&quot;recipe&quot;</code> 等词高分，其余为 0</li>
+<li>最终输出稀疏向量：仅几十个非零值，每个对应一个关键词及其语义重要性
+🔍 检索时：</li>
+</ol>
+<ul>
+<li>文档也用同样方式编码成稀疏向量</li>
+<li>通过倒排索引快速计算内积得分（只计算非零维度交集）</li>
+</ul>
+<p><strong>五、为什么叫“响亮”（informative）？</strong></p>
+<ul>
+<li>虽然稀疏，但<strong>非零维度是模型精心挑选的关键词</strong>，且权重反映其在当前上下文中的<strong>语义重要性</strong>。</li>
+<li>相比 BM25 的静态 TF-IDF，sparse embedding 能：
+<ul>
+<li>理解同义词（&ldquo;car&rdquo; → 激活 &ldquo;automobile&rdquo;）</li>
+<li>抑制停用词（&ldquo;the&rdquo;, &ldquo;how&rdquo; 权重≈0）</li>
+<li>根据上下文动态调整（&ldquo;apple&rdquo; 在科技 vs 水果语境下激活不同词）</li>
+</ul>
+</li>
+</ul>
+<p><strong>总结</strong></p>
+<table>
+<thead>
+<tr>
+<th>关键点</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>输出维度</strong></td>
+<td>= 词汇表大小（高维）</td>
+</tr>
+<tr>
+<td><strong>稀疏性来源</strong></td>
+<td>ReLU/Softplus 激活 + L1/FLOPS 正则化</td>
+</tr>
+<tr>
+<td><strong>信息量来源</strong></td>
+<td>基于预训练 MLM 头 + 相关性监督学习</td>
+</tr>
+<tr>
+<td><strong>检索兼容性</strong></td>
+<td>完全兼容传统倒排索引系统（如 Lucene, Elasticsearch）</td>
+</tr>
+<tr>
+<td><strong>代表模型</strong></td>
+<td>SPLADE（最经典）、uniCOIL、DeepImpact、BGE-M3（支持 sparse 输出）</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>✅ 所以，<strong>“稀疏但响亮” = 只保留最关键的几个词，但每个词的权重都经过深度语义理解优化</strong>。
+如果你正在构建检索系统，sparse embeddings 能让你在不牺牲太多语义能力的前提下，享受传统搜索引擎的高效与可扩展性。</p>
+</blockquote>
+<h2 id="问题">问题<a hidden class="anchor" aria-hidden="true" href="#问题">#</a></h2>
+<h4 id="问题langchain中的竖线运算符是由哪些方法来实现的">问题：langchain中的竖线运算符是由哪些方法来实现的<a hidden class="anchor" aria-hidden="true" href="#问题langchain中的竖线运算符是由哪些方法来实现的">#</a></h4>
+<p>在 <code>langchain</code> 中，竖线运算符（<code>|</code>）的实现主要依赖于以下方法：</p>
+<p><strong>核心实现方法</strong></p>
+<ol>
+<li><strong><code>__or__</code> 方法</strong>
+<ul>
+<li>这是 Python 中实现竖线运算符的核心魔术方法</li>
+<li>当使用 <code>a | b</code> 语法时，Python 会调用 <code>a.__or__(b)</code></li>
+</ul>
+</li>
+<li><strong><code>__ror__</code> 方法</strong>
+<ul>
+<li>右侧对象的反向或运算方法</li>
+<li>当左侧对象没有实现 <code>__or__</code> 时调用</li>
+</ul>
+</li>
+</ol>
+<p><strong>在 Langchain 中的应用</strong>
+在你的代码中 <code>prompt|llm|output_parser</code> 这个链条中：</p>
+<ul>
+<li>prompt（<code>ChatPromptTemplate</code> 对象）实现了 <code>__or__</code> 方法</li>
+<li>llm（<code>ChatOpenAI</code> 对象）也实现了 <code>__or__</code> 方法</li>
+<li>output_parser（<code>StrOutputParser</code> 对象）同样支持链式操作</li>
+</ul>
+<p><strong>实现机制</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#5bc4bf">**</span>伪代码示例<span style="color:#5bc4bf">**</span>
+</span></span><span style="display:flex;"><span><span style="color:#815ba4">class</span> <span style="color:#fec418">BaseComponent</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#815ba4">def</span> __or__(self, other):
+</span></span><span style="display:flex;"><span>        <span style="color:#815ba4">return</span> Chain(self, other)
+</span></span></code></pre></div><p>这种设计模式允许不同的 <code>langchain</code> 组件（如 prompt、llm、output_parser）通过竖线运算符组合成一个完整的处理链 chain。</p>
+<h4 id="问题langchain中的stroutputparser-是如何自动对-chatbot的结果进行渲染的">问题：langchain中的StrOutputParser 是如何自动对 chatbot的结果进行渲染的<a hidden class="anchor" aria-hidden="true" href="#问题langchain中的stroutputparser-是如何自动对-chatbot的结果进行渲染的">#</a></h4>
+<p>作为一名资深技术导师，我来详细解释 LangChain 中的 <code>StrOutputParser</code> <strong>不是</strong>如何“自动渲染”结果的，而是它在 LangChain 表达式语言 (LCEL) 管道中扮演的<strong>关键角色</strong>。</p>
+<p><strong>核心观点：<code>StrOutputParser</code> 并非渲染器，而是转换器</strong>
+<code>StrOutputParser</code> 的作用<strong>不是</strong>对结果进行复杂的“渲染”（如格式化为 Markdown 或 HTML），而是执行一个非常简单但至关重要的<strong>类型转换</strong>：
+<strong>它确保管道（Chain）的最终输出是标准的 Python 字符串（<code>str</code>）类型。</strong>
+在 LangChain 管道中，“渲染”这个词通常意味着将输出从一个复杂对象转换为用户或下一个组件可以使用的格式。</p>
+<p><strong>1. 为什么需要 <code>StrOutputParser</code>？</strong>
+LLM 模型的原始输出通常是一个复杂的对象，而不是一个简单的字符串：</p>
+<table>
+<thead>
+<tr>
+<th><strong>原始输出类型</strong></th>
+<th><strong>解释</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong><code>BaseMessage</code></strong></td>
+<td>对于 <strong>Chat 模型</strong> (<code>ChatOpenAI</code>, <code>ChatGroq</code> 等)，它们的 <code>invoke()</code> 或 <code>stream()</code> 方法返回的是一个 <code>BaseMessage</code> 对象（通常是 <code>AIMessage</code> 或 <code>HumanMessage</code> 的子类）。</td>
+</tr>
+<tr>
+<td><strong><code>Generation</code></strong></td>
+<td>对于 <strong>Completion 模型</strong> (<code>OpenAI</code> 等)，它们的 <code>invoke()</code> 返回的是一个 <code>Generation</code> 对象的列表（包装在 <code>LLMResult</code> 中）。</td>
+</tr>
+<tr>
+<td><strong><code>StrOutputParser</code> 的工作就是从这些复杂的对象中，安全地提取出人类可读的字符串内容。</strong></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><strong>2. <code>StrOutputParser</code> 的工作机制</strong>
+<code>StrOutputParser</code> 在 LCEL 管道中实现了 <code>BaseOutputParser</code> 接口，它的核心逻辑非常简单：</p>
+<p><strong>A. 处理 Chat 模型输出 (<code>BaseMessage</code> 对象)</strong>
+当它接收到 <code>AIMessage</code> 或其他 <code>BaseMessage</code> 对象时，它会调用该对象的 <code>.content</code> 属性。</p>
+<ul>
+<li><strong>输入示例：</strong> <code>&lt;AIMessage content='你好！我是一个AI。'&gt;</code></li>
+<li><strong>输出结果：</strong> <code>'你好！我是一个AI。'</code></li>
+</ul>
+<p><strong>B. 处理 Completion 模型输出 (<code>LLMResult</code> / <code>Generation</code> 对象)</strong>
+如果它接收到的是 Completion 模型返回的结构，它会提取第一个 <code>Generation</code> 对象的文本内容。</p>
+<p><strong>C. 处理流式输出 (Streaming)</strong>
+在流式传输中，<code>StrOutputParser</code> 会持续接收到片段（Chunks）的 <code>BaseMessage</code> 对象或字符串。它的作用是：</p>
+<ul>
+<li><strong>提取内容：</strong> 从每个传入的 Chunk 中提取 <code>.content</code> 属性。</li>
+<li><strong>拼接内容：</strong> 将这些内容片段<strong>安全地拼接</strong>起来，形成最终的完整字符串。这确保了前端或用户接收到的流是连续且正确的文本。</li>
+</ul>
+<p><strong>3. 如何“自动渲染”的误解</strong>
+用户之所以觉得它是“自动渲染”的，是因为它将一个不透明的 LangChain 内部对象（如 <code>AIMessage</code>）转换成了应用程序前端可以直接显示的 <strong>Python <code>str</code> 类型</strong>。
+在 LCEL 管道中，<code>StrOutputParser</code> 通常位于管道的<strong>末端</strong>，因为它确保了管道的输出能够被后续的系统（如 Flask API 响应、Streamlit 界面或简单的 <code>print()</code> 语句）轻松消费。</p>
+<p><strong>总结</strong>
+<code>StrOutputParser</code> 是 LangChain 管道中一个<strong>类型转换</strong>组件，它的作用是：</p>
+<ol>
+<li>从 LLM 返回的复杂对象（如 <code>AIMessage</code>）中<strong>提取</strong>纯文本内容。</li>
+<li>确保 Chain 的输出类型始终是标准的 <strong><code>str</code></strong>，以便于后续处理和展示。</li>
+<li>在流式传输中，负责将接收到的内容<strong>片段安全拼接</strong>。</li>
+</ol>
+<h4 id="问题那么streamlit的write方法是如何将markdown格式文本自动渲染为有格式的html的">问题：那么streamlit的write方法是如何将markdown格式文本自动渲染为有格式的html的<a hidden class="anchor" aria-hidden="true" href="#问题那么streamlit的write方法是如何将markdown格式文本自动渲染为有格式的html的">#</a></h4>
+<p>代码 streamlit.elements.write.WriteMixin.write 中有讲解这部分内容。</p>
+<p>这是一个非常好的问题，它触及了 Streamlit 的核心机制和前端交互原理。
+<code>streamlit.write()</code> 方法自身不会执行 Markdown 渲染，它是一个“万能”命令，会根据传入的数据类型进行<strong>分派（Dispatch）</strong>。当它接收到<strong>字符串</strong>时，它会将渲染工作委托给专门的函数。
+下面是 <code>st.write()</code> 如何将 Markdown 文本自动转换为 HTML 格式化显示的详细过程。</p>
+<p><strong>1. <code>st.write()</code> 的分派机制 (The Swiss Army Knife)</strong>
+<code>st.write()</code> 被称为 Streamlit 的“瑞士军刀”，它会检查传入的参数类型：</p>
+<table>
+<thead>
+<tr>
+<th><strong>传入参数类型</strong></th>
+<th><strong>st.write() 实际调用</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong><code>str</code> (字符串)</strong></td>
+<td>委托给 <code>st.markdown()</code></td>
+</tr>
+<tr>
+<td><code>pd.DataFrame</code></td>
+<td>委托给 <code>st.dataframe()</code></td>
+</tr>
+<tr>
+<td><code>dict</code> 或 <code>list</code></td>
+<td>委托给 <code>st.json()</code></td>
+</tr>
+<tr>
+<td><code>Altair/Plotly Chart</code></td>
+<td>委托给相应的图表函数</td>
+</tr>
+<tr>
+<td><code>Exception</code></td>
+<td>委托给 <code>st.exception()</code></td>
+</tr>
+<tr>
+<td>因此，当你传入一个包含 Markdown 格式的字符串时，实际执行渲染的是 <strong><code>st.markdown()</code></strong> 函数。</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><strong>2. <code>st.markdown()</code> 的核心渲染过程</strong>
+<code>st.markdown()</code> 是专门负责将 Markdown 文本转换为 HTML 的函数。这个转换过程在 Streamlit 内部是这样运作的：</p>
+<p><strong>A. 后端（Python）处理：使用 Markdown 解析库</strong></p>
+<ol>
+<li><strong>解析器使用：</strong> Streamlit 的 Python 后端不会自己编写 Markdown 转换逻辑。它会依赖一个或多个成熟的、高性能的 <strong>Python Markdown 解析库</strong>（例如，早期版本可能依赖 <code>markdown-it-py</code> 或类似的库）。</li>
+<li><strong>生成 HTML/抽象结构：</strong> 当你调用 <code>st.markdown(body)</code> 时，<code>body</code> 字符串会被这个内部的 Markdown 解析器处理，并转换成对应的 <strong>HTML 结构</strong>（或一个包含渲染指令的中间数据结构）。
+<ul>
+<li>例如，<code>**bold**</code> 被转换为 <code>&lt;strong&gt;bold&lt;/strong&gt;</code>。</li>
+</ul>
+</li>
+<li><strong>序列化与传输：</strong> Streamlit 将这个 HTML 结构或渲染指令<strong>序列化</strong>（通常为 JSON 格式）。</li>
+<li><strong>WebSocket 传输：</strong> 序列化后的数据通过 <strong>WebSocket</strong> 连接，从 Python 后端发送到 Streamlit 的前端（浏览器）。</li>
+</ol>
+<p><strong>B. 前端（浏览器）渲染：React + CSS</strong></p>
+<ol>
+<li><strong>前端接收：</strong> Streamlit 的前端（使用 <strong>React</strong> 框架构建）接收到通过 WebSocket 发送过来的指令/数据。</li>
+<li><strong>DOM 操作：</strong> React 组件根据收到的 HTML 结构或指令，将其安全地插入到 Web 页面的 <strong>DOM (Document Object Model)</strong> 中。</li>
+<li><strong>浏览器渲染：</strong> 浏览器识别这些 HTML 标签（如 <code>&lt;h1&gt;</code>, <code>&lt;p&gt;</code>, <code>&lt;strong&gt;</code>）并应用默认或 Streamlit 自定义的 CSS 样式。
+<ul>
+<li><strong>样式应用：</strong> Streamlit 具有内置的样式表，确保所有的 Markdown 元素（标题、列表、代码块等）都遵循应用的主题和外观，看起来美观且一致。</li>
+</ul>
+</li>
+</ol>
+<p><strong>3. 为什么是自动的？</strong>
+对于开发者来说，整个过程是自动且无感的，因为：</p>
+<ol>
+<li><strong>封装：</strong> <code>st.write()</code> 和 <code>st.markdown()</code> 封装了从 Markdown 字符串到 HTML 渲染的所有步骤。</li>
+<li><strong>实时同步：</strong> Streamlit 的架构本身就是为了在 Python 后端代码与浏览器前端之间提供<strong>实时同步</strong>。当你调用一个 Streamlit 命令时，Python 框架会立即处理数据并告诉前端如何更新。</li>
+</ol>
+<h4 id="问题pydantic-中-basemodel-的核心作用数据模型和数据校验">问题：Pydantic 中 <code>BaseModel</code> 的核心作用：数据模型和数据校验<a hidden class="anchor" aria-hidden="true" href="#问题pydantic-中-basemodel-的核心作用数据模型和数据校验">#</a></h4>
+<p>在 Python 的 <code>pydantic</code> 库中，<code>BaseModel</code> 是<strong>构建数据模型</strong>的基石。它的主要作用是<strong>定义数据的结构、类型，并自动进行验证</strong>。
+简单来说，<code>BaseModel</code> 将松散的 Python 字典数据提升为具有<strong>明确结构、类型和内置验证</strong>的强大数据对象。</p>
+<p><strong>🚀 <code>BaseModel</code> 的主要功能</strong></p>
+<p><strong>1. 定义清晰的数据结构 (Schema Definition)</strong>
+<code>BaseModel</code> 允许你使用标准的 Python 类型注解来定义你的数据对象应该长什么样，包括哪些字段、每个字段的类型。</p>
+<ul>
+<li><strong>示例:</strong>
+Python
+<div class="highlight"><pre tabindex="0" style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>from pydantic import BaseModel
+</span></span><span style="display:flex;"><span>from datetime import datetime
+</span></span><span style="display:flex;"><span>class User(BaseModel):
+</span></span><span style="display:flex;"><span>    id: int
+</span></span><span style="display:flex;"><span>    name: str = &#34;John Doe&#34;  # 带有默认值
+</span></span><span style="display:flex;"><span>    signup_ts: datetime | None = None # 联合类型
+</span></span><span style="display:flex;"><span>    is_active: bool
+</span></span></code></pre></div>这个类清楚地定义了一个用户对象必须包含 <code>id</code>（整数）、<code>name</code>（字符串）、<code>signup_ts</code>（日期时间或 None）和 <code>is_active</code>（布尔值）。</li>
+</ul>
+<p><strong>2. 自动数据校验 (Data Validation)</strong>
+这是 <code>BaseModel</code> <strong>最核心</strong>的功能。当你尝试创建一个 <code>BaseModel</code> 实例时，Pydantic 会自动检查传入的数据是否符合你定义的类型和结构。</p>
+<ul>
+<li><strong>如果数据类型正确：</strong> 它会将输入数据（比如 JSON 字符串、字典）<strong>转换</strong>为正确的 Python 类型（例如将 JSON 字符串 &ldquo;1&rdquo; 转换为整数 1）。</li>
+<li><strong>如果数据校验失败：</strong> 它会抛出一个清晰的 <code>ValidationError</code>，告诉你哪个字段出了问题，以及为什么。这极大地减少了运行时错误和调试时间。</li>
+</ul>
+<p><strong>3. 自动数据转换 (Data Coercion)</strong>
+<code>BaseModel</code> 不仅进行校验，还尝试进行合理的类型转换：</p>
+<ul>
+<li><strong>字符串到数字：</strong> 字符串 <code>&quot;123&quot;</code> 会被自动转换为整数 <code>123</code>。</li>
+<li><strong>字符串到日期/时间：</strong> 遵循 ISO 格式的日期字符串会被自动转换为 <code>datetime</code> 对象。</li>
+</ul>
+<p><strong>4. 强大的序列化和反序列化</strong>
+<code>BaseModel</code> 实例内置了将数据对象转换为其他格式的方法：</p>
+<ul>
+<li><strong>序列化 (Serialization):</strong>
+<ul>
+<li><code>user_instance.model_dump()</code>: 将模型实例转换为标准的 Python <strong>字典 (dict)</strong>。</li>
+<li><code>user_instance.model_dump_json()</code>: 将模型实例转换为 <strong>JSON 字符串</strong>，方便网络传输。</li>
+</ul>
+</li>
+<li><strong>反序列化 (Deserialization):</strong>
+<ul>
+<li><code>User(**data_dict)</code>: 从字典创建模型实例。</li>
+<li><code>User.model_validate(data_dict)</code>: 从字典或 JSON 数据中验证并创建模型实例。</li>
+</ul>
+</li>
+</ul>
+<p><strong>5. 与 FastAPI 等框架集成</strong>
+在 FastAPI 中，<code>BaseModel</code> 是定义<strong>请求体 (Request Body)</strong> 和 <strong>响应体 (Response Body)</strong> 的标准方式。</p>
+<ul>
+<li>当用作请求体时，FastAPI 自动使用 <code>BaseModel</code> 来校验客户端发送的 JSON 数据。</li>
+<li>当用作响应体时，FastAPI 自动使用 <code>BaseModel</code> 来序列化你的 Python 对象为 JSON 响应。
+<strong>总结:</strong>
+<code>BaseModel</code> 的作用就是将 Python 应用程序中的数据处理从<strong>松散、易错的字典操作</strong>，升级为<strong>结构化、类型安全且自带验证的强大对象模型</strong>。</li>
+</ul>
+<h4 id="问题llama2并非是专属的embedding模型也可以用ollamaembeddings来加载么">问题：llama2并非是专属的embedding模型，也可以用OllamaEmbeddings来加载么？<a hidden class="anchor" aria-hidden="true" href="#问题llama2并非是专属的embedding模型也可以用ollamaembeddings来加载么">#</a></h4>
+<p>这是一个非常专业和关键的问题，它涉及到大模型的<strong>多功能性</strong>和 <strong>Ollama 平台的灵活性</strong>。
+<strong>答案是：是的，您可以将 Llama 2 (或 Llama 3 等聊天/生成模型) 用作 <code>OllamaEmbeddings</code> 的模型，但它并非最佳实践。</strong>
+以下是详细的解释和建议：</p>
+<p><strong>1. 为什么 Llama 2 可以用于嵌入？（技术可行性）</strong>
+Ollama 平台提供了一个通用的 <strong><code>/api/embeddings</code></strong> REST API 端点。
+当您在 <code>OllamaEmbeddings</code> 中指定一个<strong>非专用</strong>的聊天模型（如 <code>llama2</code>）时，Ollama 守护进程会执行以下操作：</p>
+<ul>
+<li><strong>提取隐藏状态 (Hidden State):</strong> Ollama 会运行 Llama 2 模型，但不执行最终的**语言模型头（LM Head）**层（该层负责预测下一个词元）。</li>
+<li><strong>池化 (Pooling):</strong> 它会从模型的倒数第二层（或根据配置的特定层）提取<strong>词元隐藏状态（Token Hidden States）</strong>。然后，它通常会应用一个<strong>池化策略</strong>（如平均池化）将这些词元向量聚合为一个单一的句子向量，作为最终的嵌入（Embedding）。
+<strong>LangChain 的 <code>OllamaEmbeddings</code> 通过调用这个通用的 Ollama API，实现了对 Llama 2 的嵌入功能调用。</strong></li>
+</ul>
+<p><strong>2. 为什么 Llama 2 不推荐用于嵌入？（效果考量）</strong>
+尽管技术上可行，但 Llama 2 或其他聊天模型（如 Mistral）在没有经过特定微调的情况下，作为嵌入模型的效果通常远不如专用嵌入模型。</p>
+<table>
+<thead>
+<tr>
+<th><strong>嵌入模型类型</strong></th>
+<th><strong>Llama 2 (生成模型)</strong></th>
+<th><strong>专用嵌入模型 (如 Nomic Embed, mxbai-embed-large)</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>训练目标</strong></td>
+<td><strong>生成文本</strong>（预测下一个词元）。</td>
+<td><strong>语义相似性</strong>（训练目标是让语义相近的句子在向量空间中距离更近）。</td>
+</tr>
+<tr>
+<td><strong>效果/精度</strong></td>
+<td><strong>较差。</strong> 向量空间没有针对相似性搜索进行优化，检索精度低。</td>
+<td><strong>优秀。</strong> 在 MTEB 等基准测试中表现优异，RAG 效果好。</td>
+</tr>
+<tr>
+<td><strong>资源消耗</strong></td>
+<td><strong>高。</strong> Llama 2 尺寸较大（如 7B），推理慢，内存占用高。</td>
+<td><strong>低。</strong> 专用模型通常更小（如 300M），速度快，资源消耗低。</td>
+</tr>
+<tr>
+<td><strong>简而言之：</strong> Llama 2 生成的向量可能无法准确捕捉不同句子之间的<strong>语义相似性</strong>，这会严重损害您的 RAG 检索质量。</td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><strong>3. 架构师建议</strong>
+作为一名资深架构师，我的建议是：</p>
+<ol>
+<li><strong>对于 RAG 或语义搜索：</strong> <strong>始终优先使用专用的嵌入模型。</strong> 您已经看到了，Ollama 支持许多高性能、小巧且专门为嵌入任务优化的模型（如 <code>mxbai-embed-large</code> 或 <code>embeddinggemma</code>）。这能提供更好的精度和更快的速度。</li>
+<li><strong>实验和自定义：</strong> 如果您只是进行<strong>实验</strong>，或者您的 Llama 2 是经过专门的 <strong>对比学习（Contrastive Learning）微调</strong>版本（例如，<code>AnglE-LLaMA</code> 等），那么使用 Llama 2 是有意义的。在这种情况下，你需要确保你的 Llama 2 模型文件在 Ollama 中已经包含了必要的嵌入配置。
+<strong>结论：使用 <code>OllamaEmbeddings(model=&quot;llama2&quot;)</code> 是可行的，但为了您的应用性能和准确性，请使用一个专用的 Ollama 嵌入模型。</strong></li>
+</ol>
+
+
+        </div>
+
+        <footer class="post-footer">
+            
+<nav class="paginav">
+  <a class="next" href="https://chesterwang.github.io/chester-blog/posts/2025-08-22-huggingface-%E7%B1%BB%E5%BA%93%E5%AD%A6%E4%B9%A0/">
+    <span class="title">下一页 »</span>
+    <br>
+    <span>Huggingface 类库学习</span>
+  </a>
+</nav>
+
+        </footer>
+    </div>
+
+
+
+<div>
+    <div class="pagination__title">
+        <span class="pagination__title-h" style="font-size: 20px;">💬评论</span>
+        <hr />
+    </div>
+
+    <div id="tcomment"></div>
+
+    <script src="https://image.lvbibir.cn/js/1.6.40/twikoo.all.min.js">
+    </script>
+    
+
+    
+
+    <script>
+        twikoo.init({
+            envId: "https://twikoo.lvbibir.cn/", 
+            el: "#tcomment",
+            lang: 'zh-CN',
+            
+            path: window.TWIKOO_MAGIC_PATH||window.location.pathname,
+            
+            
+            
+            
+            
+            
+            
+        });
+    </script>
+
+</div>
+</article>
+</main>
+
+
+<footer class="footer">
+
+    <a href="https://gohugo.io/" target="_blank">
+        
+        <img style="display: unset;" src="https://image.lvbibir.cn/blog/frame-hugo-blue.svg">
+    </a>
+    <a href="https://github.com/adityatelange/hugo-PaperMod" target="_blank">
+        
+        <img style="display: unset;" src="https://image.lvbibir.cn/blog/theme-papermod-lightgrey.svg">
+    </a>
+    <a href="https://cn.aliyun.com/" target="_blank">
+        
+        <img style="display: unset;" src="https://image.lvbibir.cn/blog/图床-阿里云-orange.svg">
+    </a>
+
+    <br>
+
+    <span id="runtime_span"></span>
+    <script
+        type="text/javascript">function show_runtime() { window.setTimeout("show_runtime()", 1000); X = new Date("11/11/2025 1:00:00"); Y = new Date(); T = (Y.getTime() - X.getTime()); M = 24 * 60 * 60 * 1000; a = T / M; A = Math.floor(a); b = (a - A) * 24; B = Math.floor(b); c = (b - B) * 60; C = Math.floor((b - B) * 60); D = Math.floor((c - C) * 60); runtime_span.innerHTML = "网站已运行" + A + "天" + B + "小时" + C + "分" + D + "秒" } show_runtime();</script>
+    |
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span id="busuanzi_container">
+        
+        总访客数:  <span id="busuanzi_value_site_uv"></span>
+        |
+        总访问量:  <span id="busuanzi_value_site_pv"></span>
+    </span>
+
+    <br>
+
+    
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <span class="topInner">
+        <svg class="topSvg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+            <path d="M12 6H0l6-6z" />
+        </svg>
+        <span id="read_progress"></span>
+    </span>
+</a>
+
+<script>
+    document.addEventListener('scroll', function (e) {
+        const readProgress = document.getElementById("read_progress");
+        const scrollHeight = document.documentElement.scrollHeight;
+        const clientHeight = document.documentElement.clientHeight;
+        const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+        
+        readProgress.innerText = ((scrollTop / (scrollHeight - clientHeight)).toFixed(2) * 100).toFixed(0);
+    })
+</script>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    let mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 400 || document.documentElement.scrollTop > 400) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+
+
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerText = '复制';
+
+        function copyingDone() {
+            copybutton.innerText = '已复制！';
+            setTimeout(() => {
+                copybutton.innerText = '复制';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) {
+            }
+            ;
+            selection.removeRange(range);
+        });
+
+        let language = codeblock.className.replaceAll("language-", "")
+        let macTool = document.createElement("div")
+        let macTool1 = document.createElement("div")
+        let macTool2 = document.createElement("div")
+        let macTool3 = document.createElement("div")
+        let languageType = document.createElement("div")
+        languageType.innerText = language
+        macTool.setAttribute('class', 'mac-tool')
+        macTool1.setAttribute('class', 'mac bb1')
+        macTool2.setAttribute('class', 'mac bb2')
+        macTool3.setAttribute('class', 'mac bb3')
+        languageType.setAttribute('class', 'language-type')
+        macTool.appendChild(macTool1)
+        macTool.appendChild(macTool2)
+        macTool.appendChild(macTool3)
+        macTool.appendChild(languageType)
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+            container.appendChild(macTool)
+        } else if (container.parentNode.firstChild === container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName === "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+            container.appendChild(macTool)
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+            container.appendChild(macTool)
+        }
+    });
+</script>
+
+</body>
+
+</html>

@@ -2,53 +2,53 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>Chester&#39;s Blog</title>
-    <link>https://chesterwang.github.io/chester-blog/</link>
+    <link>http://localhost:1313/chester-blog/</link>
     <description>Recent content on Chester&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh</language>
-    <lastBuildDate>Fri, 07 Nov 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://chesterwang.github.io/chester-blog/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 07 Nov 2025 00:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/chester-blog/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>个人RAG项目开发记录</title>
-      <link>https://chesterwang.github.io/chester-blog/posts/2025-11-07-rag-demo%E9%A1%B9%E7%9B%AE/</link>
+      <link>http://localhost:1313/chester-blog/posts/2025-11-07-rag-demo%E9%A1%B9%E7%9B%AE/</link>
       <pubDate>Fri, 07 Nov 2025 00:00:00 +0000</pubDate>
       
-      <guid>https://chesterwang.github.io/chester-blog/posts/2025-11-07-rag-demo%E9%A1%B9%E7%9B%AE/</guid>
+      <guid>http://localhost:1313/chester-blog/posts/2025-11-07-rag-demo%E9%A1%B9%E7%9B%AE/</guid>
       <description>个人RAG项目的开发记录和笔记</description>
     </item>
     
     <item>
       <title>Huggingface 类库学习</title>
-      <link>https://chesterwang.github.io/chester-blog/posts/2025-08-22-huggingface-%E7%B1%BB%E5%BA%93%E5%AD%A6%E4%B9%A0/</link>
+      <link>http://localhost:1313/chester-blog/posts/2025-08-22-huggingface-%E7%B1%BB%E5%BA%93%E5%AD%A6%E4%B9%A0/</link>
       <pubDate>Fri, 22 Aug 2025 00:00:00 +0000</pubDate>
       
-      <guid>https://chesterwang.github.io/chester-blog/posts/2025-08-22-huggingface-%E7%B1%BB%E5%BA%93%E5%AD%A6%E4%B9%A0/</guid>
+      <guid>http://localhost:1313/chester-blog/posts/2025-08-22-huggingface-%E7%B1%BB%E5%BA%93%E5%AD%A6%E4%B9%A0/</guid>
       <description>Huggingface 类库学习</description>
     </item>
     
     <item>
       <title>🙋🏻‍♂️ 关于</title>
-      <link>https://chesterwang.github.io/chester-blog/about/</link>
+      <link>http://localhost:1313/chester-blog/about/</link>
       <pubDate>Sat, 06 Nov 2021 14:57:28 +0800</pubDate>
       
-      <guid>https://chesterwang.github.io/chester-blog/about/</guid>
+      <guid>http://localhost:1313/chester-blog/about/</guid>
       <description>🏡 关于本站 本博客记录个人的感想和开发过程。 👦🏻 博主是谁 AI算法工程师 🏹 兴趣爱好 🏃‍♂️跑步 | 🎧 音乐 | 🛌 摆烂</description>
     </item>
     
     <item>
       <title>🤝 友链</title>
-      <link>https://chesterwang.github.io/chester-blog/links/</link>
+      <link>http://localhost:1313/chester-blog/links/</link>
       <pubDate>Sat, 06 Nov 2021 00:00:00 +0000</pubDate>
       
-      <guid>https://chesterwang.github.io/chester-blog/links/</guid>
+      <guid>http://localhost:1313/chester-blog/links/</guid>
       <description>👉友链为随机顺序 cuikx&amp;#39;s blog cuikx&amp;#39;s blog Sulv&amp;#39;s Blog 一个记录技术、阅读、生活的博客 陈桂林博客 成功最有效的方法就是向有经验的人学习！ 黄忠德的博客 DevOps,SRE,Python,Golang程序员,开源爱好者 阿虚同学的储物间 收集了很多实用网站 老生杂谈的 IT 人 老生杂谈，后继有人。 Yunyi’s Blog Little squirrel Hopping around Yu</description>
     </item>
     
     <item>
       <title>💬 说说</title>
-      <link>https://chesterwang.github.io/chester-blog/talk/</link>
+      <link>http://localhost:1313/chester-blog/talk/</link>
       <pubDate>Tue, 31 Aug 2021 00:00:00 +0000</pubDate>
       
-      <guid>https://chesterwang.github.io/chester-blog/talk/</guid>
+      <guid>http://localhost:1313/chester-blog/talk/</guid>
       <description>胡言乱语</description>
     </item>
     

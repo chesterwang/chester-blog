@@ -2,26 +2,26 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>📚 文章 on Chester&#39;s Blog</title>
-    <link>https://chesterwang.github.io/chester-blog/posts/</link>
+    <link>http://localhost:1313/chester-blog/posts/</link>
     <description>Recent content in 📚 文章 on Chester&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh</language>
-    <lastBuildDate>Fri, 29 Dec 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://chesterwang.github.io/chester-blog/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 29 Dec 2023 00:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/chester-blog/posts/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>个人RAG项目开发记录</title>
-      <link>https://chesterwang.github.io/chester-blog/posts/2025-11-07-rag-demo%E9%A1%B9%E7%9B%AE/</link>
+      <link>http://localhost:1313/chester-blog/posts/2025-11-07-rag-demo%E9%A1%B9%E7%9B%AE/</link>
       <pubDate>Fri, 07 Nov 2025 00:00:00 +0000</pubDate>
       
-      <guid>https://chesterwang.github.io/chester-blog/posts/2025-11-07-rag-demo%E9%A1%B9%E7%9B%AE/</guid>
+      <guid>http://localhost:1313/chester-blog/posts/2025-11-07-rag-demo%E9%A1%B9%E7%9B%AE/</guid>
       <description>个人RAG项目的开发记录和笔记</description>
     </item>
     
     <item>
       <title>Huggingface 类库学习</title>
-      <link>https://chesterwang.github.io/chester-blog/posts/2025-08-22-huggingface-%E7%B1%BB%E5%BA%93%E5%AD%A6%E4%B9%A0/</link>
+      <link>http://localhost:1313/chester-blog/posts/2025-08-22-huggingface-%E7%B1%BB%E5%BA%93%E5%AD%A6%E4%B9%A0/</link>
       <pubDate>Fri, 22 Aug 2025 00:00:00 +0000</pubDate>
       
-      <guid>https://chesterwang.github.io/chester-blog/posts/2025-08-22-huggingface-%E7%B1%BB%E5%BA%93%E5%AD%A6%E4%B9%A0/</guid>
+      <guid>http://localhost:1313/chester-blog/posts/2025-08-22-huggingface-%E7%B1%BB%E5%BA%93%E5%AD%A6%E4%B9%A0/</guid>
       <description>Huggingface 类库学习</description>
     </item>
     
