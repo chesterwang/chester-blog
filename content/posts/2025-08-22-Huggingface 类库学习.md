@@ -1,5 +1,5 @@
 ---
-title: "Huggingface 类库学习"
+title: "Huggingface库学习笔记"
 date: 2025-08-22
 lastmod: 2025-08-22
 tags:
@@ -7,7 +7,7 @@ tags:
 keywords:
   - LLM
   - HuggingFace
-description: "Huggingface 类库学习"
+description: "Huggingface相关Python库学习笔记"
 ---
 
 

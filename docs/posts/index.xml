@@ -8,21 +8,30 @@
     <language>zh</language>
     <lastBuildDate>Fri, 29 Dec 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://chesterwang.github.io/chester-blog/posts/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>个人RAG项目开发记录</title>
-      <link>https://chesterwang.github.io/chester-blog/posts/2025-11-07-rag-demo%E9%A1%B9%E7%9B%AE/</link>
+      <title>【置顶】个人开发项目展示</title>
+      <link>https://chesterwang.github.io/chester-blog/posts/2025-11-13-%E4%B8%AA%E4%BA%BA%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE%E5%B1%95%E7%A4%BA/</link>
       <pubDate>Fri, 07 Nov 2025 00:00:00 +0000</pubDate>
       
-      <guid>https://chesterwang.github.io/chester-blog/posts/2025-11-07-rag-demo%E9%A1%B9%E7%9B%AE/</guid>
+      <guid>https://chesterwang.github.io/chester-blog/posts/2025-11-13-%E4%B8%AA%E4%BA%BA%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE%E5%B1%95%E7%A4%BA/</guid>
+      <description>所有项目</description>
+    </item>
+    
+    <item>
+      <title>个人RAG项目开发记录</title>
+      <link>https://chesterwang.github.io/chester-blog/posts/2025-11-07-rag%E9%A1%B9%E7%9B%AE%E5%BC%80%E5%8F%91%E8%AE%B0%E5%BD%95/</link>
+      <pubDate>Fri, 07 Nov 2025 00:00:00 +0000</pubDate>
+      
+      <guid>https://chesterwang.github.io/chester-blog/posts/2025-11-07-rag%E9%A1%B9%E7%9B%AE%E5%BC%80%E5%8F%91%E8%AE%B0%E5%BD%95/</guid>
       <description>个人RAG项目的开发记录和笔记</description>
     </item>
     
     <item>
-      <title>Huggingface 类库学习</title>
+      <title>Huggingface库学习笔记</title>
       <link>https://chesterwang.github.io/chester-blog/posts/2025-08-22-huggingface-%E7%B1%BB%E5%BA%93%E5%AD%A6%E4%B9%A0/</link>
       <pubDate>Fri, 22 Aug 2025 00:00:00 +0000</pubDate>
       
       <guid>https://chesterwang.github.io/chester-blog/posts/2025-08-22-huggingface-%E7%B1%BB%E5%BA%93%E5%AD%A6%E4%B9%A0/</guid>
-      <description>Huggingface 类库学习</description>
+      <description>Huggingface相关Python库学习笔记</description>
     </item>
     
   </channel>
