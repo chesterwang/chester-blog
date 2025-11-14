@@ -1,6 +1,6 @@
-https://chesterwang.github.io/chester-blog/en/
+播客地址： https://chesterwang.github.io/chester-blog
 
-# 操作命令
+---
 
 ```bash
 # 本地浏览
@@ -14,4 +14,4 @@ git push origin master
 ```
 
 
-博客参考自 https://github.com/lvbibir/lvbibir.github.io
+代码参考自 https://github.com/lvbibir/lvbibir.github.io
