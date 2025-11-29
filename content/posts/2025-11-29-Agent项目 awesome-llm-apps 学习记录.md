@@ -10,7 +10,9 @@ keywords:
 description: "Agent项目 awesome-llm-apps 学习记录"
 ---
 
-项目地址 [**Shubhamsaboo/awesome-llm-apps**: Collection of awesome LLM apps with AI Agents and RAG using OpenAI, Anthropic, Gemini and opensource models.](https://github.com/Shubhamsaboo/awesome-llm-apps)
+1. 原始项目地址 [**Shubhamsaboo/awesome-llm-apps**: Collection of awesome LLM apps with AI Agents and RAG using OpenAI, Anthropic, Gemini and opensource models.](https://github.com/Shubhamsaboo/awesome-llm-apps)
+2. 实践项目地址 [**large\_model\_projects/Agent/2025-11-29-agno-demo** · chesterwang/large\_model\_projects](https://github.com/chesterwang/large_model_projects/tree/master/Agent/2025-11-29-agno-demo)
+
 
 ## agno 框架
 
