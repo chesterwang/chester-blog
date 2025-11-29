@@ -6,7 +6,7 @@
     <description>Recent content on Chester&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh</language>
-    <lastBuildDate>Mon, 17 Nov 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://chesterwang.github.io/chester-blog/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 29 Nov 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://chesterwang.github.io/chester-blog/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>【置顶】个人开发项目展示</title>
       <link>https://chesterwang.github.io/chester-blog/posts/2025-11-13-%E4%B8%AA%E4%BA%BA%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE%E5%B1%95%E7%A4%BA/</link>
@@ -14,6 +14,15 @@
       
       <guid>https://chesterwang.github.io/chester-blog/posts/2025-11-13-%E4%B8%AA%E4%BA%BA%E5%BC%80%E5%8F%91%E9%A1%B9%E7%9B%AE%E5%B1%95%E7%A4%BA/</guid>
       <description>所有项目</description>
+    </item>
+    
+    <item>
+      <title>Agent项目 awesome-llm-apps 学习记录</title>
+      <link>https://chesterwang.github.io/chester-blog/posts/2025-11-29-agent%E9%A1%B9%E7%9B%AE-awesome-llm-apps-%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/</link>
+      <pubDate>Sat, 29 Nov 2025 00:00:00 +0000</pubDate>
+      
+      <guid>https://chesterwang.github.io/chester-blog/posts/2025-11-29-agent%E9%A1%B9%E7%9B%AE-awesome-llm-apps-%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/</guid>
+      <description>Agent项目 awesome-llm-apps 学习记录</description>
     </item>
     
     <item>
